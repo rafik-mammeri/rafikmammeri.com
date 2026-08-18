@@ -1,5 +1,6 @@
 ---
 title: Rafik Mammeri
+description: Senior AI Engineer building agentic systems that run in production — multi-agent LangGraph architectures, MCP servers, and LLM infrastructure at retail scale.
 template: home.html
 hide:
   - navigation

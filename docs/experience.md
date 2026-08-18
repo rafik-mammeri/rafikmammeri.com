@@ -1,5 +1,6 @@
 ---
 title: Experience
+description: Seven years from regulated credit-risk modeling at BNP Paribas to leading production generative AI at Boulanger — full CV, education, and certifications.
 ---
 
 # Experience

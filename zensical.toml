@@ -17,6 +17,8 @@ extra_css = ["stylesheets/extra.css"]
 [project.theme]
 custom_dir = "overrides"
 language = "en"
+favicon = "assets/favicon.svg"
+logo = "assets/favicon.svg"
 features = [
   "navigation.instant",
   "navigation.instant.prefetch",
