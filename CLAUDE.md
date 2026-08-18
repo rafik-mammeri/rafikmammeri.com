@@ -14,8 +14,18 @@ whitespace. No AI-startup gradients, no photo, no dashboard-style stat theatrics
 ## Content source of truth
 
 Site content (English) is adapted, not copied, from Rafik's French Obsidian vault at
-`~/Library/Mobile Documents/com~apple~CloudDocs/Documents/Bibliothèque/ai/obsidian/resume/` —
-read-only source, never edit it directly.
+`~/Documents/Bibliothèque/ai/obsidian/resume/` — read-only source, never edit it directly.
+The vault's own rule applies to the site: **never publish confidential Boulanger internals**
+(IPs, security header names, table/role/warehouse names, internal tool names like Platodin,
+escalation vendor names). Keep public copy at the abstraction level already live.
+
+**Positioning (since 2026-08-18 rewrite):** the site is written for a CDO/CTO hiring a Head of
+AI, not for fellow engineers. Every page leads with stakes/decisions/organizational outcomes;
+tech detail supports the story. Key assets deliberately surfaced: the org-adoption story (chat
+became a baseline requirement in every IT project), "what I said no to" trade-offs, the API
+contract negotiated across 3 front teams, HR-as-product-owner model, and the Basel-regulated
+banking background framed as the root of his AI-governance posture. Keep this altitude in any
+content edit — don't let it drift back into a tech writeup.
 
 ## Structure
 
