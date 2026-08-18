@@ -78,6 +78,14 @@ link = "https://www.linkedin.com/in/rafikmammeri"
 icon = "fontawesome/brands/github"
 link = "https://github.com/rafik-mammeri"
 
+[[project.extra.social]]
+icon = "fontawesome/brands/medium"
+link = "https://medium.com/@rafik_23044"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/dev"
+link = "https://dev.to/rafik_mammeri"
+
 [project.markdown_extensions]
 abbr = {}
 attr_list = {}
