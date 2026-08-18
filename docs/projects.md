@@ -1,5 +1,6 @@
 ---
 title: Projects
+description: Four production AI systems — a multi-agent conversational assistant, natural-language BI over Snowflake via MCP, a streaming voice callbot, and RAG-backed internal agents.
 ---
 
 # Projects
