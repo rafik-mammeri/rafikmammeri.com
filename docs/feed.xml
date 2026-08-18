@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Rafik Mammeri — Writing</title>
     <link>https://www.rafikmammeri.com/writing/</link>
     <description>Notes on building and running LLM systems in production.</description>
     <language>en</language>
-    <lastBuildDate>Tue, 18 Aug 2026 21:55:32 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Aug 2026 21:59:32 +0000</lastBuildDate>
     <atom:link href="https://www.rafikmammeri.com/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Latency is an architecture problem, not a prompt problem</title>
       <link>https://www.rafikmammeri.com/writing/2026-08-14-latency-is-an-architecture-problem/</link>
       <guid isPermaLink="true">https://www.rafikmammeri.com/writing/2026-08-14-latency-is-an-architecture-problem/</guid>
       <description>Why the biggest latency win in a production multi-agent system rarely comes from prompt optimization.</description>
+      <content:encoded><![CDATA[<h1>Latency is an architecture problem, not a prompt problem</h1>
+<p><code>2026-08-14</code></p>
+<p>Most teams shipping their first multi-agent LLM system reach for the same fix when latency becomes a problem: trim the prompt, switch to a faster model, cache more aggressively. Those help at the margins. They rarely fix the actual problem, because the actual problem is usually structural, not textual.</p>
+<h2>The naive shape almost everyone starts with</h2>
+<p>A common first design for routing a user message to the right specialized agent looks like this:</p>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    A[User message] --&gt; B[&quot;Orchestrator&lt;br&gt;LLM call: &lt;i&gt;which agent should handle this?&lt;/i&gt;&quot;]
+    B --&gt; C[&quot;Specialized agent&lt;br&gt;LLM call: generates the actual response&quot;]
+    C --&gt; D[&quot;Formatter&lt;br&gt;sometimes a third LLM call, to shape the output&quot;]
+</code></pre></div>
+<p>It's a reasonable design on a whiteboard — separation of concerns, one job per node. In production, it means <strong>every single message pays for two or three sequential LLM round-trips before the user sees a token</strong>, even for something as simple as "what are your opening hours."</p>
+<div class="admonition tip">
+<p class="admonition-title">The tell</p>
+<p>If your latency budget is dominated by "time waiting for an LLM to decide something," before any LLM call that actually helps the user, you're paying an architecture tax — not a prompt tax.</p>
+</div>
+<h2>What changes when routing is native, not delegated</h2>
+<p>The fix that actually moved the needle on a production conversational assistant handling several thousand conversations a day wasn't a better router prompt. It was removing the router's LLM call entirely for the common case:</p>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    A[User message] --&gt; B[Router identifies domain directly]
+    B --&gt; C[&quot;Correct specialized agent activated&lt;br&gt;(no intermediate LLM call to get there)&quot;]
+    C --&gt; D[&quot;Agent responds&lt;br&gt;(1–2 LLM calls total)&quot;]
+    D -- on topic change --&gt; E[&quot;Native handoff&lt;br&gt;conversation state carried over&lt;br&gt;no restart, no re-explaining context&quot;]
+    E --&gt; C
+</code></pre></div>
+<p>The router still exists — it still has to figure out which agent should own a message. What changed is <em>how</em> it decides: deterministic signal matching and graph-native routing where possible, instead of asking a general-purpose LLM to classify intent on every single turn. The handoff between agents, when a conversation genuinely changes topic mid-flow, is also native to the orchestration graph rather than a fresh LLM call bolted on top — so switching agents doesn't mean losing the conversation's accumulated context.</p>
+<p>The result: most messages resolve in <strong>one to two LLM calls total</strong>, down from three or more. That's not a 10% latency improvement from a leaner prompt — it's removing a whole category of round-trip.</p>
+<h2>Why this is easy to miss</h2>
+<p>Prompt-level optimization is visible and satisfying: you can diff two prompts, run an eval, see a number move. Architectural latency is invisible until you actually trace a request end to end and count how many times you're calling out to a model before anything useful happens. It's also easy to under-count, because "just one more classification step" always looks cheap in isolation — it's the sum across the whole conversation flow that hurts.</p>
+<p>The practical habit that catches this: before optimizing any single prompt, draw the actual sequence of LLM calls a real message triggers, node by node, including the ones that feel like plumbing (classification, formatting, validation). If more than one of those nodes is a full LLM call and could plausibly be a rule, a smaller/cheaper model, or a native part of the orchestration layer instead — that's where the latency budget is actually going.</p>
+<h2>Where this doesn't apply</h2>
+<p>This isn't an argument against ever using an LLM to route. Genuinely ambiguous, open-ended intent classification across a large number of possible destinations often <em>does</em> need a model's judgment — a hard-coded ruleset won't scale to that. The distinction that matters is between routing decisions that are <strong>inherently ambiguous</strong> (worth an LLM call) and ones that are <strong>incidentally implemented as an LLM call</strong> because it was the fastest way to prototype the system. The second category is where the free latency wins live, and in most production systems I've seen, it's a larger category than teams expect going in.</p>]]></content:encoded>
       <pubDate>Fri, 14 Aug 2026 12:00:00 +0000</pubDate>
     </item>
   </channel>

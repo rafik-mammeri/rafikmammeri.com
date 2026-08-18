@@ -13,6 +13,8 @@ from email.utils import format_datetime
 from pathlib import Path
 from xml.sax.saxutils import escape
 
+import markdown
+
 ROOT = Path(__file__).resolve().parent.parent
 WRITING = ROOT / "docs" / "writing"
 OUT = ROOT / "docs" / "feed.xml"
@@ -22,15 +24,28 @@ FEED_TITLE = "Rafik Mammeri — Writing"
 FEED_DESCRIPTION = "Notes on building and running LLM systems in production."
 
 
-def parse_front_matter(text: str) -> dict:
+def split_front_matter(text: str) -> tuple[dict, str]:
     match = re.match(r"\A---\n(.*?)\n---\n", text, re.DOTALL)
     meta = {}
+    body = text
     if match:
+        body = text[match.end():]
         for line in match.group(1).splitlines():
             if ":" in line and not line.startswith((" ", "-", "\t")):
                 key, _, value = line.partition(":")
                 meta[key.strip()] = value.strip().strip("\"'")
-    return meta
+    return meta, body
+
+
+def render_html(body: str) -> str:
+    html = markdown.markdown(
+        body,
+        extensions=["extra", "admonition", "pymdownx.superfences"],
+    )
+    # Feed readers resolve nothing relative — make internal links absolute
+    html = re.sub(r'href="(?!https?://|mailto:|#)([^"]+)"', rf'href="{SITE_URL}/writing/\1"', html)
+    # CDATA cannot contain the "]]>" terminator
+    return html.replace("]]>", "]]&gt;")
 
 
 def articles():
@@ -40,7 +55,7 @@ def articles():
         date_match = re.match(r"(\d{4})-(\d{2})-(\d{2})-", path.name)
         if not date_match:
             continue
-        meta = parse_front_matter(path.read_text(encoding="utf-8"))
+        meta, body = split_front_matter(path.read_text(encoding="utf-8"))
         published = datetime(
             *(int(g) for g in date_match.groups()), 12, 0, tzinfo=timezone.utc
         )
@@ -49,6 +64,7 @@ def articles():
             "description": meta.get("description", ""),
             "url": f"{SITE_URL}/writing/{path.stem}/",
             "published": published,
+            "content": render_html(body),
         }
 
 
@@ -61,13 +77,14 @@ def main() -> None:
       <link>{a['url']}</link>
       <guid isPermaLink="true">{a['url']}</guid>
       <description>{escape(a['description'])}</description>
+      <content:encoded><![CDATA[{a['content']}]]></content:encoded>
       <pubDate>{format_datetime(a['published'])}</pubDate>
     </item>"""
         for a in items
     )
     OUT.write_text(
         f"""<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>{escape(FEED_TITLE)}</title>
     <link>{SITE_URL}/writing/</link>
