@@ -1,26 +1,30 @@
 ---
 title: Projects
-description: Four production AI systems — a multi-agent conversational assistant, natural-language BI over Snowflake via MCP, a streaming voice callbot, and RAG-backed internal agents.
+description: Four production AI systems at a €4B retailer, written up as case studies — the stakes, the decisions that mattered, and what each one changed.
 ---
 
 # Projects
 
-Four systems I've designed and shipped to production, all currently running. Each one is a different answer to the same underlying question: how do you put an LLM in front of real users without the latency, cost, or reliability problems eating the value.
+Four systems I've designed and shipped to production, all currently running at Boulanger, one of France's largest electronics retailers. Each is written up the way I'd want to read it: what was at stake, the decisions that mattered — including the things I said no to — and what actually changed.
 
-## Conversational AI assistant
+## Customer AI assistant — web & mobile
 
 <span class="tag">LangGraph</span><span class="tag">Kubernetes</span><span class="tag">Azure OpenAI</span><span class="tag">FastAPI</span>
 
-Boulanger's legacy chatbot was a static decision tree (Dialogflow). I led the design and build of its replacement: a generative AI assistant covering the full customer journey — product discovery, order tracking, after-sales, human escalation — live on the website and mobile app since October 2025.
+### The stakes
+
+Boulanger's customer chat ran on a static decision tree (Dialogflow) — the kind of bot customers learn to route around. The bet: replace it with a generative assistant good enough to become a real customer channel, on the website and mobile app, for the *entire* journey — product advice, order tracking, after-sales, human escalation. I led it end to end: architecture, development, Kubernetes deployment, API exposure, security, response quality, and the business relationship. Six months from first commit to production, live since October 2025.
 
 <div class="stat-row" markdown>
 <span class="stat">~2,000<small>conversations / day</small></span>
 <span class="stat">73–75%<small>resolved without escalation</small></span>
-<span class="stat">78%<small>positive satisfaction</small></span>
+<span class="stat">78%<small>satisfaction · 10,450 ratings</small></span>
 <span class="stat">~2.4s<small>average latency</small></span>
 </div>
 
-**The core problem was latency, and the fix was architectural, not a prompt tweak.** A naive multi-agent system routes every message through a central orchestrator that calls an LLM just to decide who handles it, then calls the agent, then formats the output — every hop adds latency. Instead:
+### The decision that shaped everything: no orchestrator
+
+A naive multi-agent system routes every message through a central orchestrator that calls an LLM just to decide who handles it, then calls the agent, then formats the output — every hop adds latency and cost. I designed the swarm so routing and handoffs are native to the graph itself:
 
 ```mermaid
 flowchart TB
@@ -31,21 +35,25 @@ flowchart TB
     E --> C
 ```
 
-Routing and handoffs are native to the graph — no external classifier, no extra orchestration layer. The number of LLM calls per message stays minimal by design.
+No external classifier, no orchestration layer, minimal LLM calls per message by construction. The ~2.4s average latency is what one model call plus tools plus formatting costs — the architecture's job is to never add a superfluous call on top of it.
 
 !!! tip "More on this"
-    I wrote up the general principle behind this decision in [Latency is an architecture problem, not a prompt problem](writing/2026-08-14-latency-is-an-architecture-problem.md).
+    I wrote up the general principle in [Latency is an architecture problem, not a prompt problem](writing/2026-08-14-latency-is-an-architecture-problem.md).
 
-**What else went into making it production-grade:**
+### The other decisions that mattered
 
-- **Fully async, end to end** — FastAPI + Motor (async MongoDB) + httpx, so no request blocks a worker thread during an LLM call, a DB write, or an internal API request. Sized Kubernetes ReplicaSets and resource limits to absorb concurrent load.
-- **A security layer inside the graph itself** — prompt-injection detection and off-scope content filtering at the router level, before any agent runs; strict per-agent tool isolation so an agent can only call what it owns.
-- **Structured output over free text for anything factual** — `model.with_structured_output(...)` for product identifiers, separating offers from prose. Removes an entire class of hallucination on things that must be exact.
-- **Native interrupt/resume for multi-step escalation** — when a conversation needs a human, LangGraph's `@interrupt` pauses it, the client picks a channel, and `Command(resume=...)` continues from the exact same state. No context loss.
-- **Prompts as versioned Markdown, not embedded strings** — split by domain (system / shared / tools), loaded with `@lru_cache`. A prompt change is a merge and a redeploy, not a code change. Quality is tracked continuously with **Langfuse** LLM-judge scoring against production traffic.
-- **A real API contract negotiation** — 12 polymorphic content types (text, product carousels, link cards, escalation actions) co-designed with the web, iOS, and Android teams so every channel renders the same conversation correctly.
+- **Fully async, end to end** — FastAPI + Motor (async MongoDB) + httpx, so no request blocks a worker during an LLM call, a DB write, or an internal API request. Kubernetes ReplicaSets and resource limits sized against real concurrent load.
+- **Security inside the graph, not bolted on** — prompt-injection detection and off-scope filtering at the router, before any agent runs; strict per-agent tool isolation so an agent can only call what it owns.
+- **Structured output for anything factual** — typed, validated responses for product identifiers, with offers separated from prose. Removes an entire class of hallucination on things that must be exact.
+- **Native interrupt/resume for escalation** — when a conversation needs a human, the graph pauses, the customer picks a channel (live chat or scheduled callback), and the conversation resumes from the exact same state. No context loss, no starting over.
+- **Prompts as versioned Markdown, not embedded strings** — a prompt change is a merge and a redeploy, not a code change. Quality is tracked continuously with **Langfuse** LLM-judge scoring against production traffic.
+- **The API contract was negotiated, not decreed** — 12 polymorphic content types (text, product carousels, link cards, escalation actions, end-of-conversation states) co-designed across many workshops with the web, iOS, and Android teams. Each client declares what it can render; the assistant adapts. This was the longest part of the project, and the reason all three channels render the same conversation correctly.
 
-The chatbot now covers the entire customer journey — 26% after-sales, 22% pre-purchase advice, 17% order management, the rest split across FAQ, delivery, billing, and loyalty — and has become the reference pattern for every new AI touchpoint at the company.
+### What it changed
+
+The assistant covers the entire customer journey — 26% after-sales, 22% pre-purchase advice, 17% order management, the rest across FAQ, delivery, billing, and loyalty. The honest read on the ~25% escalation rate: a large share is *structural* — order cancellations and modifications that no system could self-serve because the internal API doesn't exist yet (it's in development). The assistant diagnoses those correctly and routes them to the right human.
+
+The larger outcome is organizational. **In twelve months, the chat went from an isolated AI project to a company reflex: every new IT project at Boulanger now ships a chat facet as a baseline requirement** — order selfcare and retail media integrations are arriving in the channel next. That's the difference between delivering a system and creating a channel, and it's become the reference pattern for every new AI touchpoint at the company.
 
 ---
 
@@ -53,21 +61,35 @@ The chatbot now covers the entire customer journey — 26% after-sales, 22% pre-
 
 <span class="tag">MCP</span><span class="tag">Google ADK</span><span class="tag">Vertex AI</span><span class="tag">Snowflake</span>
 
-Business teams — digital, commerce, retail — needed to query Snowflake data without waiting on a data analyst. Snowflake's native self-service BI was too costly to roll out broadly and assumes every user has a Snowflake account, which most don't.
+### The stakes
 
-**The design:** build an MCP server that exposes Snowflake's query and semantic-search capabilities, then deploy business-specific agents on **Gemini Enterprise** — the interface these teams already use every day. No new tool to learn, no Snowflake account required.
+Business teams — digital, commerce, retail stores — needed answers from the data warehouse without waiting on a data analyst. Every path to that runs through an uncomfortable trade-off between access and control. This project is mostly a story about which options I turned down.
 
-A deliberate call was made *against* using each user's personal Snowflake credentials via OAuth: personal accounts often carry broader privileges than an AI agent should ever be able to exercise, and not every user has one anyway. Instead, each use case gets a dedicated service account bound to a **read-only, narrowly scoped Snowflake role**.
+### What I said no to
 
-!!! note "Security is enforced at four independent layers, so a single failure doesn't expose data"
-    1. API gateway authentication (Gravitee) — no valid subscription plan, no access to the MCP server at all
-    2. Mandatory service headers validated by the MCP middleware before any tool executes
-    3. SQL statement-type enforcement (via `sqlglot`) — only `SELECT` / `DESCRIBE` / `SHOW` ever reach Snowflake
-    4. Read-only Snowflake role scoped to the specific use case's tables — even a hallucinated query targeting the wrong table is rejected at the database layer
+**No to Snowflake's native self-service BI.** Too costly to roll out at company scale, and it assumes every user has a Snowflake account — most don't and never will.
 
-**The trickiest engineering problem wasn't the agent — it was connectivity.** Vertex AI Agent Engine runs on public GCP infrastructure; the MCP server lives on Boulanger's private network, unreachable from the internet. Solved with three layers: a GCP Private Service Connect attachment so traffic never touches the public internet, a WAF whitelist for the outbound NAT IP, and a conditional HTTP proxy factory so the exact same code path works unchanged in local development and in production.
+**No to OAuth with users' personal credentials.** Personal accounts inherit privileges far broader than anything an AI agent should be able to exercise, and again — most target users have no account at all. Instead: one dedicated service account per use case, bound to a **read-only Snowflake role scoped to exactly that use case's data**.
 
-The agent's domain knowledge — table schemas, business aliases, critical filtering rules, standard metric definitions — lives in a 22KB system prompt, so it never needs to perform schema discovery at query time. It also never surfaces raw SQL or technical table names to the end user; everything is translated into business language.
+### What I built instead
+
+An **MCP server** exposing Snowflake's query and semantic-search capabilities, consumed by business-specific agents on **Gemini Enterprise** — the interface these teams already use daily. No new tool to learn, no Snowflake account required, no training rollout.
+
+!!! note "Security is four independent layers, so no single failure exposes data"
+    1. API gateway authentication — no valid subscription plan, no access to the MCP server at all
+    2. Mandatory service headers validated by MCP middleware before any tool executes
+    3. SQL statement-type enforcement — only read statements ever reach Snowflake, parsed and verified, not trusted
+    4. A read-only Snowflake role scoped to the use case — even a hallucinated query against the wrong table is rejected by the database itself
+
+This is what "assume the model will be wrong" looks like in practice: the agent can hallucinate all it wants; the blast radius is a rejected query.
+
+### The hard part nobody plans for: connectivity
+
+Vertex AI Agent Engine runs on public GCP infrastructure; the MCP server lives on the company's private network, unreachable from the internet. Solved in three layers — a GCP Private Service Connect attachment so traffic never touches the public internet, a WAF whitelist for the outbound NAT IP, and a conditional HTTP proxy factory so the exact same code runs unchanged on a laptop and in production.
+
+### Design choices worth stealing
+
+The agent's domain knowledge — schemas, business aliases, critical filter rules, standard metric definitions — lives in a 22KB system prompt, so it never performs schema discovery at query time. And it never surfaces raw SQL or technical table names to the user: everything is translated into business language. The first use case (customer analytics) is live with digital, commerce, and store teams; each new use case is a new role, a new semantic schema, the same platform.
 
 ---
 
@@ -75,24 +97,27 @@ The agent's domain knowledge — table schemas, business aliases, critical filte
 
 <span class="tag">Hexagonal architecture</span><span class="tag">SSE streaming</span><span class="tag">LangGraph</span>
 
-Extending the conversational assistant to the phone channel. An external partner handles telephony and speech-to-text/text-to-speech; Vox is the backend that receives the transcribed customer utterance, streams back a response token by token, and returns a control signal (continue, end, escalate to a human).
+### The stakes
 
-Voice changes the constraints completely. Latency that was merely important on web becomes **critical** on a phone call — the text-to-speech engine has to start speaking before the LLM has finished generating. That reshaped the entire design:
+Extending the assistant to the phone. An external partner handles telephony and speech-to-text/text-to-speech; Vox is the backend that receives the transcribed utterance, streams the response token by token, and returns a control signal — continue, end, or escalate to a human.
 
-| | Web chatbot | Vox |
+On the web, latency is a metric. **On a phone call, latency is silence** — and the text-to-speech engine has to start speaking before the model has finished generating. That single constraint reshaped every layer:
+
+| | Web assistant | Vox |
 |---|---|---|
 | Escalation routing | LLM classification | **Deterministic hard rules — zero LLM calls** |
-| Response length | Long, detailed | **≤200 tokens** — short phrases suited to speech |
-| Streaming | None | **Token-by-token SSE**, so TTS can start immediately |
+| Response length | Long, detailed | **≤200 tokens** — short phrases built for speech |
+| Streaming | Optional | **Token-by-token SSE**, so TTS starts immediately |
 | Architecture | Layered | **Hexagonal** (ports & adapters) |
 
-**Hard rules run before any LLM call.** A pure, I/O-free node checks for explicit human requests, backend unavailability, or end-of-conversation keywords, and short-circuits straight to a control signal when one matches — skipping an LLM round-trip entirely on exactly the paths where latency matters most.
+### The decisions that mattered
 
-**The domain layer never imports a framework.** Everything depends on `Protocol`-based ports (`DeliveryInfoPort`, `AftersalesInfoPort`, `PurchaseHistoryPort`, ...), with concrete adapters plugged in at the edges. Swapping a backend API means writing a new adapter — zero changes inside the agent logic itself, and the domain can be tested with plain async lambdas instead of real I/O.
+- **Hard rules run before any LLM call.** A pure, I/O-free node checks for explicit human requests, backend unavailability, and end-of-conversation signals, and short-circuits straight to a control signal — skipping an entire LLM round-trip on exactly the paths where latency matters most.
+- **The domain layer never imports a framework.** Everything depends on protocol-based ports with concrete adapters at the edges. Swapping a backend API means writing one adapter — zero changes to agent logic — and the domain tests run with plain async fakes instead of real I/O.
+- **Streaming is treated as the product, not a feature.** Each turn emits a typed event sequence — conversation start, a stream of text deltas, completion, then a final control event — with anti-buffering headers so no intermediate proxy defeats the point. Time-to-first-byte is a first-class production metric in Langfuse, not an afterthought.
+- **Lessons from the web assistant applied on day one, by design:** bearer tokens live in the runtime context, never in checkpointed state, so they can't leak into traces or across sessions; adapters fetch concurrently and only re-fetch when the underlying data actually changed.
 
-**Streaming is the central engineering problem.** Each turn emits a sequence of typed SSE events — `conversation_started`, a stream of `text_delta` frames, `message_done`, then a final `control` event — with `X-Accel-Buffering: no` to stop any intermediate proxy from buffering the stream and defeating the whole point. Time-to-first-byte is tracked in Langfuse as a first-class production metric, not an afterthought.
-
-Design decisions learned the hard way on the web chatbot were carried over deliberately from day one: bearer tokens live in the LangGraph runtime context, never in the checkpointed state, so they can't leak into traces or across sessions; adapters fetch concurrently (`asyncio.gather`) and only re-fetch when the underlying data actually changed.
+This is what a second system looks like when the first one taught you where the bodies are buried.
 
 ---
 
@@ -100,10 +125,18 @@ Design decisions learned the hard way on the web chatbot were carried over delib
 
 <span class="tag">Vertex AI Agent Engine</span><span class="tag">Cloud Run</span><span class="tag">RAG</span>
 
-A third distribution channel for AI agents inside the company, reaching collaborators who use neither the customer-facing site nor Gemini Enterprise: **Google Chat**, the internal communication tool everyone already has open.
+### The stakes
 
-A Cloud Run service bridges Google Chat's event webhooks to a Vertex AI Agent Engine agent backed by **Data Stores** — Google's managed RAG layer, which handles ingestion, chunking, embedding, and retrieval over documents supplied directly by the business teams, with no custom pipeline to build or maintain.
+Customer-facing AI was live; the company's own employees had none. The third distribution channel targets people who use neither the customer site nor Gemini Enterprise: **Google Chat**, the internal messaging tool everyone already has open. The thesis — every surface the company already uses becomes an entry point for agents — is the same pattern each time: a business-owned agent, a managed retrieval layer, a distribution surface with zero adoption cost.
 
-The first agent deployed this way is an **official HR assistant**, built in direct collaboration with Boulanger's HR team: they own the content, the scope, and response validation; I own the technical build and deployment. It answers common HR questions around the clock, grounded exclusively in official HR documentation, with no need to escalate routine questions to the HR team.
+### What I built
 
-The underlying pattern — a business-owned agent, a managed retrieval layer, and a distribution surface the target users already have — is now being formalized into a reusable Terraform template, so a new departmental agent can be provisioned (Cloud Run + Chat App + Agent Engine + Data Stores) in a handful of commands rather than a manual console build.
+A Cloud Run service bridges Google Chat's event webhooks to a Vertex AI Agent Engine agent backed by **Data Stores** — Google's managed RAG layer, which handles ingestion, chunking, embedding, and retrieval over documents supplied directly by the business teams. No custom RAG pipeline to build, run, or debug at 2am.
+
+### The operating model is the interesting part
+
+The first agent live on the channel is the **company's official HR assistant**, built in direct collaboration with the HR team — and they are its product owner in the full sense: they own the content, the scope, and response validation. I own the technical build and deployment. It answers routine HR questions around the clock, grounded exclusively in official HR documentation, and it works because the people accountable for HR answers control what the agent is allowed to say.
+
+### From project to platform
+
+The pattern is being formalized into a reusable Terraform template — Cloud Run, Chat app, Agent Engine, Data Stores, IAM — so provisioning the *next* departmental agent is a handful of commands instead of a console build. That's the quiet goal of all four projects on this page: each one starts as a delivery and ends as a capability the organization can repeat without me.

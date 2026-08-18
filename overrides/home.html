@@ -6,10 +6,22 @@
   <section class="home-hero">
     <h1>Rafik Mammeri</h1>
     <p class="home-hero__tagline">
-      Senior AI Engineer building agentic systems that run in production —
-      multi-agent LangGraph architectures, MCP servers, and LLM infrastructure
-      at retail scale.
+      I take AI agents from whiteboard to production — and make them part of
+      how the company works.
     </p>
+    <p class="home-hero__context">
+      Technical lead for AI agents at Boulanger, one of France's largest
+      electronics retailers (€4B). Four systems in production across three
+      channels: customer web &amp; mobile, voice, and the tools employees use
+      every day. Before that, seven years shipping machine learning in
+      regulated banking. PhD in mathematics.
+    </p>
+    <div class="stat-row">
+      <span class="stat">~2,000<small>conversations / day</small></span>
+      <span class="stat">75%<small>resolved end-to-end</small></span>
+      <span class="stat">78%<small>satisfaction, 10,000+ ratings</small></span>
+      <span class="stat">6 mo<small>from zero to production</small></span>
+    </div>
   </section>
 
   <section class="home-section">
@@ -18,9 +30,40 @@
   </section>
 
   <section class="home-section">
+    <h2>How I work</h2>
+    <div class="home-principles">
+      <div class="home-principle">
+        <h3>Architecture before prompts</h3>
+        <p>The biggest latency and cost wins in LLM systems are structural.
+        The assistant answers in one or two model calls per message not
+        because of clever prompting, but because routing and handoffs are
+        native to the graph.</p>
+      </div>
+      <div class="home-principle">
+        <h3>Design for the model being wrong</h3>
+        <p>Four independent security layers stand between an agent and the
+        data warehouse. Even a hallucinated query lands on a read-only role
+        scoped to its use case — and gets rejected.</p>
+      </div>
+      <div class="home-principle">
+        <h3>The business owns the product</h3>
+        <p>The HR assistant is owned by HR — content, scope, response
+        validation. My job is making sure the technical layer never gives
+        them a reason to doubt it.</p>
+      </div>
+      <div class="home-principle">
+        <h3>Production is a loop, not a launch</h3>
+        <p>Versioned prompts, LLM-judge scoring against live traffic, and
+        continuous releases since day one. Quality in production isn't
+        achieved — it's maintained.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section">
     <h2>Writing</h2>
     <ul class="home-timeline">
-      <li><span class="home-timeline__date">2026-08-14</span> <a href="writing/2026-08-14-latency-is-an-architecture-problem.md">Latency is an architecture problem, not a prompt problem</a></li>
+      <li><span class="home-timeline__date">2026-08-14</span> <a href="writing/2026-08-14-latency-is-an-architecture-problem/">Latency is an architecture problem, not a prompt problem</a></li>
     </ul>
     <p><a href="writing/">All articles &rarr;</a></p>
   </section>
@@ -28,12 +71,12 @@
   <section class="home-section">
     <h2>Experience</h2>
     <ul class="home-timeline">
-      <li><span class="home-timeline__date">2025 — present</span> Senior AI Engineer, <strong>Boulanger</strong></li>
+      <li><span class="home-timeline__date">2025 — present</span> Senior AI Engineer &amp; technical lead for AI agents, <strong>Boulanger</strong></li>
       <li><span class="home-timeline__date">2024 — 2025</span> AI / DevOps Engineer (Freelance), <strong>ITS Group</strong></li>
       <li><span class="home-timeline__date">2021 — 2024</span> Senior Data Scientist, <strong>BNP Paribas Datalab</strong></li>
       <li><span class="home-timeline__date">2018 — 2021</span> Data Scientist / Risk Manager, <strong>BNP Paribas Risk</strong></li>
     </ul>
-    <p><a href="experience.md">Full experience &amp; education &rarr;</a></p>
+    <p><a href="experience/">Full experience &amp; education &rarr;</a></p>
   </section>
 
   <section class="home-section">
@@ -41,15 +84,15 @@
     <div class="home-skills">
       <div class="home-skills__group">
         <h3>LLM &amp; Agents</h3>
-        <span class="tag">LangGraph</span><span class="tag">LangChain</span><span class="tag">Google ADK</span><span class="tag">MCP</span><span class="tag">RAG</span><span class="tag">Azure OpenAI</span><span class="tag">Gemini</span>
+        <span class="tag">LangGraph</span><span class="tag">LangChain</span><span class="tag">Google ADK</span><span class="tag">MCP</span><span class="tag">RAG</span><span class="tag">Azure OpenAI</span><span class="tag">Gemini</span><span class="tag">Langfuse</span>
       </div>
       <div class="home-skills__group">
-        <h3>MLOps &amp; Engineering</h3>
-        <span class="tag">FastAPI</span><span class="tag">Python</span><span class="tag">Kubernetes</span><span class="tag">Docker</span><span class="tag">Hexagonal architecture</span><span class="tag">Async / SSE</span>
+        <h3>Engineering &amp; MLOps</h3>
+        <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Kubernetes</span><span class="tag">Docker</span><span class="tag">Hexagonal architecture</span><span class="tag">Async / SSE</span><span class="tag">CI/CD</span>
       </div>
       <div class="home-skills__group">
         <h3>Cloud &amp; Data</h3>
-        <span class="tag">GCP / Vertex AI</span><span class="tag">Azure</span><span class="tag">Snowflake</span><span class="tag">MongoDB</span><span class="tag">Terraform</span><span class="tag">Gravitee APIM</span>
+        <span class="tag">GCP / Vertex AI</span><span class="tag">Azure</span><span class="tag">Snowflake</span><span class="tag">MongoDB</span><span class="tag">Terraform</span><span class="tag">API gateways</span>
       </div>
     </div>
   </section>
