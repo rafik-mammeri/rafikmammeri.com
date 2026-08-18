@@ -1,0 +1,227 @@
+/* Technical-minimal palette: near-monochrome + one restrained accent (steel blue). */
+
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #1a1a1a;
+  --md-primary-fg-color--light: #3a3a3a;
+  --md-primary-fg-color--dark: #000000;
+  --md-primary-bg-color: #fafafa;
+
+  --md-accent-fg-color: #3b6ea5;
+  --md-accent-fg-color--transparent: #3b6ea51a;
+
+  --md-default-bg-color: #fafafa;
+  --md-default-fg-color: #1a1a1a;
+  --md-default-fg-color--light: #4a4a4a;
+  --md-default-fg-color--lighter: #8a8a8a;
+  --md-default-fg-color--lightest: #e0e0e0;
+
+  --md-typeset-color: #2a2a2a;
+  --md-typeset-a-color: #3b6ea5;
+
+  --md-code-bg-color: #f0f0ee;
+  --md-code-fg-color: #2a2a2a;
+
+  --md-footer-bg-color: #1a1a1a;
+  --md-footer-bg-color--dark: #141414;
+  --md-footer-fg-color: #fafafa;
+  --md-footer-fg-color--light: #cfcfcf;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-hue: 0;
+
+  --md-primary-fg-color: #e8e8e8;
+  --md-primary-fg-color--light: #cfcfcf;
+  --md-primary-fg-color--dark: #ffffff;
+  --md-primary-bg-color: #121212;
+
+  --md-accent-fg-color: #6f9bce;
+  --md-accent-fg-color--transparent: #6f9bce1a;
+
+  --md-default-bg-color: #121212;
+  --md-default-fg-color: #e8e8e8;
+  --md-default-fg-color--light: #b8b8b8;
+  --md-default-fg-color--lighter: #7a7a7a;
+  --md-default-fg-color--lightest: #2a2a2a;
+
+  --md-typeset-color: #d8d8d8;
+  --md-typeset-a-color: #6f9bce;
+
+  --md-code-bg-color: #1a1a1a;
+  --md-code-fg-color: #d8d8d8;
+
+  --md-footer-bg-color: #0a0a0a;
+  --md-footer-bg-color--dark: #000000;
+  --md-footer-fg-color: #e8e8e8;
+  --md-footer-fg-color--light: #a0a0a0;
+}
+
+/* Generous whitespace — technical-minimal reads as unhurried, not dense */
+.md-typeset {
+  line-height: 1.7;
+}
+
+.md-typeset h1,
+.md-typeset h2 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Monospace signal: reserved for concrete technical facts (stats, stack tags) */
+.tag {
+  display: inline-block;
+  font-family: var(--md-code-font, "JetBrains Mono", monospace);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.55rem;
+  margin: 0 0.35rem 0.35rem 0;
+  border-radius: 3px;
+  background-color: var(--md-code-bg-color);
+  color: var(--md-default-fg-color--light);
+  border: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.stat {
+  font-family: var(--md-code-font, "JetBrains Mono", monospace);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.stat small {
+  font-family: var(--md-text-font, sans-serif);
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--md-default-fg-color--light);
+  letter-spacing: 0.01em;
+}
+
+.contact-link {
+  display: block;
+  font-size: 1.1rem;
+  margin: 0.75rem 0;
+}
+
+/* Restyle default grid cards toward the technical-minimal register: flat, no shadow */
+.md-typeset .grid.cards > ul > li {
+  border-radius: 4px;
+  box-shadow: none;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  transition: border-color 0.2s;
+}
+
+.md-typeset .grid.cards > ul > li:hover {
+  box-shadow: none;
+  border-color: var(--md-accent-fg-color);
+}
+
+/* Homepage layout */
+.home {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 1rem 0.2rem 3rem;
+}
+
+.home-hero {
+  padding: 3rem 0 2.5rem;
+}
+
+.home-hero h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+.home-hero__tagline {
+  font-size: 1.15rem;
+  color: var(--md-default-fg-color--light);
+  max-width: 40rem;
+  line-height: 1.6;
+}
+
+.home-section {
+  padding: 2.25rem 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.home-section h2 {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 1.5rem;
+}
+
+.home-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.home-timeline__date {
+  display: inline-block;
+  font-family: var(--md-code-font, "JetBrains Mono", monospace);
+  font-size: 0.8rem;
+  color: var(--md-default-fg-color--light);
+  min-width: 8rem;
+}
+
+.home-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.home-skills__group h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0 0 0.6rem;
+  color: var(--md-default-fg-color);
+}
+
+/* Writing / articles listing — plain, no card chrome, consistent with the rest of the site */
+.md-typeset .article-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 2rem 0;
+}
+
+.md-typeset .article-list > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.md-typeset .article-list > ul > li {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .article-list > ul > li:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.md-typeset .article-list h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.article-date {
+  font-family: var(--md-code-font, "JetBrains Mono", monospace);
+  font-size: 0.8rem;
+  color: var(--md-default-fg-color--light);
+}
