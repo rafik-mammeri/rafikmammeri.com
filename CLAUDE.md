@@ -79,6 +79,17 @@ already logged in as `rafik-mammeri` on this machine.
   `[data-md-color-scheme="default"]` / `[data-md-color-scheme="slate"]`.
 - Zensical is alpha software — core rendering/theming is stable (inherited from Material for
   MkDocs), but expect thin docs on advanced features and possible pre-1.0 churn.
+- Feature availability as of 2026-08 (verified against zensical.org docs): **native social
+  cards NOT yet available** (manual `docs/assets/og-card.png` + OG tags in `overrides/main.html`
+  is the workaround), **tag index pages NOT yet supported** (front-matter `tags:` do render as
+  chips on the page itself — the article uses them), **no native analytics setup page**.
+  Re-check these when Zensical updates; the manual OG setup can be replaced once social cards
+  land.
+- `[project.markdown_extensions]` is aligned with Zensical's recommended defaults: syntax
+  highlighting (`pymdownx.highlight` + `inlinehilite`), `toc.permalink`, content tabs,
+  tasklists, caret/mark/tilde, keys, magiclink, smartsymbols, and the mermaid custom fence
+  (` ```mermaid ` blocks render as diagrams — Zensical's JS bundle lazy-loads mermaid.min.js).
+  Architecture diagrams on Projects and in the article are mermaid flowcharts, not ASCII.
 
 ## Pages overview
 

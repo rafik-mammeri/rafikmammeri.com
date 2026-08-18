@@ -17,14 +17,11 @@ Most teams shipping their first multi-agent LLM system reach for the same fix wh
 
 A common first design for routing a user message to the right specialized agent looks like this:
 
-```
-User message
-     ↓
-Orchestrator (LLM call: "which agent should handle this?")
-     ↓
-Specialized agent (LLM call: generates the actual response)
-     ↓
-Formatter (sometimes a third LLM call, to shape the output)
+```mermaid
+flowchart TB
+    A[User message] --> B["Orchestrator<br>LLM call: <i>which agent should handle this?</i>"]
+    B --> C["Specialized agent<br>LLM call: generates the actual response"]
+    C --> D["Formatter<br>sometimes a third LLM call, to shape the output"]
 ```
 
 It's a reasonable design on a whiteboard — separation of concerns, one job per node. In production, it means **every single message pays for two or three sequential LLM round-trips before the user sees a token**, even for something as simple as "what are your opening hours."
@@ -36,17 +33,13 @@ It's a reasonable design on a whiteboard — separation of concerns, one job per
 
 The fix that actually moved the needle on a production conversational assistant handling several thousand conversations a day wasn't a better router prompt. It was removing the router's LLM call entirely for the common case:
 
-```
-User message → router identifies domain directly
-                     ↓
-        Correct specialized agent activated
-        (no intermediate LLM call to get there)
-                     ↓
-        Agent responds (1–2 LLM calls total)
-                     ↓
-        On topic change → native handoff
-        → conversation state carried over
-        → no restart, no re-explaining context
+```mermaid
+flowchart TB
+    A[User message] --> B[Router identifies domain directly]
+    B --> C["Correct specialized agent activated<br>(no intermediate LLM call to get there)"]
+    C --> D["Agent responds<br>(1–2 LLM calls total)"]
+    D -- on topic change --> E["Native handoff<br>conversation state carried over<br>no restart, no re-explaining context"]
+    E --> C
 ```
 
 The router still exists — it still has to figure out which agent should own a message. What changed is *how* it decides: deterministic signal matching and graph-native routing where possible, instead of asking a general-purpose LLM to classify intent on every single turn. The handoff between agents, when a conversation genuinely changes topic mid-flow, is also native to the orchestration graph rather than a fresh LLM call bolted on top — so switching agents doesn't mean losing the conversation's accumulated context.

@@ -22,17 +22,13 @@ Boulanger's legacy chatbot was a static decision tree (Dialogflow). I led the de
 
 **The core problem was latency, and the fix was architectural, not a prompt tweak.** A naive multi-agent system routes every message through a central orchestrator that calls an LLM just to decide who handles it, then calls the agent, then formats the output — every hop adds latency. Instead:
 
-```
-Client message → SwarmRouter identifies domain
-                        ↓
-              Correct agent activated directly
-              (Sales / Usage / Transfer / Front)
-                        ↓
-              Agent responds (1–2 LLM calls max)
-                        ↓
-              On domain change → native handoff
-              → context preserved in LangGraph state
-              → no conversation restart
+```mermaid
+flowchart TB
+    A[Client message] --> B[SwarmRouter identifies domain]
+    B --> C["Correct agent activated directly<br>(Sales / Usage / Transfer / Front)"]
+    C --> D["Agent responds<br>(1–2 LLM calls max)"]
+    D -- on domain change --> E["Native handoff<br>context preserved in LangGraph state<br>no conversation restart"]
+    E --> C
 ```
 
 Routing and handoffs are native to the graph — no external classifier, no extra orchestration layer. The number of LLM calls per message stays minimal by design.
