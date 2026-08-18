@@ -1,0 +1,20 @@
+[tasks.dev]
+description = "Run the local dev server with live reload"
+run = "uv run zensical serve"
+
+[tasks.build]
+description = "Build the static site into site/"
+run = "uv run zensical build --clean"
+
+[tasks."preview-build"]
+description = "Build, then serve the exact static output (what GitHub Pages will deploy)"
+depends = ["build"]
+run = "uv run python -m http.server 8080 --directory site"
+
+[tasks.clean]
+description = "Remove build output and Zensical cache"
+run = "rm -rf site .cache"
+
+[tasks.deploy]
+description = "Push to the deploy branch — GitHub Actions builds and publishes to Pages"
+run = "git push origin HEAD"
