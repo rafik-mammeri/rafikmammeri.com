@@ -11,6 +11,10 @@ description = "Build, then serve the exact static output (what GitHub Pages will
 depends = ["build"]
 run = "uv run python -m http.server 8080 --directory site"
 
+[tasks.feed]
+description = "Regenerate docs/feed.xml from the articles in docs/writing/"
+run = "uv run python scripts/gen_feed.py"
+
 [tasks.clean]
 description = "Remove build output and Zensical cache"
 run = "rm -rf site .cache"
