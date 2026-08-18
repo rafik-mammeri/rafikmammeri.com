@@ -142,10 +142,24 @@
 }
 
 .home-hero__tagline {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
+  color: var(--md-default-fg-color);
+  max-width: 42rem;
+  line-height: 1.55;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.home-hero__context {
+  font-size: 0.95rem;
   color: var(--md-default-fg-color--light);
-  max-width: 40rem;
-  line-height: 1.6;
+  max-width: 42rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.home-hero .stat-row {
+  margin: 1.5rem 0 0;
 }
 
 .home-section {
@@ -176,6 +190,26 @@
   font-size: 0.8rem;
   color: var(--md-default-fg-color--light);
   min-width: 8rem;
+}
+
+.home-principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1.75rem 2.5rem;
+}
+
+.home-principle h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--md-default-fg-color);
+}
+
+.home-principle p {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--md-default-fg-color--light);
+  margin: 0;
 }
 
 .home-skills {
