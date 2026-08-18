@@ -1,5 +1,6 @@
 ---
 title: Contact
+description: Get in touch by email or LinkedIn — I usually respond within a day or two.
 ---
 
 # Contact
