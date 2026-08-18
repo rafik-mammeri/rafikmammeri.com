@@ -15,11 +15,19 @@ nav = [
 
 extra_css = ["stylesheets/extra.css"]
 
+repo_url = "https://github.com/rafik-mammeri"
+repo_name = "rafik-mammeri"
+
 [project.theme]
 custom_dir = "overrides"
 language = "en"
 favicon = "assets/favicon.svg"
 logo = "assets/favicon.svg"
+
+[project.theme.icon]
+repo = "fontawesome/brands/github"
+admonition.tip = "lucide/lightbulb"
+admonition.note = "lucide/shield-check"
 features = [
   "navigation.instant",
   "navigation.instant.prefetch",

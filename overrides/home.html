@@ -33,26 +33,26 @@
     <h2>How I work</h2>
     <div class="home-principles">
       <div class="home-principle">
-        <h3>Architecture before prompts</h3>
+        <h3>{% include ".icons/lucide/route.svg" %} Architecture before prompts</h3>
         <p>The biggest latency and cost wins in LLM systems are structural.
         The assistant answers in one or two model calls per message not
         because of clever prompting, but because routing and handoffs are
         native to the graph.</p>
       </div>
       <div class="home-principle">
-        <h3>Design for the model being wrong</h3>
+        <h3>{% include ".icons/lucide/shield-check.svg" %} Design for the model being wrong</h3>
         <p>Four independent security layers stand between an agent and the
         data warehouse. Even a hallucinated query lands on a read-only role
         scoped to its use case — and gets rejected.</p>
       </div>
       <div class="home-principle">
-        <h3>The business owns the product</h3>
+        <h3>{% include ".icons/lucide/users.svg" %} The business owns the product</h3>
         <p>The HR assistant is owned by HR — content, scope, response
         validation. My job is making sure the technical layer never gives
         them a reason to doubt it.</p>
       </div>
       <div class="home-principle">
-        <h3>Production is a loop, not a launch</h3>
+        <h3>{% include ".icons/lucide/refresh-cw.svg" %} Production is a loop, not a launch</h3>
         <p>Versioned prompts, LLM-judge scoring against live traffic, and
         continuous releases since day one. Quality in production isn't
         achieved — it's maintained.</p>
