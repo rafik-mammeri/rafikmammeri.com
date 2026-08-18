@@ -61,6 +61,21 @@
   line-height: 1.7;
 }
 
+/* Justified body text on content pages (Projects, Writing, Experience) —
+   not on the homepage, whose custom layout keeps ragged-right */
+.md-typeset p,
+.md-typeset li {
+  text-align: justify;
+  hyphens: auto;
+}
+
+.home p,
+.home li,
+.md-typeset .grid.cards p {
+  text-align: left;
+  hyphens: none;
+}
+
 .md-typeset h1,
 .md-typeset h2 {
   font-weight: 600;
