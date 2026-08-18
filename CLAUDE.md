@@ -33,9 +33,12 @@ content edit — don't let it drift back into a tech writeup.
   social links, `site_url`.
 - `docs/` — page content (Markdown): `index.md` (home, custom template), `projects.md`,
   `experience.md`, `contact.md`, `writing/` (articles).
-- `docs/writing/` — one Markdown file per article + `index.md` as the hand-maintained,
-  newest-first listing page. **No native blog plugin in Zensical** — new articles must be added
-  manually to both `docs/writing/index.md`'s list and the homepage teaser in `overrides/home.html`.
+- `docs/writing/` — one Markdown file per article (named `YYYY-MM-DD-slug.md`) + `index.md` as
+  the hand-maintained, newest-first listing page. **No native blog plugin in Zensical** — a new
+  article needs three manual updates: `docs/writing/index.md`'s list, the homepage teaser in
+  `overrides/home.html`, and `mise run feed` (regenerates `docs/feed.xml`, the RSS feed served
+  at /feed.xml — used for Medium import and syndication; cross-post to Medium via its "Import a
+  story" tool, which sets the canonical link back to this site automatically).
 - `docs/stylesheets/extra.css` — the design system: CSS custom property overrides for light/dark
   (`slate`) palette, `.tag`/`.stat` monospace classes, `.home-*` homepage layout classes,
   `.article-list` for the Writing index.

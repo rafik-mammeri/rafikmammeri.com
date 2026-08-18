@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rafik Mammeri — Writing</title>
+    <link>https://www.rafikmammeri.com/writing/</link>
+    <description>Notes on building and running LLM systems in production.</description>
+    <language>en</language>
+    <lastBuildDate>Tue, 18 Aug 2026 21:55:32 +0000</lastBuildDate>
+    <atom:link href="https://www.rafikmammeri.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Latency is an architecture problem, not a prompt problem</title>
+      <link>https://www.rafikmammeri.com/writing/2026-08-14-latency-is-an-architecture-problem/</link>
+      <guid isPermaLink="true">https://www.rafikmammeri.com/writing/2026-08-14-latency-is-an-architecture-problem/</guid>
+      <description>Why the biggest latency win in a production multi-agent system rarely comes from prompt optimization.</description>
+      <pubDate>Fri, 14 Aug 2026 12:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
