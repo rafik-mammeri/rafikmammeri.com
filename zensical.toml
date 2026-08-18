@@ -3,6 +3,7 @@ site_url = "https://www.rafikmammeri.com/"
 site_name = "Rafik Mammeri"
 site_description = "Senior AI Engineer — agentic systems and LLM infrastructure in production"
 site_author = "Rafik Mammeri"
+copyright = "&copy; 2026 Rafik Mammeri"
 
 nav = [
   { "Home" = "index.md" },
@@ -62,6 +63,10 @@ link = "mailto:rafik@rafikmammeri.com"
 icon = "fontawesome/brands/linkedin"
 link = "https://www.linkedin.com/in/rafikmammeri"
 
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/rafik-mammeri"
+
 [project.markdown_extensions]
 abbr = {}
 attr_list = {}
@@ -70,10 +75,27 @@ md_in_html = {}
 admonition = {}
 footnotes = {}
 tables = {}
+toc.permalink = true
 pymdownx.betterem = {}
+pymdownx.caret = {}
 pymdownx.details = {}
-pymdownx.superfences = {}
+pymdownx.highlight = {
+  anchor_linenums = true,
+  line_spans = "__span",
+  pygments_lang_class = true,
+}
+pymdownx.inlinehilite = {}
+pymdownx.keys = {}
+pymdownx.magiclink = {}
+pymdownx.mark = {}
+pymdownx.smartsymbols = {}
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
 pymdownx.snippets = {}
+pymdownx.tabbed = { alternate_style = true, combine_header_slug = true }
+pymdownx.tasklist.custom_checkbox = true
+pymdownx.tilde = {}
 pymdownx.emoji = {
   emoji_generator = "zensical.extensions.emoji.to_svg",
   emoji_index = "zensical.extensions.emoji.twemoji",
