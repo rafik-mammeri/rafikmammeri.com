@@ -45,5 +45,10 @@ if [ -z "$run_id" ]; then
 fi
 
 gh run watch "$run_id" --exit-status
-echo "Live at https://www.rafikmammeri.com"
+
+if gh api -X PUT repos/rafik-mammeri/rafikmammeri.com/pages -F https_enforced=true >/dev/null 2>&1; then
+  echo "Live at https://www.rafikmammeri.com"
+else
+  echo "Live at http://www.rafikmammeri.com (HTTPS cert still provisioning on GitHub's side — will switch automatically once ready)"
+fi
 '''
