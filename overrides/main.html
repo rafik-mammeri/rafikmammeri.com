@@ -6,13 +6,59 @@
   {% elif page.title and not page.is_homepage and page.title | striptags != config.site_name %}
     <title>{{ page.title | striptags }} - {{ config.site_name }}</title>
   {% else %}
-    <title>{{ config.site_name }}</title>
+    <title>{{ config.site_name }} — Senior AI Engineer</title>
   {% endif %}
 {% endblock %}
 
 {% block extrahead %}
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap">
   <link rel="alternate" type="application/rss+xml" title="Rafik Mammeri — Writing" href="{{ config.site_url }}feed.xml">
+  {% if page.canonical_url == config.site_url %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Rafik Mammeri",
+    "jobTitle": "Senior AI Engineer",
+    "description": "Senior AI Engineer and technical lead for AI agents — multi-agent systems, MCP servers, and LLM infrastructure in production.",
+    "url": "https://www.rafikmammeri.com/",
+    "image": "https://www.rafikmammeri.com/assets/og-card.png",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Boulanger"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lille",
+      "addressCountry": "FR"
+    },
+    "homeLocation": {
+      "@type": "Place",
+      "name": "Lille, France"
+    },
+    "alumniOf": [
+      { "@type": "CollegeOrUniversity", "name": "Université de Lille" },
+      { "@type": "CollegeOrUniversity", "name": "Université Paris-Saclay" }
+    ],
+    "knowsAbout": [
+      "AI Engineering",
+      "Multi-agent systems",
+      "LangGraph",
+      "Model Context Protocol",
+      "LLM infrastructure",
+      "Retrieval-augmented generation",
+      "MLOps",
+      "Kubernetes"
+    ],
+    "sameAs": [
+      "https://www.linkedin.com/in/rafikmammeri",
+      "https://github.com/rafik-mammeri",
+      "https://medium.com/@rafik_23044",
+      "https://dev.to/rafik_mammeri"
+    ]
+  }
+  </script>
+  {% endif %}
   {% if page.meta and page.meta.title and page.meta.title != config.site_name %}
     {% set og_title = page.meta.title ~ " — " ~ config.site_name %}
   {% elif page.title and page.title | striptags != config.site_name %}
