@@ -45,25 +45,26 @@ Via [mise](https://mise.jdx.dev) (`mise trust` once per machine first):
 | `mise run build` | Build static site into `site/` |
 | `mise run preview-build` | Build, then serve exact static output (what Pages deploys) |
 | `mise run clean` | Remove `site/` and the Zensical cache |
-| `mise run deploy` | Push current branch — Actions builds/publishes to Pages |
+| `mise run deploy` | Verify the build locally, push, and watch the live deploy through to completion |
 
 Without mise: `uv run zensical serve` / `uv run zensical build --clean`.
 
-Package management is `uv` (not pip/poetry) — `pyproject.toml` + `uv.lock`.
+Package management is `uv` (not pip/poetry) — `pyproject.toml` + `uv.lock`. `deploy` depends on
+`build` (as a local smoke test before pushing — `site/` itself is gitignored, never committed),
+refuses to run if there are uncommitted changes, then pushes and uses `gh run watch` to follow
+the triggered Actions run to completion.
 
 ## Deployment status
 
-Custom domain **www.rafikmammeri.com** (`docs/CNAME`, `zensical.toml site_url` both set).
-GitHub Actions workflow is ready but **this repo is not yet pushed to GitHub / not yet a git
-repo locally** — no `.git` directory exists here. To go live: create a GitHub repo, push, set
-Pages source to "GitHub Actions", set/verify the custom domain in Pages settings, enable
-Enforce HTTPS, and point DNS (`www` CNAME to `<user>.github.io`, optionally apex A/AAAA records
-too). Open question not yet resolved: whether bare `rafikmammeri.com` should redirect to `www`
-or vice versa (DNS-only decision, not a repo change).
-
-**Caveat:** Rafik was previously on a Boulanger company laptop and was told to check employer
-IT policy before pushing a personal repo from it — unresolved either way. He mentioned moving
-to a personal MacBook Air; confirm which machine before actually pushing/enabling Pages.
+**Live** at `www.rafikmammeri.com`, repo pushed to
+[github.com/rafik-mammeri/rafikmammeri.com](https://github.com/rafik-mammeri/rafikmammeri.com).
+Pages source is "GitHub Actions". DNS is on Porkbun (Cloudflare-backed): apex (`@`) has GitHub
+Pages' A/AAAA records (redirects to `www`), `www` is a CNAME to `rafik-mammeri.github.io`. Both
+verified resolving and serving over HTTP. **HTTPS enforcement is still pending** — GitHub was
+still provisioning the Let's Encrypt certificate as of 2026-08-18 (`gh api -X PUT
+repos/rafik-mammeri/rafikmammeri.com/pages -F https_enforced=true` returns "certificate does not
+exist yet"); retry that once the cert is ready, no other action needed. `gh auth status` is
+already logged in as `rafik-mammeri` on this machine.
 
 ## Zensical-specific gotchas
 
