@@ -79,7 +79,7 @@ icon = "fontawesome/brands/github"
 link = "https://github.com/rafik-mammeri"
 
 [[project.extra.social]]
-icon = "fontawesome/brands/medium"
+icon = "custom/medium"
 link = "https://medium.com/@rafik_23044"
 
 [[project.extra.social]]
