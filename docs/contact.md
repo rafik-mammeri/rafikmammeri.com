@@ -31,5 +31,3 @@ The best way to reach me is by email — I usually respond within a day or two.
     <span class="contact-row__label">dev.to</span>
   </a>
 </div>
-
-Good conversations to have with me: agentic systems in production, AI delivery and governance in the enterprise, or the specific problem you're trying to ship.

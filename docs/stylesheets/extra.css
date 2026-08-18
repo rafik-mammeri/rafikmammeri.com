@@ -272,6 +272,25 @@
   margin: 1.5rem 0 0;
 }
 
+.home-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+  margin-top: 2.25rem;
+}
+
+.home-cta a {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--md-accent-fg-color);
+  text-decoration: none;
+}
+
+.home-cta a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
 .home-section {
   padding: 2.25rem 0;
   border-top: 1px solid var(--md-default-fg-color--lightest);
@@ -332,17 +351,76 @@
   margin: 0;
 }
 
+.home-principle__proof {
+  margin-top: 0.6rem !important;
+  font-size: 0.75rem !important;
+  color: var(--md-default-fg-color--lighter) !important;
+}
+
+.home-principle__proof a {
+  color: var(--md-accent-fg-color);
+  text-decoration: none;
+}
+
+.home-principle__proof a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* Skills — flat cards that lift on hover, same language as the grid cards */
 .home-skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: 1rem;
+}
+
+.home-skills__group {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 4px;
+  padding: 1.2rem 1.3rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.home-skills__group:hover {
+  border-color: var(--md-accent-fg-color);
+  transform: translateY(-2px);
 }
 
 .home-skills__group h3 {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.85rem;
   color: var(--md-default-fg-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.home-skills__group h3 svg {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--md-accent-fg-color);
+  flex-shrink: 0;
+}
+
+.home-skills__tags {
+  flex: 1;
+}
+
+.home-skills__proof {
+  margin: 0.85rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  font-family: var(--md-code-font, "JetBrains Mono", monospace);
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.tag:hover {
+  border-color: var(--md-accent-fg-color);
+  color: var(--md-accent-fg-color);
 }
 
 /* Writing / articles listing — plain, no card chrome, consistent with the rest of the site */
