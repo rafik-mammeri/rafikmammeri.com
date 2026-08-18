@@ -9,7 +9,7 @@ hide:
 
 <div class="grid cards" markdown>
 
-- __Customer AI assistant — web & mobile__
+- :material-message-processing-outline:{ .card-icon } __Customer AI assistant — web & mobile__
 
     ---
 
@@ -20,7 +20,7 @@ hide:
 
     [:octicons-arrow-right-24: Case study](projects.md#customer-ai-assistant-web-mobile)
 
-- __Self-BI — the warehouse, in plain language__
+- :material-database-search-outline:{ .card-icon } __Self-BI — the warehouse, in plain language__
 
     ---
 
@@ -30,7 +30,7 @@ hide:
 
     [:octicons-arrow-right-24: Case study](projects.md#self-bi-natural-language-over-snowflake)
 
-- __Vox — voice callbot API__
+- :material-phone-in-talk-outline:{ .card-icon } __Vox — voice callbot API__
 
     ---
 
@@ -40,7 +40,7 @@ hide:
 
     [:octicons-arrow-right-24: Case study](projects.md#vox-voice-callbot-api)
 
-- __Internal agents — Google Chat__
+- :material-account-group-outline:{ .card-icon } __Internal agents — Google Chat__
 
     ---
 
