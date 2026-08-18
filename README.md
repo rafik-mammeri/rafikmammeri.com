@@ -12,7 +12,7 @@ With [mise](https://mise.jdx.dev) installed, run `mise trust` once, then:
 | `mise run build` | Build the static site into `site/` |
 | `mise run preview-build` | Build, then serve the exact static output (what GitHub Pages will deploy) |
 | `mise run clean` | Remove `site/` and the Zensical cache |
-| `mise run deploy` | Push current branch — GitHub Actions builds and publishes to Pages |
+| `mise run deploy` | Verify the build locally, push, and watch the live deploy through to completion |
 
 Without mise, the equivalent raw commands are `uv run zensical serve` and `uv run zensical build --clean`.
 
@@ -27,12 +27,6 @@ Without mise, the equivalent raw commands are `uv run zensical serve` and `uv ru
 
 ## Deployment
 
-Custom domain: **www.rafikmammeri.com** (see `docs/CNAME`). GitHub Pages via GitHub Actions is configured but **not yet connected** — this repo hasn't been pushed to GitHub yet.
+Live at **http://www.rafikmammeri.com** (HTTPS pending — GitHub is still provisioning the certificate; "Enforce HTTPS" will be turned on once it's ready). Repo: [github.com/rafik-mammeri/rafikmammeri.com](https://github.com/rafik-mammeri/rafikmammeri.com). Pages source is "GitHub Actions"; the workflow (`.github/workflows/docs.yml`) builds and deploys on every push to `main`. DNS (Porkbun) points the apex to GitHub Pages' A/AAAA records (redirecting to `www`) and `www` CNAMEs to `rafik-mammeri.github.io`.
 
-To go live:
-
-1. Create a repo on GitHub (any name — the custom domain means the repo name no longer affects the URL) and push this project to it
-2. In the repo's Settings → Pages, set Source to "GitHub Actions"
-3. In the same Settings → Pages screen, set the custom domain to `www.rafikmammeri.com` (GitHub reads `docs/CNAME` automatically once the site is deployed, but the domain still needs to be entered/verified once in the Pages UI) and enable "Enforce HTTPS" once the certificate provisions
-4. At your domain registrar, point DNS for `www` to `<github-username>.github.io` via a CNAME record (and, if you also want the bare `rafikmammeri.com` to work, add the GitHub Pages A/AAAA records for apex domains — see [GitHub's custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site))
-5. The next push to `main`/`master` triggers the workflow and publishes the site
+`mise run deploy` (see Commands above) is the day-to-day path from a local change to it being live.

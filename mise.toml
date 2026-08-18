@@ -16,5 +16,34 @@ description = "Remove build output and Zensical cache"
 run = "rm -rf site .cache"
 
 [tasks.deploy]
-description = "Push to the deploy branch — GitHub Actions builds and publishes to Pages"
-run = "git push origin HEAD"
+description = "Verify the build locally, push to trigger the live deploy, and watch it through to completion"
+depends = ["build"]
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ -n "$(git status --porcelain)" ]; then
+  echo "You have uncommitted changes — commit them first, or they won't be part of this deploy:" >&2
+  git status --short
+  exit 1
+fi
+
+git push origin HEAD
+export SHA=$(git rev-parse HEAD)
+echo "Pushed $SHA — waiting for GitHub Actions to pick it up..."
+
+run_id=""
+for i in $(seq 1 30); do
+  run_id=$(gh run list --workflow=docs.yml --limit 5 --json databaseId,headSha --jq '.[] | select(.headSha==env.SHA) | .databaseId' | head -1)
+  if [ -n "$run_id" ]; then break; fi
+  sleep 2
+done
+
+if [ -z "$run_id" ]; then
+  echo "Could not find the triggered workflow run — check https://github.com/rafik-mammeri/rafikmammeri.com/actions" >&2
+  exit 1
+fi
+
+gh run watch "$run_id" --exit-status
+echo "Live at https://www.rafikmammeri.com"
+'''
