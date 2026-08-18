@@ -170,10 +170,54 @@
   letter-spacing: 0.01em;
 }
 
-.contact-link {
-  display: block;
-  font-size: 1.1rem;
-  margin: 0.75rem 0;
+/* Contact page — quiet rows, consistent icons, no default link chrome */
+.md-typeset .contact-list {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset a.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 0.2rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+}
+
+.md-typeset a.contact-row:hover {
+  color: var(--md-accent-fg-color);
+}
+
+.contact-row__icon {
+  display: inline-flex;
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--md-default-fg-color--light);
+  flex-shrink: 0;
+}
+
+.md-typeset a.contact-row:hover .contact-row__icon {
+  color: var(--md-accent-fg-color);
+}
+
+.contact-row__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.contact-row__label {
+  font-weight: 600;
+  min-width: 5.5rem;
+}
+
+.contact-row__value {
+  font-family: var(--md-code-font, "JetBrains Mono", monospace);
+  font-size: 0.8rem;
+  color: var(--md-default-fg-color--light);
 }
 
 /* Card title icons — steel-blue, sized to the title line */
