@@ -22,11 +22,11 @@
       <span class="stat">78%<small>satisfaction, 10,000+ ratings</small></span>
       <span class="stat">6 mo<small>from zero to production</small></span>
     </div>
-  </section>
-
-  <section class="home-section">
-    <h2>Selected work</h2>
-    {{ page.content }}
+    <div class="home-cta">
+      <a href="projects/">Explore the projects &rarr;</a>
+      <a href="writing/">Read the writing &rarr;</a>
+      <a href="experience/">Full experience &rarr;</a>
+    </div>
   </section>
 
   <section class="home-section">
@@ -38,61 +38,79 @@
         The assistant answers in one or two model calls per message not
         because of clever prompting, but because routing and handoffs are
         native to the graph.</p>
+        <p class="home-principle__proof">Proof:
+          <a href="projects/#customer-ai-assistant-web-mobile">the no-orchestrator design</a> ·
+          <a href="writing/2026-08-14-latency-is-an-architecture-problem/">the article</a>
+        </p>
       </div>
       <div class="home-principle">
         <h3>{% include ".icons/lucide/shield-check.svg" %} Design for the model being wrong</h3>
         <p>Four independent security layers stand between an agent and the
         data warehouse. Even a hallucinated query lands on a read-only role
         scoped to its use case — and gets rejected.</p>
+        <p class="home-principle__proof">Proof:
+          <a href="projects/#self-bi-natural-language-over-snowflake">Self-BI's four-layer model</a> ·
+          <a href="experience/#bnp-paribas-risk-data-scientist-risk-manager">regulated-banking roots</a>
+        </p>
       </div>
       <div class="home-principle">
         <h3>{% include ".icons/lucide/users.svg" %} The business owns the product</h3>
         <p>The HR assistant is owned by HR — content, scope, response
         validation. My job is making sure the technical layer never gives
         them a reason to doubt it.</p>
+        <p class="home-principle__proof">Proof:
+          <a href="projects/#internal-agents-google-chat-gemini-enterprise">the HR product-owner model</a>
+        </p>
       </div>
       <div class="home-principle">
         <h3>{% include ".icons/lucide/refresh-cw.svg" %} Production is a loop, not a launch</h3>
         <p>Versioned prompts, LLM-judge scoring against live traffic, and
         continuous releases since day one. Quality in production isn't
         achieved — it's maintained.</p>
+        <p class="home-principle__proof">Proof:
+          <a href="experience/#boulanger-senior-ai-engineer-technical-lead-for-ai-agents">the quality loop at Boulanger</a>
+        </p>
       </div>
     </div>
-  </section>
-
-  <section class="home-section">
-    <h2>Writing</h2>
-    <ul class="home-timeline">
-      <li><span class="home-timeline__date">2026-08-14</span> <a href="writing/2026-08-14-latency-is-an-architecture-problem/">Latency is an architecture problem, not a prompt problem</a></li>
-    </ul>
-    <p><a href="writing/">All articles &rarr;</a></p>
-  </section>
-
-  <section class="home-section">
-    <h2>Experience</h2>
-    <ul class="home-timeline">
-      <li><span class="home-timeline__date">2025 — present</span> Senior AI Engineer &amp; technical lead for AI agents, <strong>Boulanger</strong></li>
-      <li><span class="home-timeline__date">2024 — 2025</span> AI / DevOps Engineer (Freelance), <strong>ITS Group</strong></li>
-      <li><span class="home-timeline__date">2021 — 2024</span> Senior Data Scientist, <strong>BNP Paribas Datalab</strong></li>
-      <li><span class="home-timeline__date">2018 — 2021</span> Data Scientist / Risk Manager, <strong>BNP Paribas Risk</strong></li>
-    </ul>
-    <p><a href="experience/">Full experience &amp; education &rarr;</a></p>
   </section>
 
   <section class="home-section">
     <h2>Skills</h2>
     <div class="home-skills">
       <div class="home-skills__group">
-        <h3>LLM &amp; Agents</h3>
-        <span class="tag">LangGraph</span><span class="tag">LangChain</span><span class="tag">Google ADK</span><span class="tag">MCP</span><span class="tag">RAG</span><span class="tag">Azure OpenAI</span><span class="tag">Gemini</span><span class="tag">Langfuse</span>
+        <h3>{% include ".icons/lucide/bot.svg" %} LLM &amp; Agents</h3>
+        <div class="home-skills__tags">
+          <span class="tag">LangGraph</span><span class="tag">LangChain</span><span class="tag">Google ADK</span><span class="tag">MCP</span><span class="tag">RAG</span><span class="tag">Azure OpenAI</span><span class="tag">Gemini</span><span class="tag">Langfuse</span><span class="tag">Prompt systems</span>
+        </div>
+        <p class="home-skills__proof">6 specialized agents, 26 production tools</p>
       </div>
       <div class="home-skills__group">
-        <h3>Engineering &amp; MLOps</h3>
-        <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Kubernetes</span><span class="tag">Docker</span><span class="tag">Hexagonal architecture</span><span class="tag">Async / SSE</span><span class="tag">CI/CD</span>
+        <h3>{% include ".icons/lucide/shield.svg" %} AI Security &amp; Governance</h3>
+        <div class="home-skills__tags">
+          <span class="tag">Guardrails</span><span class="tag">Prompt-injection defense</span><span class="tag">Per-agent tool isolation</span><span class="tag">SQL enforcement</span><span class="tag">Secrets isolation</span><span class="tag">GDPR-aware tracing</span>
+        </div>
+        <p class="home-skills__proof">Four independent layers in front of the warehouse</p>
       </div>
       <div class="home-skills__group">
-        <h3>Cloud &amp; Data</h3>
-        <span class="tag">GCP / Vertex AI</span><span class="tag">Azure</span><span class="tag">Snowflake</span><span class="tag">MongoDB</span><span class="tag">Terraform</span><span class="tag">API gateways</span>
+        <h3>{% include ".icons/lucide/wrench.svg" %} Engineering &amp; MLOps</h3>
+        <div class="home-skills__tags">
+          <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Async / SSE</span><span class="tag">Hexagonal architecture</span><span class="tag">Kubernetes</span><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">SonarQube</span>
+        </div>
+        <p class="home-skills__proof">~2,000 conversations/day without blocking a worker</p>
+      </div>
+      <div class="home-skills__group">
+        <h3>{% include ".icons/lucide/cloud.svg" %} Cloud &amp; Data</h3>
+        <div class="home-skills__tags">
+          <span class="tag">GCP / Vertex AI</span><span class="tag">Azure</span><span class="tag">Snowflake</span><span class="tag">MongoDB</span><span class="tag">Terraform</span><span class="tag">Private networking (PSC)</span><span class="tag">API gateways</span><span class="tag">Algolia</span>
+        </div>
+        <p class="home-skills__proof">Google Cloud Professional Data Engineer</p>
+      </div>
+      <div class="home-skills__group">
+        <h3>{% include ".icons/lucide/chart-line.svg" %} ML Foundations</h3>
+        <div class="home-skills__tags">
+          <span class="tag">XGBoost / CatBoost</span><span class="tag">Credit scoring (Basel II/III)</span><span class="tag">Time series (LSTM)</span><span class="tag">Transformers (SBERT)</span><span class="tag">MLflow</span>
+        </div>
+        <p class="home-skills__proof">Seven years of regulated, production ML before LLMs</p>
       </div>
     </div>
   </section>
