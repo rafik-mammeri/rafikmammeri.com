@@ -1,0 +1,19 @@
+# Rafik Mammeri
+
+> Senior AI Engineer and technical lead for AI agents at Boulanger, one of
+> France's largest electronics retailers (€4B). Four systems in production
+> across three channels: a customer-facing multi-agent assistant (web and
+> mobile), natural-language BI over Snowflake via MCP, a streaming voice
+> callbot, and RAG-backed internal agents. Seven years of regulated banking
+> ML before that. PhD in mathematics. Based in Lille, France.
+
+## Pages
+
+- [Projects](https://www.rafikmammeri.com/projects/): Four production AI systems written as case studies — the stakes, the trade-off decisions (including what was rejected and why), and the organizational outcomes.
+- [Experience](https://www.rafikmammeri.com/experience/): Full career path — Boulanger, freelance, BNP Paribas Datalab and Risk — plus education and certifications.
+- [Writing](https://www.rafikmammeri.com/writing/): Notes on building and running LLM systems in production.
+- [Contact](https://www.rafikmammeri.com/contact/): Email, LinkedIn, GitHub, Medium, dev.to.
+
+## Writing
+
+- [Latency is an architecture problem, not a prompt problem](https://www.rafikmammeri.com/writing/2026-08-14-latency-is-an-architecture-problem/): Why the biggest latency win in a production multi-agent system rarely comes from prompt optimization.
