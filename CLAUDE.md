@@ -74,12 +74,10 @@ the triggered Actions run to completion.
 **Live** at `www.rafikmammeri.com`, repo pushed to
 [github.com/rafik-mammeri/rafikmammeri.com](https://github.com/rafik-mammeri/rafikmammeri.com).
 Pages source is "GitHub Actions". DNS is on Porkbun (Cloudflare-backed): apex (`@`) has GitHub
-Pages' A/AAAA records (redirects to `www`), `www` is a CNAME to `rafik-mammeri.github.io`. Both
-verified resolving and serving over HTTP. **HTTPS enforcement is still pending** — GitHub was
-still provisioning the Let's Encrypt certificate as of 2026-08-18 (`gh api -X PUT
-repos/rafik-mammeri/rafikmammeri.com/pages -F https_enforced=true` returns "certificate does not
-exist yet"); retry that once the cert is ready, no other action needed. `gh auth status` is
-already logged in as `rafik-mammeri` on this machine.
+Pages' A/AAAA records (redirects to `www`), `www` is a CNAME to `rafik-mammeri.github.io`.
+HTTPS is fully enforced (Let's Encrypt cert approved 2026-08-19; HTTP 301-redirects to HTTPS on
+both apex and `www` — verified live). `gh auth status` is already logged in as `rafik-mammeri`
+on this machine.
 
 ## Zensical-specific gotchas
 
