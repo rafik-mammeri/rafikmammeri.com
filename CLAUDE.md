@@ -35,10 +35,12 @@ content edit — don't let it drift back into a tech writeup.
   `experience.md`, `contact.md`, `writing/` (articles).
 - `docs/writing/` — one Markdown file per article (named `YYYY-MM-DD-slug.md`) + `index.md` as
   the hand-maintained, newest-first listing page. **No native blog plugin in Zensical** — a new
-  article needs three manual updates: `docs/writing/index.md`'s list, the homepage teaser in
-  `overrides/home.html`, and `mise run feed` (regenerates `docs/feed.xml`, the RSS feed served
-  at /feed.xml — used for Medium import and syndication; cross-post to Medium via its "Import a
-  story" tool, which sets the canonical link back to this site automatically).
+  article needs two manual updates plus one command: `docs/writing/index.md`'s list, the
+  writing teaser link on the homepage (if present in `overrides/home.html`), and
+  `mise run feed` — which regenerates both `docs/feed.xml` (full-text RSS at /feed.xml, used by
+  dev.to's RSS importer and other syndication) and `docs/llms.txt` (AI-agent discovery index at
+  /llms.txt). Cross-post to Medium via its "Import a story" tool, which sets the canonical link
+  back to this site automatically.
 - `docs/stylesheets/extra.css` — the design system: CSS custom property overrides for light/dark
   (`slate`) palette, `.tag`/`.stat` monospace classes, `.home-*` homepage layout classes,
   `.article-list` for the Writing index.

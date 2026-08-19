@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Generate docs/feed.xml (RSS 2.0) from the articles in docs/writing/.
+"""Generate docs/feed.xml (RSS 2.0) and docs/llms.txt from docs/writing/.
 
-Zensical has no native feed support yet, so the feed is generated from
-front matter and committed as a static file. Run after adding an article:
+Zensical has no native feed or llms.txt support yet, so both are generated
+from front matter and committed as static files. Run after adding an article:
 
     mise run feed
 """
@@ -18,6 +18,27 @@ import markdown
 ROOT = Path(__file__).resolve().parent.parent
 WRITING = ROOT / "docs" / "writing"
 OUT = ROOT / "docs" / "feed.xml"
+LLMS_OUT = ROOT / "docs" / "llms.txt"
+
+LLMS_HEADER = """\
+# Rafik Mammeri
+
+> Senior AI Engineer and technical lead for AI agents at Boulanger, one of
+> France's largest electronics retailers (€4B). Four systems in production
+> across three channels: a customer-facing multi-agent assistant (web and
+> mobile), natural-language BI over Snowflake via MCP, a streaming voice
+> callbot, and RAG-backed internal agents. Seven years of regulated banking
+> ML before that. PhD in mathematics. Based in Lille, France.
+
+## Pages
+
+- [Projects](https://www.rafikmammeri.com/projects/): Four production AI systems written as case studies — the stakes, the trade-off decisions (including what was rejected and why), and the organizational outcomes.
+- [Experience](https://www.rafikmammeri.com/experience/): Full career path — Boulanger, freelance, BNP Paribas Datalab and Risk — plus education and certifications.
+- [Writing](https://www.rafikmammeri.com/writing/): Notes on building and running LLM systems in production.
+- [Contact](https://www.rafikmammeri.com/contact/): Email, LinkedIn, GitHub, Medium, dev.to.
+
+## Writing
+"""
 
 SITE_URL = "https://www.rafikmammeri.com"
 FEED_TITLE = "Rafik Mammeri — Writing"
@@ -99,6 +120,12 @@ def main() -> None:
         encoding="utf-8",
     )
     print(f"Wrote {OUT.relative_to(ROOT)} with {len(items)} article(s)")
+
+    article_lines = "\n".join(
+        f"- [{a['title']}]({a['url']}): {a['description']}" for a in items
+    )
+    LLMS_OUT.write_text(LLMS_HEADER + "\n" + article_lines + "\n", encoding="utf-8")
+    print(f"Wrote {LLMS_OUT.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
