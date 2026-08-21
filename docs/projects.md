@@ -13,7 +13,7 @@ Four systems I've designed and shipped to production, all currently running at B
 
 ### The stakes
 
-Boulanger's customer chat ran on a static decision tree (Dialogflow) — the kind of bot customers learn to route around. The bet: replace it with a generative assistant good enough to become a real customer channel, on the website and mobile app, for the *entire* journey — product advice, order tracking, after-sales, human escalation. I led it end to end: architecture, development, Kubernetes deployment, API exposure, security, response quality, and the business relationship. Six months from first commit to production, live since October 2025.
+Boulanger's customer chat ran on a static decision tree (Dialogflow) — the kind of bot customers learn to route around. The bet: replace it with a generative assistant good enough to become a real customer channel, on the website and mobile app, for the *entire* journey — product advice, order tracking, after-sales, human escalation. I led it end to end — architecture, development, Kubernetes deployment, API exposure, security, response quality, and the business relationship. Other engineers contributed along the way; every structural choice on this page was mine. The company's Kubernetes cluster and API gateway already existed — everything above them was built from scratch. Six months from first commit to production, live since October 2025: it's the chat that greets you on boulanger.com and the mobile app today.
 
 <div class="stat-row" markdown>
 <span class="stat">~2,000<small>conversations / day</small></span>
@@ -48,6 +48,10 @@ No external classifier, no orchestration layer, minimal LLM calls per message by
 - **Native interrupt/resume for escalation** — when a conversation needs a human, the graph pauses, the customer picks a channel (live chat or scheduled callback), and the conversation resumes from the exact same state. No context loss, no starting over.
 - **Prompts as versioned Markdown, not embedded strings** — a prompt change is a merge and a redeploy, not a code change. Quality is tracked continuously with **Langfuse** LLM-judge scoring against production traffic.
 - **The API contract was negotiated, not decreed** — 12 polymorphic content types (text, product carousels, link cards, escalation actions, end-of-conversation states) co-designed across many workshops with the web, iOS, and Android teams. Each client declares what it can render; the assistant adapts. This was the longest part of the project, and the reason all three channels render the same conversation correctly.
+
+### What broke in production
+
+The most instructive bug: product carousels always rendered *after* all the text, whatever order the model intended — a timing misalignment between LangGraph's two streaming channels (`messages` vs `custom`). The lenient JSON parsing that works for live text produces false positives on structured blocks, so the fix was a character-by-character scanner over the raw stream that detects each block's *actual* closure. It shipped with 44 new tests. Bugs like this are why streaming is treated here as a product surface, not a transport detail — and why quality regressions are watched continuously, not discovered by customers.
 
 ### What it changed
 
