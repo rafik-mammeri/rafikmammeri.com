@@ -1,6 +1,6 @@
 # Rafik Mammeri
 
-> AI product and technical lead for AI agents at Boulanger, one of
+> Lead AI Engineer at Boulanger, one of
 > France's largest electronics retailers (€4B), leading a team of five
 > engineers. Four systems in production across three channels: a
 > customer-facing multi-agent shopping assistant (web and mobile),
