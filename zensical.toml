@@ -7,7 +7,6 @@ copyright = "&copy; 2026 Rafik Mammeri"
 
 nav = [
   { "Home" = "index.md" },
-  { "Projects" = "projects.md" },
   { "Writing" = "writing/index.md" },
   { "Experience" = "experience.md" },
   { "Contact" = "contact.md" },
