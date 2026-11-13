@@ -34,7 +34,6 @@ LLMS_HEADER = """\
 
 ## Pages
 
-- [Projects](https://www.rafikmammeri.com/projects/): Four production AI systems written as case studies — the stakes, the trade-off decisions (including what was rejected and why), and the organizational outcomes.
 - [Experience](https://www.rafikmammeri.com/experience/): Full career path — Boulanger, freelance, BNP Paribas Datalab and Risk — plus education and certifications.
 - [Writing](https://www.rafikmammeri.com/writing/): Notes on building and running LLM systems in production.
 - [Contact](https://www.rafikmammeri.com/contact/): Email, LinkedIn, GitHub, Medium, dev.to.
