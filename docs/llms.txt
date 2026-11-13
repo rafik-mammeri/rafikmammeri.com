@@ -1,12 +1,12 @@
 # Rafik Mammeri
 
-> Senior AI Engineer and technical lead for AI agents at Boulanger, one of
+> AI product and technical lead for AI agents at Boulanger, one of
 > France's largest electronics retailers (€4B), leading a team of five
 > engineers. Four systems in production across three channels: a
 > customer-facing multi-agent shopping assistant (web and mobile),
 > natural-language BI over Snowflake via MCP, voice AI handling the
 > customer-service phone line, and business-owned agents in Google Chat.
-> Seven years of regulated banking ML before that. PhD in mathematics.
+> Six years of regulated banking ML before that. PhD in mathematics.
 > Based in Lille, France.
 
 ## Pages
