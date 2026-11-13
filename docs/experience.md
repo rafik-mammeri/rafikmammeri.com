@@ -1,25 +1,18 @@
 ---
 title: Experience
-description: AI product and technical lead for AI agents at Boulanger, after six years of production ML in regulated banking at BNP Paribas. Full path, education, and certifications.
+description: Lead AI Engineer at Boulanger, after six years of production ML in regulated banking at BNP Paribas. Full path, education, and certifications.
 ---
 
 # Experience
 
 Eight years across two demanding cultures: regulated credit risk at a major bank, then generative AI in production retail. The through-line is taking models out of notebooks and turning them into systems an organization can run, trust, and build on.
 
-## Boulanger — AI Product Lead & Technical Lead, AI Agents
-`Apr 2025 — Present` · Lille, France · Official title: Senior AI Engineer
+## Boulanger — Lead AI Engineer
+`Apr 2025 — Present` · Lille, France
 
-Boulanger is one of France's largest electronics and appliance retailers (~€4B revenue, ~10,000 employees). I joined to build its generative AI assistant and became the technical lead for AI agents across the company.
+Boulanger is one of France's largest electronics and appliance retailers (~€4B revenue, ~10,000 employees). I came in to build its generative AI assistant. Today I lead the team of five engineers behind the company's customer-facing AI, and I'm responsible for the architecture, security, quality, and day-to-day running of four systems in production.
 
-**Outcome:** in 18 months, AI went from one pilot to a company standard. Chat is now a baseline requirement in every new IT project, and four AI systems serve customers on the web and mobile apps, callers on the customer-service line, and every employee.
-
-**Scope:**
-
-- Lead a team of five AI and DevOps engineers across the customer-facing programs; interviewed and recruited four of them, including a senior DevOps engineer with twenty years of experience
-- Named AI product lead of the shopping-agent program, alongside the web, app, and merchandising product leads
-- Own architecture, security, response quality, and production operations for the four systems below
-- Work with e-commerce, customer service, after-sales, HR, finance, IT, and external vendors, from vendor selection to launch
+In eighteen months, AI went from a single pilot to a company standard: every new IT project now plans for the chat channel from the start, and our agents serve customers on the web and mobile apps, callers on the customer-service line, and every employee.
 
 **Customer AI assistant, web & mobile.**
 Replaced a rule-based chatbot with a generative assistant covering the full customer journey. Six months from start to production, live since October 2025.
@@ -31,7 +24,7 @@ Replaced a rule-based chatbot with a generative assistant covering the full cust
 - **Impact:** ~2,000 conversations a day · 73–75% end without a hand-off to a human · 78% positive among 10,450+ customers who rated
 
 **Shopping agent, the assistant's second generation.**
-A multi-project program: a sales assistant, guided after-sales, product care, and the platform's migration to the company's standard infrastructure.
+I'm the AI product lead of this program, which brings together a sales assistant, guided after-sales, product care, and the platform's migration to the company's standard infrastructure.
 
 - Brought the after-sales and product-care teams onto the new platform although they weren't required to: one assistant for sales and after-sales instead of three separate integrations
 - Set the launch rules: prompts governed in code before moving to a managed tool, and production responsibility handed to each engineer feature by feature as they proved ready
@@ -57,10 +50,10 @@ Built the bridge that puts business-owned agents in the chat tool every employee
 
 `Python · LangGraph · Azure OpenAI · Claude · Gemini Enterprise · MCP · FastAPI · Kubernetes · Snowflake · Langfuse`
 
-## ITS Group — AI / DevOps Engineer, Freelance
+## Freelance — Generative AI Engineer
 `Oct 2024 — Mar 2025` · Remote
 
-Sole technical owner of a RAG system that matches consultant profiles to client requirements, from blank page to production.
+Sole technical owner of a RAG system for an IT services firm, matching consultant profiles to client requirements, from blank page to production.
 
 - Full pipeline: CV ingestion, semantic embeddings (Weaviate), retrieval, and generation (OpenAI GPT)
 - Conversational interface with iterative refinement (LangChain + Streamlit)
@@ -69,7 +62,7 @@ Sole technical owner of a RAG system that matches consultant profiles to client 
 `Python · LangChain · Weaviate · OpenAI · Streamlit · GCP · Terraform · Kubernetes`
 
 ## BNP Paribas Datalab — Senior Data Scientist
-`Sep 2021 — May 2024` · Levallois-Perret
+`Jun 2021 — May 2024` · Paris region
 
 BNP Paribas's data and AI innovation lab. Shipped four ML projects to production across different business lines, each one packaged, monitored, and handed over rather than demonstrated.
 
@@ -80,8 +73,8 @@ BNP Paribas's data and AI innovation lab. Shipped four ML projects to production
 
 `Python · Scikit-learn · XGBoost · HuggingFace Transformers · PyTorch · FastAPI · MLflow · Docker`
 
-## BNP Paribas Risk — Data Scientist / Risk Manager
-`Apr 2018 — Sep 2021` · Bordeaux
+## BNP Paribas Risk — Data Scientist
+`Jan 2018 — May 2021` · Bordeaux
 
 Credit-risk modeling for BNP Paribas's risk division across four markets (France, Turkey, Germany, Belgium) in a Basel II/III regulated environment: model documentation, independent validation reviews, defended decisions.
 
@@ -101,6 +94,8 @@ This is where I learned model governance under regulators. It shapes how I run A
 It shows up less in the frameworks I use than in how I approach problems with no standard answer yet: reading the underlying optimization or probability theory rather than treating a model as a black box.
 
 **M2, Data Science** — Université Paris-Saclay
+
+**Teaching and Research Associate** — Université de Lille, 2015–2016
 
 ## Certifications
 
