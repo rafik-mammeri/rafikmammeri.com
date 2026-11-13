@@ -45,7 +45,7 @@ admonition.tip = "lucide/lightbulb"
 admonition.note = "lucide/shield-check"
 
 [project.theme.font]
-text = "Inter"
+text = "Hanken Grotesk"
 code = "JetBrains Mono"
 
 [[project.theme.palette]]
