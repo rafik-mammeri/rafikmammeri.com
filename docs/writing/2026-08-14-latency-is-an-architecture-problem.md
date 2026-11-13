@@ -31,11 +31,11 @@ It's a reasonable design on a whiteboard — separation of concerns, one job per
 
 ## What changes when routing is native, not delegated
 
-The fix that actually moved the needle on a production conversational assistant handling several thousand conversations a day wasn't a better router prompt. It was removing the router's LLM call entirely for the common case:
+The fix that actually moved the needle on a production conversational assistant handling about 2,000 conversations a day wasn't a better router prompt. It was removing the router's LLM call entirely for the common case:
 
 ```mermaid
 flowchart TB
-    A[User message] --> B[Router identifies domain directly]
+    A[User message] --> B[Router identifies domain<br>(no LLM classification call)]
     B --> C["Correct specialized agent activated<br>(no intermediate LLM call to get there)"]
     C --> D["Agent responds<br>(1–2 LLM calls total)"]
     D -- on topic change --> E["Native handoff<br>conversation state carried over<br>no restart, no re-explaining context"]
@@ -44,7 +44,7 @@ flowchart TB
 
 The router still exists — it still has to figure out which agent should own a message. What changed is *how* it decides: deterministic signal matching and graph-native routing where possible, instead of asking a general-purpose LLM to classify intent on every single turn. The handoff between agents, when a conversation genuinely changes topic mid-flow, is also native to the orchestration graph rather than a fresh LLM call bolted on top — so switching agents doesn't mean losing the conversation's accumulated context.
 
-The result: most messages resolve in **one to two LLM calls total**, down from three or more. That's not a 10% latency improvement from a leaner prompt — it's removing a whole category of round-trip.
+The result: most messages resolve in **one to two LLM calls total**, versus the three or more an orchestrator-first design needs. That's not a 10% latency improvement from a leaner prompt — it's removing a whole category of round-trip.
 
 ## Why this is easy to miss
 
