@@ -18,3 +18,7 @@ site/
 
 # Claude Code session-local state
 .claude/scheduled_tasks.lock
+
+# Local AI assistant instructions — never published
+CLAUDE.md
+.claude/
