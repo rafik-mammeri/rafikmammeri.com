@@ -290,49 +290,36 @@
   color: var(--md-default-fg-color--lighter);
 }
 
-.md-typeset .rm-lead {
-  font-size: 1.05em;
-}
-
-.md-typeset .rm-result {
+/* Project impact: a short labelled list set off by an accent rule */
+.md-typeset .rm-impact {
+  margin: 1em 0;
   padding-left: 1em;
   border-left: 2px solid var(--md-accent-fg-color);
 }
 
-/* Key figures: three equal columns, number above its caption */
-.md-typeset .rm-figures > ul {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5em;
-  margin: 1.5em 0;
-  padding: 1em 0;
-  border-top: 1px solid var(--md-default-fg-color--lightest);
-  border-bottom: 1px solid var(--md-default-fg-color--lightest);
-  list-style: none;
-}
-
-.md-typeset .rm-figures > ul > li {
-  margin: 0;
+.md-typeset .rm-impact > p:first-child {
+  margin: 0 0 0.3em;
   font-size: 0.85em;
-  line-height: 1.4;
   color: var(--md-default-fg-color--light);
 }
 
-.md-typeset .rm-figures strong {
-  display: block;
-  margin-bottom: 0.2em;
-  font-family: "Bricolage Grotesque", var(--md-text-font, sans-serif);
-  font-size: 1.75em;
-  font-weight: 600;
-  line-height: 1.1;
-  color: var(--md-default-fg-color);
+.md-typeset .rm-impact ul {
+  margin: 0;
 }
 
-@media screen and (max-width: 30em) {
-  .md-typeset .rm-figures > ul {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1em;
-  }
+.md-typeset .rm-impact li:last-child {
+  margin-bottom: 0;
+}
+
+/* Projects page: each company opens a new block, each project is a step below */
+.md-typeset h2 + .rm-meta + p,
+.md-typeset h2 + .rm-meta + h3 {
+  margin-top: 0;
+}
+
+.md-typeset h3[id] {
+  margin-top: 2.2em;
+  font-size: 1.15em;
 }
 
 /* Technologies: a Markdown list shown as small pills with official logos */

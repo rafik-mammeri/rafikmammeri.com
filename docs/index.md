@@ -1,30 +1,32 @@
 ---
 title: "Rafik Mammeri"
-description: "Lead AI Engineer. Tech lead of a team of AI engineers shipping AI agents to production at scale."
+description: "Lead AI Engineer and tech lead of a team of AI engineers, building AI agents that run in production at scale."
 template: home.html
 hero:
   name: "Rafik Mammeri"
   role: "Lead AI Engineer · PhD in Mathematics"
-  intro: "Tech lead of a team of AI engineers, I design and ship AI agents used every day at scale: shopping assistants, a customer-service voice bot, and agents for business teams."
+  intro: "Tech lead of a team of AI engineers. I build AI agents that run in production, at scale."
   actions:
-    - label: "See the projects"
+    - label: "See my work"
       href: "projects/"
       primary: true
-    - label: "About me"
+    - label: "My story"
       href: "about/"
       primary: false
     - label: "Get in touch"
       href: "contact/"
       primary: false
 pillars:
-  - title: "Tech lead of a team of AI engineers"
-    text: "I set the team's technical direction: architecture, model choices, reviews and releases. My job is to make sure every engineer can ship to production safely."
-  - title: "Shipping to production, at scale"
-    text: "A voice bot that answers thousands of calls every day. Two generations of shopping assistant on web and mobile. A natural-language analytics platform, launched with the data teams."
-    link_label: "See the projects"
+  - title: "Tech lead of an AI engineering team"
+    text: "Setting the technical direction for engineers who ship to production."
+    link_label: "My story"
+    link_href: "about/"
+  - title: "Thousands of customer calls a day"
+    text: "Answered by a voice bot my team put in production, alongside two generations of shopping assistant."
+    link_label: "See my work"
     link_href: "projects/"
   - title: "At the frontier of AI engineering"
-    text: "MCP in production, agents that combine several models (Claude, Gemini, GPT), model changes measured before they are adopted, continuous evaluation, agent-assisted development. I write and share what I learn."
+    text: "MCP, agents that combine several models, model choices measured before they ship."
     link_label: "Community"
     link_href: "community/"
 hide:
