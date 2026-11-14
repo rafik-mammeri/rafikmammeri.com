@@ -74,8 +74,18 @@
 }
 
 /* The job title sits next to the name in the header, on every page */
-.md-header__title .md-header__topic:first-child .md-ellipsis::after,
-body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
+.md-header__title .md-header__topic:first-child {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  z-index: 0;
+}
+
+.md-header__title .md-header__topic + .md-header__topic {
+  display: none;
+}
+
+.md-header__title .md-header__topic:first-child .md-ellipsis::after {
   content: "Lead AI Engineer";
   margin-left: 0.7em;
   padding-left: 0.7em;
@@ -181,50 +191,6 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
   font-weight: 400;
   color: var(--md-default-fg-color--light);
   letter-spacing: 0.01em;
-}
-
-/* Contact page — compact icon+label buttons, matching the flat card register */
-.md-typeset .contact-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 2rem 0;
-}
-
-.md-typeset a.contact-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.6rem 1.1rem;
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 4px;
-  color: var(--md-default-fg-color);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.85rem;
-  transition: border-color 0.2s, color 0.2s;
-}
-
-.md-typeset a.contact-row:hover {
-  border-color: var(--md-accent-fg-color);
-  color: var(--md-accent-fg-color);
-}
-
-.contact-row__icon {
-  display: inline-flex;
-  width: 1rem;
-  height: 1rem;
-  color: var(--md-default-fg-color--light);
-  flex-shrink: 0;
-}
-
-.md-typeset a.contact-row:hover .contact-row__icon {
-  color: var(--md-accent-fg-color);
-}
-
-.contact-row__icon svg {
-  width: 100%;
-  height: 100%;
 }
 
 /* Card title icons — steel-blue, sized to the title line */
@@ -506,7 +472,7 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
   z-index: 2;
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 1.3rem;
+  gap: 1.7rem;
   margin-top: 6.5rem;
 }
 
@@ -525,8 +491,8 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
   gap: 0.3rem;
   align-content: start;
   min-width: 0;
-  margin: -0.7rem;
-  padding: 0.7rem;
+  margin: -0.6rem;
+  padding: 0.6rem;
   border-radius: 12px;
   color: var(--a-mut);
   text-decoration: none;
@@ -543,7 +509,6 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
   opacity: 1;
   background: var(--a-card-bg);
   box-shadow: var(--a-card-shadow);
-  transform: translateY(-5px);
 }
 
 .md-typeset .rm-tg__top {
@@ -609,8 +574,8 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
 
 .md-typeset a.rm-tg.is-hot .rm-tg__node {
   background: var(--a-hot);
-  transform: scale(1.7);
-  box-shadow: 0 0 0 5px color-mix(in srgb, var(--a-hot) 24%, transparent), 0 0 22px 4px color-mix(in srgb, var(--a-hot) 50%, transparent);
+  transform: scale(1.35);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--a-hot) 22%, transparent), 0 0 10px 1px color-mix(in srgb, var(--a-hot) 35%, transparent);
 }
 
 .md-typeset a.rm-tg.is-hot b {
@@ -654,9 +619,9 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
   overflow: visible;
   position: absolute;
   inset: 0;
-  z-index: 1;
   width: 100%;
   height: 100%;
+  z-index: 3;
   pointer-events: none;
   color: var(--a-hot);
 }
@@ -678,7 +643,7 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
 
   .md-typeset .rm-attn__targets {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 2rem;
+    gap: 0.7rem 2.2rem;
     margin-top: 2rem;
     min-height: 0;
   }
@@ -686,7 +651,7 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
   .md-typeset a.rm-tg {
     grid-template-columns: auto minmax(0, 1fr);
     column-gap: 0.7rem;
-    margin: 0 0 0.5rem;
+    margin: 0;
     padding: 0.7rem 0.8rem;
   }
 
@@ -742,17 +707,6 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
 /* ===========================================================================
    Site chrome in the same language as the homepage: tokens and dots.
    =========================================================================== */
-
-/* A token: the tinted chip used for the homepage phrases, the menu, the language
-   switch and the footer links */
-.rm-chip {
-  display: inline-block;
-  padding: 0.18em 0.6em;
-  border-radius: 7px;
-  background: var(--rm-chip-1);
-  color: var(--md-default-fg-color);
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-}
 
 /* Menu tabs: quiet words; the current page is the selected token */
 .md-tabs__item {
@@ -827,7 +781,7 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
   color: var(--rm-hot);
 }
 
-/* Footer: one compact line (it wraps on narrow screens) */
+/* Footer: one compact line (it wraps on narrow screens): name and copyright left, logos right. */
 .rm-footer {
   margin-top: 2.5rem;
   border-top: 1px solid var(--md-default-fg-color--lightest);
@@ -839,16 +793,17 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1.2rem;
-  padding: 0.7rem 1rem;
-  font-family: var(--md-code-font, monospace);
-  font-size: 0.58rem;
+  gap: 0.4rem 1.4rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.64rem;
 }
 
 .rm-footer__who {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  color: var(--md-default-fg-color);
+  font-weight: 700;
 }
 
 .rm-footer__dot {
@@ -859,35 +814,36 @@ body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--rm-hot) 22%, transparent);
 }
 
-.rm-footer__tokens {
+.rm-footer__links {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: 0.3rem;
-  font-family: var(--md-text-font, sans-serif);
-  font-size: 0.64rem;
-  font-weight: 500;
+  align-items: center;
+  gap: 0.2rem 0.9rem;
+  margin-left: auto;
 }
 
-.rm-footer__tokens .rm-chip {
-  padding: 0.1em 0.5em;
+/* Logos take the text colour: black in light mode, white in dark mode. */
+.rm-footer__links a {
+  display: inline-flex;
+  padding: 0.15rem;
+  color: var(--md-default-fg-color);
+  transition: opacity 0.2s, transform 0.2s;
 }
 
-.rm-footer__tokens .rm-chip:nth-child(3n + 2) {
-  background: var(--rm-chip-2);
+.rm-footer__links svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  fill: currentColor;
 }
 
-.rm-footer__tokens .rm-chip:nth-child(3n) {
-  background: var(--rm-chip-3);
-}
-
-.rm-footer__tokens .rm-chip:hover,
-.rm-footer__tokens .rm-chip:focus-visible {
-  background: var(--rm-sel);
-  color: var(--rm-sel-ink);
+.rm-footer__links a:hover,
+.rm-footer__links a:focus-visible {
+  transform: translateY(-2px);
 }
 
 .rm-footer__copy {
-  margin-left: auto;
+  margin-left: -0.5rem;
+  color: var(--md-default-fg-color--light);
 }
 
 /* No repository widget in the header: hide the empty slot the theme keeps for it */
