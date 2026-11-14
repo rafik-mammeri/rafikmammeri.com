@@ -7,9 +7,10 @@ cd "$(dirname "$0")/.."
 
 ZENSICAL="${ZENSICAL:-uv run zensical}"
 
-rm -rf docs-fr/assets docs-fr/stylesheets
+rm -rf docs-fr/assets docs-fr/stylesheets docs-fr/javascripts
 cp -R docs/assets docs-fr/assets
 cp -R docs/stylesheets docs-fr/stylesheets
+cp -R docs/javascripts docs-fr/javascripts
 
 $ZENSICAL build --clean -f zensical.toml
 $ZENSICAL build --clean -f zensical.fr.toml
