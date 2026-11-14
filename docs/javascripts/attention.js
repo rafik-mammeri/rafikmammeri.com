@@ -107,7 +107,7 @@ document$.subscribe(function () {
   }
 
   toks.forEach(function (b, i) {
-    var pick = function () { cur = i; draw(); };
+    var pick = function () { if (streaming) endIntro(); cur = i; draw(); };
     b.addEventListener("click", pick);
     b.addEventListener("mouseenter", pick);
     b.addEventListener("focus", pick);
@@ -120,6 +120,50 @@ document$.subscribe(function () {
   });
 
   window.addEventListener("resize", function () { if (document.body.contains(root)) { state = null; draw(true); } });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { state = null; draw(true); });
+
+  // Opening: the paragraph streams in token by token, like a model writing it, and each new
+  // token draws its attention lines to the experiences and lights the ones it rests on.
+  // After the last token the page settles at rest. Any interaction with the paragraph
+  // ends the opening at once.
+  // Each token stays on screen long enough to be read: a short base plus a time per
+  // character ("I" about 0.38 s, the closing phrase about 2.2 s).
+  var BASE = 340, PER_CHAR = 40, HOLD = 900, timer = null, streaming = false;
+  function dwell(tok) { return BASE + PER_CHAR * tok.textContent.trim().length; }
+  function endIntro() {
+    if (!streaming) return;
+    streaming = false;
+    if (timer) { clearTimeout(timer); timer = null; }
+    root.classList.remove("is-streaming");
+    toks.forEach(function (b) { b.classList.add("is-in"); });
+  }
+  function intro() {
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) { draw(true); return; }
+    streaming = true;
+    root.classList.add("is-streaming");
+    var i = 0;
+    (function next() {
+      if (!streaming) return;
+      if (i < toks.length) {
+        toks[i].classList.add("is-in");
+        cur = i; draw(true);
+        i++;
+        timer = setTimeout(next, dwell(toks[i - 1]));
+      } else {
+        timer = setTimeout(function () { cur = -1; draw(); endIntro(); }, HOLD);
+      }
+    })();
+  }
+  ["pointerdown", "keydown", "wheel", "touchstart"].forEach(function (ev) {
+    root.addEventListener(ev, function () { if (streaming) { endIntro(); } }, { passive: true });
+  });
+  toks.forEach(function (b) {
+    b.addEventListener("mouseenter", endIntro);
+    b.addEventListener("focus", endIntro);
+  });
+
+  root.classList.add("is-streaming");  // hide the tokens until the opening starts
   draw(true);
+  var ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+  ready.then(function () { state = null; setTimeout(intro, 250); });
 });

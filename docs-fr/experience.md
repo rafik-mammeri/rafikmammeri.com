@@ -26,11 +26,10 @@ L'IA conversationnelle derrière la ligne du service client, en production depui
 
 **Impact**
 
-- Tous les appels entrants pris en charge en trois jours après le lancement, des milliers d'appels par jour
-- Plus de 10 % des appels résolus sans conseiller dès le deuxième jour, contre 2 % prévus, et 29 % sur les questions produit
-- 81 % des appels transférés arrivent au conseiller avec le motif déjà identifié
+- Passage de 25 % à 100 % des appels entrants en trois jours, une montée en charge progressive que j'ai recommandée
+- Plus de 50 000 appels sur les six premiers jours, 98 % pris en charge par l'IA
+- Plus de 10 % des appels résolus sans conseiller dès le deuxième jour, contre 2 % prévus
 - Cinq correctifs en 48 heures après la première journée, qui ont fait baisser les abandons de plus d'un tiers
-- Une demi-seconde environ avant que la voix commence à répondre
 
 </div>
 
@@ -81,14 +80,15 @@ Un assistant génératif sur le site et les applications mobiles, pour le consei
 
 ### Assistant d'achat, seconde génération { #shopping-agent }
 
-Lead produit IA du programme : assistant de vente, après-vente guidé, entretien des produits, et passage sur la plateforme standard de l'entreprise.
+Je mène le programme comme lead produit IA : assistant de vente, après-vente guidé, entretien des produits, et passage sur la plateforme standard de l'entreprise.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
 - Un seul assistant pour la vente et l'après-vente, au lieu d'intégrations séparées
-- Lancé en octobre 2026 avec une ouverture progressive sur le site, puis sur les applications mobiles en novembre
+- A/B test sur 50 % du trafic du site depuis octobre 2026
+- Applications iOS et Android en production depuis le 3 novembre 2026
 
 </div>
 
@@ -111,7 +111,7 @@ Lead produit IA du programme : assistant de vente, après-vente guidé, entretie
 
 ### Self-BI : les données en langage naturel { #self-bi }
 
-Lancé le projet et l'ai mené jusqu'à la production avec les équipes data : les équipes métier interrogent l'entrepôt de données en langage naturel dans Gemini Enterprise, via un serveur MCP interne. L'accès est sécurisé en quatre couches, de l'authentification des utilisateurs par OAuth 2.0 et OpenID Connect au contrôle d'accès par rôle (RBAC) sur les données.
+J'ai lancé le projet et l'ai mené jusqu'à la production avec les équipes data : les équipes métier interrogent l'entrepôt de données en langage naturel dans Gemini Enterprise, via un serveur MCP interne. L'accès est sécurisé en quatre couches, de l'authentification des utilisateurs par OAuth 2.0 et OpenID Connect au contrôle d'accès par rôle (RBAC) sur les données.
 
 <div class="rm-impact" markdown>
 
@@ -323,9 +323,9 @@ Scoring comportemental des clients cartes de crédit de la filiale allemande.
 
 </div>
 
-### Librairie de scoring partagée { #scoring-library }
+### Bibliothèque de scoring partagée { #scoring-library }
 
-La librairie interne de l'équipe pour construire les modèles de scoring, avec tests, livraison automatisée et documentation.
+La bibliothèque interne de l'équipe pour construire les modèles de scoring, avec tests, livraison automatisée et documentation.
 
 <div class="rm-impact" markdown>
 
