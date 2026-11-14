@@ -1,12 +1,12 @@
 ---
-title: "Projects"
+title: "Experience"
 description: "Positions I have held and what I built in each: what it was, its business impact, and the technology behind it."
 hide:
   - navigation
   - toc
 ---
 
-# Projects
+# Experience
 
 The positions I have held and what I built in each: what it was, what it changed for the business, and the technology behind it.
 { .rm-lede }
@@ -20,26 +20,33 @@ Tech lead of a team of AI engineers that builds and runs the company's AI agents
 
 ### Customer-service voice bot { #voice-bot }
 
-The conversational AI behind the customer-service phone line, replacing the keypad menu. Involved from the vendor tender to production; designed the architecture that keeps business logic and customer data in-house.
+The conversational AI behind the customer-service phone line, in production since 28 October 2026. I lead it end to end: architecture, code, integrations, customer authentication, monitoring and production analysis, working with the voice vendor and the customer-service teams. Involved from the vendor tender in late 2025, I co-designed the architecture that keeps business logic and customer data in-house. The agent is connected to 15 internal services, from order tracking and repairs to invoices, loyalty, stores and the product catalogue.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
 - Every inbound call handled within three days of launch, thousands of calls a day
-- Four times more calls resolved without an advisor than planned
+- Over 10% of calls resolved without an advisor from the second day, against 2% planned, and 29% on product questions
 - 81% of transferred calls reach the advisor with the reason already identified
+- Five fixes in 48 hours after the first day, cutting hang-ups by more than a third
+- About half a second before the voice starts answering
 
 </div>
 
 <div class="rm-stack" markdown>
 
 - :logos-langgraph: LangGraph
-- :logos-claude: Claude
+- :logos-anthropic: Anthropic
 - :logos-python: Python
 - :logos-fastapi: FastAPI
 - :logos-kubernetes: Kubernetes
+- :logos-gravitee: Gravitee
 - :logos-mongodb: MongoDB
+- :logos-langfuse: Langfuse
+- :logos-prometheus: Prometheus
+- :logos-grafana: Grafana
+- :logos-gitlab: GitLab CI
 
 </div>
 
@@ -51,7 +58,7 @@ A generative assistant on the website and mobile apps for product advice, orders
 
 **Impact**
 
-- In production in six months, about 2,000 conversations a day
+- In production in six months; about 2,000 conversations a day in spring 2026
 - 78% positive ratings from customers
 - Chat became a standard part of every new IT project
 
@@ -60,11 +67,15 @@ A generative assistant on the website and mobile apps for product advice, orders
 <div class="rm-stack" markdown>
 
 - :logos-langgraph: LangGraph
-- :logos-azure: Azure OpenAI
+- :logos-openai: OpenAI
+- :logos-azureaisearch: Azure AI Search
 - :logos-python: Python
 - :logos-fastapi: FastAPI
 - :logos-kubernetes: Kubernetes
+- :logos-gravitee: Gravitee
 - :logos-mongodb: MongoDB
+- :logos-langfuse: Langfuse
+- :logos-gitlab: GitLab CI
 
 </div>
 
@@ -77,40 +88,56 @@ AI product lead of the program: a sales assistant, guided after-sales, product c
 **Impact**
 
 - One assistant for sales and after-sales instead of separate integrations
-- Launched in October 2026 on the website, then on the mobile apps
+- Launched in October 2026 with a gradual rollout on the website, then on the mobile apps in November
 
 </div>
 
 <div class="rm-stack" markdown>
 
 - :logos-langgraph: LangGraph
-- :logos-azure: Azure OpenAI
+- :logos-openai: OpenAI
+- :logos-azureaisearch: Azure AI Search
 - :logos-python: Python
 - :logos-fastapi: FastAPI
 - :logos-kubernetes: Kubernetes
+- :logos-gravitee: Gravitee
+- :logos-mongodb: MongoDB
+- :logos-langfuse: Langfuse
+- :logos-prometheus: Prometheus
+- :logos-grafana: Grafana
+- :logos-gitlab: GitLab CI
 
 </div>
 
 ### Self-BI: data in plain language { #self-bi }
 
-Started the project and took it to production with the data teams: business teams ask the data warehouse questions in plain language, through an in-house MCP server secured in four layers.
+Started the project and took it to production with the data teams: business teams ask the data warehouse questions in plain language in Gemini Enterprise, through an in-house MCP server. Access is secured in four layers, from user sign-in with OAuth 2.0 and OpenID Connect to role-based access to the data.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
+- Two business scopes in production; a new scope can be added in about three days
 - Answers without waiting for an analyst, with figures that match the official dashboards
-- Became the company's target architecture for analytics agents
+- Median answer time cut from 150 to 60 seconds with specialised tools
+- Validated by the security team and IT architects, then chosen as the company's target architecture
 
 </div>
 
 <div class="rm-stack" markdown>
 
 - :logos-modelcontextprotocol: MCP
-- :logos-gemini: Gemini
+- :logos-gemini: Gemini Enterprise
 - :logos-snowflake: Snowflake
 - :logos-googlecloud: Google Cloud
+- :logos-gravitee: Gravitee
+- OAuth 2.0
+- :logos-openid: OpenID Connect
+- RBAC
 - :logos-python: Python
+- :logos-langfuse: Langfuse
+- :logos-prometheus: Prometheus
+- :logos-grafana: Grafana
 
 </div>
 
@@ -122,7 +149,7 @@ The bridge that brings business-owned agents into the company messaging tool, st
 
 **Impact**
 
-- Open to every employee since November 2026
+- Opened to every employee in November 2026, announced by HR and finance leadership
 - Four agents designed by the business teams themselves
 
 </div>
@@ -142,13 +169,14 @@ Generative AI Engineer · October 2024 – March 2025 · Remote
 
 ### Consultant matching { #consultant-matching }
 
-A tool for an IT services firm that matches consultant profiles to client requirements. Built alone, from the first line to production, including the cloud infrastructure.
+A conversational tool for an IT services firm: a salesperson describes a client need in plain language, the tool asks follow-up questions, then returns the best-matching consultant profiles. Built alone, from the first line to production, including the cloud infrastructure.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
-- Taken from a blank page to production in six months
+- Profiles found in seconds instead of a manual search
+- More precise matches against each client's specific requirements
 
 </div>
 
@@ -156,10 +184,13 @@ A tool for an IT services firm that matches consultant profiles to client requir
 
 - :logos-python: Python
 - :logos-langchain: LangChain
-- RAG
+- :logos-openai: OpenAI
+- Weaviate
+- Streamlit
 - :logos-googlecloud: Google Cloud
 - :logos-terraform: Terraform
 - :logos-kubernetes: Kubernetes
+- :logos-docker: Docker
 
 </div>
 
@@ -172,13 +203,15 @@ The group's data and AI lab: four machine-learning projects taken to production 
 
 ### Customer-support chatbot { #support-chatbot }
 
-Semantic question answering over the support knowledge base, with a fine-tuned language model.
+Answers customer requests from the support knowledge base before they reach an advisor, using a fine-tuned language model.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
+- 65% of incoming requests handled automatically
 - 40% less workload for the support teams
+- Support available around the clock
 
 </div>
 
@@ -186,19 +219,22 @@ Semantic question answering over the support knowledge base, with a fine-tuned l
 
 - :logos-python: Python
 - :logos-pytorch: PyTorch
-- Transformers
+- :logos-huggingface: Hugging Face Transformers
+- :logos-fastapi: FastAPI
+- :logos-docker: Docker
+- :logos-mlflow: MLflow
 
 </div>
 
 ### Call-volume forecasting { #call-forecasting }
 
-Forecasts of incoming call volumes to plan call-centre staffing.
+Daily forecasts of incoming calls for a debt-collection call centre, to plan staffing around holidays and collection campaigns.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
-- 30% lower forecast error
+- 30% lower forecast error on call peaks
 - 15% lower operating cost
 
 </div>
@@ -206,21 +242,23 @@ Forecasts of incoming call volumes to plan call-centre staffing.
 <div class="rm-stack" markdown>
 
 - :logos-python: Python
-- :logos-pytorch: PyTorch
 - XGBoost
-- :logos-scikitlearn: scikit-learn
+- :logos-fastapi: FastAPI
+- :logos-docker: Docker
+- :logos-mlflow: MLflow
 
 </div>
 
 ### Fraud and payment-default scoring { #fraud-scoring }
 
-Fraud detection for consumer credit, and prediction of first missed payments for the Belgian subsidiary, each delivered with automated testing and deployment.
+Fraud detection on online consumer-credit applications, and prediction of first missed payments for the Belgian subsidiary, each taken to production with automated testing and deployment.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
-- Both models packaged and handed over to the teams running them
+- Fewer credit applications reviewed by hand, and faster answers to customers
+- Collection teams can act first on the customers most likely to miss a payment
 
 </div>
 
@@ -228,8 +266,10 @@ Fraud detection for consumer credit, and prediction of first missed payments for
 
 - :logos-python: Python
 - XGBoost
-- :logos-mlflow: MLflow
+- :logos-scikitlearn: scikit-learn
+- :logos-fastapi: FastAPI
 - :logos-docker: Docker
+- :logos-gitlab: GitLab CI
 
 </div>
 
@@ -249,6 +289,7 @@ Scoring of small and medium businesses applying for credit.
 **Impact**
 
 - 20% more precise lending decisions
+- Fewer payment defaults
 
 </div>
 
@@ -256,6 +297,7 @@ Scoring of small and medium businesses applying for credit.
 
 - :logos-python: Python
 - :logos-scikitlearn: scikit-learn
+- pandas
 
 </div>
 
@@ -267,15 +309,17 @@ Behavioural scoring of credit-card customers for the German subsidiary.
 
 **Impact**
 
-- 15% more precise decisions
+- 15% more precise risk scores
+- Lower losses on bad debt
 
 </div>
 
 <div class="rm-stack" markdown>
 
 - :logos-python: Python
-- XGBoost
+- :logos-scikitlearn: scikit-learn
 - CatBoost
+- pandas
 
 </div>
 
@@ -287,13 +331,14 @@ The team's internal library for building scoring models, with tests, automated d
 
 **Impact**
 
-- One shared, tested base for the team's models
+- Fewer code errors across teams
+- Faster delivery on the projects that followed
 
 </div>
 
 <div class="rm-stack" markdown>
 
 - :logos-python: Python
-- CI/CD
+- :logos-gitlab: GitLab CI
 
 </div>

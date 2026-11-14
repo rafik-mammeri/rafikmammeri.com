@@ -21,4 +21,4 @@ In 2025 I joined Boulanger to build its customer assistant. One project led to t
 
 I live in Lille.
 
-[See my work](projects.md){ .md-button .md-button--primary } [Get in touch](contact.md){ .md-button }
+[See my experience](experience.md){ .md-button .md-button--primary } [Get in touch](contact.md){ .md-button }

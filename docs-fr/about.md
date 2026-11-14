@@ -21,4 +21,4 @@ En 2025, j'ai rejoint Boulanger pour construire son assistant client. Un projet 
 
 Je vis à Lille.
 
-[Voir mes réalisations](projects.md){ .md-button .md-button--primary } [Me contacter](contact.md){ .md-button }
+[Voir mon expérience](experience.md){ .md-button .md-button--primary } [Me contacter](contact.md){ .md-button }

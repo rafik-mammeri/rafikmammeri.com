@@ -1,12 +1,12 @@
 ---
-title: "Projets"
+title: "Expérience"
 description: "Les postes que j'ai occupés et ce que j'y ai construit : le projet, son impact métier et les technologies utilisées."
 hide:
   - navigation
   - toc
 ---
 
-# Projets
+# Expérience
 
 Les postes que j'ai occupés et ce que j'y ai construit : ce qu'était chaque projet, ce qu'il a changé pour l'entreprise, et les technologies derrière.
 { .rm-lede }
@@ -20,26 +20,33 @@ Tech lead d'une équipe d'ingénieurs IA qui construit et fait tourner les agent
 
 ### Voice bot du service client { #voice-bot }
 
-L'IA conversationnelle derrière la ligne téléphonique du service client, qui remplace le serveur vocal à touches. Impliqué de l'appel d'offres à la production ; j'ai conçu l'architecture qui garde la logique métier et les données clients dans l'entreprise.
+L'IA conversationnelle derrière la ligne du service client, en production depuis le 28 octobre 2026. Je la porte de bout en bout : architecture, code, intégrations, authentification des clients, supervision et analyse de production, en lien avec le fournisseur de la voix et les équipes du service client. Impliqué dès l'appel d'offres fin 2025, j'ai co-conçu l'architecture qui garde la logique métier et les données clients dans l'entreprise. L'agent est connecté à 15 services internes, du suivi de commande et des réparations aux factures, à la fidélité, aux magasins et au catalogue.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
 - Tous les appels entrants pris en charge en trois jours après le lancement, des milliers d'appels par jour
-- Quatre fois plus d'appels résolus sans conseiller que prévu
+- Plus de 10 % des appels résolus sans conseiller dès le deuxième jour, contre 2 % prévus, et 29 % sur les questions produit
 - 81 % des appels transférés arrivent au conseiller avec le motif déjà identifié
+- Cinq correctifs en 48 heures après la première journée, qui ont fait baisser les abandons de plus d'un tiers
+- Une demi-seconde environ avant que la voix commence à répondre
 
 </div>
 
 <div class="rm-stack" markdown>
 
 - :logos-langgraph: LangGraph
-- :logos-claude: Claude
+- :logos-anthropic: Anthropic
 - :logos-python: Python
 - :logos-fastapi: FastAPI
 - :logos-kubernetes: Kubernetes
+- :logos-gravitee: Gravitee
 - :logos-mongodb: MongoDB
+- :logos-langfuse: Langfuse
+- :logos-prometheus: Prometheus
+- :logos-grafana: Grafana
+- :logos-gitlab: GitLab CI
 
 </div>
 
@@ -51,7 +58,7 @@ Un assistant génératif sur le site et les applications mobiles, pour le consei
 
 **Impact**
 
-- En production en six mois, environ 2 000 conversations par jour
+- En production en six mois ; environ 2 000 conversations par jour au printemps 2026
 - 78 % d'avis positifs des clients
 - Le chat est devenu un volet standard de chaque nouveau projet informatique
 
@@ -60,11 +67,15 @@ Un assistant génératif sur le site et les applications mobiles, pour le consei
 <div class="rm-stack" markdown>
 
 - :logos-langgraph: LangGraph
-- :logos-azure: Azure OpenAI
+- :logos-openai: OpenAI
+- :logos-azureaisearch: Azure AI Search
 - :logos-python: Python
 - :logos-fastapi: FastAPI
 - :logos-kubernetes: Kubernetes
+- :logos-gravitee: Gravitee
 - :logos-mongodb: MongoDB
+- :logos-langfuse: Langfuse
+- :logos-gitlab: GitLab CI
 
 </div>
 
@@ -77,40 +88,56 @@ Lead produit IA du programme : assistant de vente, après-vente guidé, entretie
 **Impact**
 
 - Un seul assistant pour la vente et l'après-vente, au lieu d'intégrations séparées
-- Lancé en octobre 2026 sur le site, puis sur les applications mobiles
+- Lancé en octobre 2026 avec une ouverture progressive sur le site, puis sur les applications mobiles en novembre
 
 </div>
 
 <div class="rm-stack" markdown>
 
 - :logos-langgraph: LangGraph
-- :logos-azure: Azure OpenAI
+- :logos-openai: OpenAI
+- :logos-azureaisearch: Azure AI Search
 - :logos-python: Python
 - :logos-fastapi: FastAPI
 - :logos-kubernetes: Kubernetes
+- :logos-gravitee: Gravitee
+- :logos-mongodb: MongoDB
+- :logos-langfuse: Langfuse
+- :logos-prometheus: Prometheus
+- :logos-grafana: Grafana
+- :logos-gitlab: GitLab CI
 
 </div>
 
 ### Self-BI : les données en langage naturel { #self-bi }
 
-Lancé le projet et l'ai mené jusqu'à la production avec les équipes data : les équipes métier interrogent l'entrepôt de données en langage naturel, via un serveur MCP interne sécurisé en quatre couches.
+Lancé le projet et l'ai mené jusqu'à la production avec les équipes data : les équipes métier interrogent l'entrepôt de données en langage naturel dans Gemini Enterprise, via un serveur MCP interne. L'accès est sécurisé en quatre couches, de l'authentification des utilisateurs par OAuth 2.0 et OpenID Connect au contrôle d'accès par rôle (RBAC) sur les données.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
+- Deux périmètres métier en production ; un nouveau périmètre s'ajoute en trois jours environ
 - Des réponses sans attendre un analyste, avec des chiffres alignés sur les tableaux de bord officiels
-- Devenu l'architecture cible de l'entreprise pour les agents d'analyse
+- Temps de réponse médian passé de 150 à 60 secondes grâce à des outils spécialisés
+- Validé par la sécurité et les architectes, puis retenu comme architecture cible de l'entreprise
 
 </div>
 
 <div class="rm-stack" markdown>
 
 - :logos-modelcontextprotocol: MCP
-- :logos-gemini: Gemini
+- :logos-gemini: Gemini Enterprise
 - :logos-snowflake: Snowflake
 - :logos-googlecloud: Google Cloud
+- :logos-gravitee: Gravitee
+- OAuth 2.0
+- :logos-openid: OpenID Connect
+- RBAC
 - :logos-python: Python
+- :logos-langfuse: Langfuse
+- :logos-prometheus: Prometheus
+- :logos-grafana: Grafana
 
 </div>
 
@@ -122,7 +149,7 @@ La passerelle qui amène les agents des métiers dans la messagerie de l'entrepr
 
 **Impact**
 
-- Ouvert à tous les collaborateurs depuis novembre 2026
+- Ouvert à tous les collaborateurs en novembre 2026, annoncé par la direction des RH et la direction financière
 - Quatre agents conçus par les métiers eux-mêmes
 
 </div>
@@ -142,13 +169,14 @@ Generative AI Engineer · octobre 2024 – mars 2025 · à distance
 
 ### Rapprochement de consultants { #consultant-matching }
 
-Un outil pour une ESN qui rapproche des profils de consultants des besoins clients. Construit seul, de la première ligne à la production, infrastructure cloud comprise.
+Un outil conversationnel pour une ESN : un commercial décrit le besoin d'un client en langage naturel, l'outil pose des questions pour le préciser, puis propose les profils de consultants les plus pertinents. Construit seul, de la première ligne à la production, infrastructure cloud comprise.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
-- Passé d'une page blanche à la production en six mois
+- Des profils trouvés en quelques secondes au lieu d'une recherche manuelle
+- Des correspondances plus précises avec les exigences de chaque client
 
 </div>
 
@@ -156,10 +184,13 @@ Un outil pour une ESN qui rapproche des profils de consultants des besoins clien
 
 - :logos-python: Python
 - :logos-langchain: LangChain
-- RAG
+- :logos-openai: OpenAI
+- Weaviate
+- Streamlit
 - :logos-googlecloud: Google Cloud
 - :logos-terraform: Terraform
 - :logos-kubernetes: Kubernetes
+- :logos-docker: Docker
 
 </div>
 
@@ -172,13 +203,15 @@ Le laboratoire data et IA du groupe : quatre projets de machine learning mis en 
 
 ### Chatbot de support client { #support-chatbot }
 
-Réponses sémantiques à partir de la base de connaissances du support, avec un modèle de langage affiné.
+Répond aux demandes des clients à partir de la base de connaissances du support, avant qu'elles n'arrivent à un conseiller, avec un modèle de langage affiné.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
+- 65 % des demandes entrantes traitées automatiquement
 - 40 % de charge en moins pour les équipes support
+- Un support disponible 24 h/24
 
 </div>
 
@@ -186,19 +219,22 @@ Réponses sémantiques à partir de la base de connaissances du support, avec un
 
 - :logos-python: Python
 - :logos-pytorch: PyTorch
-- Transformers
+- :logos-huggingface: Hugging Face Transformers
+- :logos-fastapi: FastAPI
+- :logos-docker: Docker
+- :logos-mlflow: MLflow
 
 </div>
 
 ### Prévision des volumes d'appels { #call-forecasting }
 
-Prévision des appels entrants pour planifier les effectifs du centre d'appels.
+Prévision quotidienne des appels entrants d'un centre de recouvrement, pour planifier les effectifs en tenant compte des jours fériés et des campagnes de relance.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
-- 30 % d'erreur de prévision en moins
+- 30 % d'erreur de prévision en moins sur les pics d'appels
 - 15 % de coûts d'exploitation en moins
 
 </div>
@@ -206,21 +242,23 @@ Prévision des appels entrants pour planifier les effectifs du centre d'appels.
 <div class="rm-stack" markdown>
 
 - :logos-python: Python
-- :logos-pytorch: PyTorch
 - XGBoost
-- :logos-scikitlearn: scikit-learn
+- :logos-fastapi: FastAPI
+- :logos-docker: Docker
+- :logos-mlflow: MLflow
 
 </div>
 
 ### Scoring de fraude et d'impayés { #fraud-scoring }
 
-Détection de fraude pour le crédit à la consommation, et prédiction des premiers impayés pour la filiale belge, chacun livré avec tests et déploiement automatisés.
+Détection de fraude sur les demandes de crédit à la consommation en ligne, et prédiction des premiers impayés pour la filiale belge, chacun mis en production avec tests et déploiement automatisés.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
-- Les deux modèles packagés et transmis aux équipes qui les exploitent
+- Moins de dossiers de crédit traités à la main, et des réponses plus rapides aux clients
+- Les équipes de recouvrement agissent d'abord sur les clients les plus susceptibles d'un impayé
 
 </div>
 
@@ -228,8 +266,10 @@ Détection de fraude pour le crédit à la consommation, et prédiction des prem
 
 - :logos-python: Python
 - XGBoost
-- :logos-mlflow: MLflow
+- :logos-scikitlearn: scikit-learn
+- :logos-fastapi: FastAPI
 - :logos-docker: Docker
+- :logos-gitlab: GitLab CI
 
 </div>
 
@@ -249,6 +289,7 @@ Notation des petites et moyennes entreprises qui demandent un crédit.
 **Impact**
 
 - Des décisions de crédit 20 % plus précises
+- Moins de défauts de paiement
 
 </div>
 
@@ -256,6 +297,7 @@ Notation des petites et moyennes entreprises qui demandent un crédit.
 
 - :logos-python: Python
 - :logos-scikitlearn: scikit-learn
+- pandas
 
 </div>
 
@@ -267,15 +309,17 @@ Scoring comportemental des clients cartes de crédit de la filiale allemande.
 
 **Impact**
 
-- Des décisions 15 % plus précises
+- Des scores de risque 15 % plus précis
+- Moins de pertes sur créances douteuses
 
 </div>
 
 <div class="rm-stack" markdown>
 
 - :logos-python: Python
-- XGBoost
+- :logos-scikitlearn: scikit-learn
 - CatBoost
+- pandas
 
 </div>
 
@@ -287,13 +331,14 @@ La librairie interne de l'équipe pour construire les modèles de scoring, avec 
 
 **Impact**
 
-- Une base commune et testée pour les modèles de l'équipe
+- Moins d'erreurs de code entre équipes
+- Des projets suivants livrés plus vite
 
 </div>
 
 <div class="rm-stack" markdown>
 
 - :logos-python: Python
-- CI/CD
+- :logos-gitlab: GitLab CI
 
 </div>

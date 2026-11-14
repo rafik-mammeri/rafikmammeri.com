@@ -1,59 +1,75 @@
-/* Technical-minimal palette: near-monochrome + one restrained accent (steel blue). */
+/* Palette: warm paper or near-black, one amber accent; the header is always ink */
 
 [data-md-color-scheme="default"] {
-  --md-primary-fg-color: #1a1a1a;
-  --md-primary-fg-color--light: #3a3a3a;
-  --md-primary-fg-color--dark: #000000;
-  --md-primary-bg-color: #fafafa;
+  --rm-accent: #8F5300;
 
-  --md-accent-fg-color: #3b6ea5;
-  --md-accent-fg-color--transparent: #3b6ea51a;
+  --md-primary-fg-color: #0F1115;
+  --md-primary-fg-color--light: #1B1F26;
+  --md-primary-fg-color--dark: #0A0C0F;
+  --md-primary-bg-color: #F1EDE4;
+  --md-primary-bg-color--light: #F1EDE4B3;
 
-  --md-default-bg-color: #fafafa;
-  --md-default-fg-color: #1a1a1a;
-  --md-default-fg-color--light: #4a4a4a;
-  --md-default-fg-color--lighter: #8a8a8a;
-  --md-default-fg-color--lightest: #e0e0e0;
+  --md-accent-fg-color: #8F5300;
+  --md-accent-fg-color--transparent: #8F53001a;
 
-  --md-typeset-color: #2a2a2a;
-  --md-typeset-a-color: #3b6ea5;
+  --md-default-bg-color: #FAF8F3;
+  --md-default-fg-color: #14161A;
+  --md-default-fg-color--light: #5C6066;
+  --md-default-fg-color--lighter: #8B8F96;
+  --md-default-fg-color--lightest: #E3DFD5;
 
-  --md-code-bg-color: #f0f0ee;
-  --md-code-fg-color: #2a2a2a;
+  --md-typeset-color: #1E2126;
+  --md-typeset-a-color: #8F5300;
 
-  --md-footer-bg-color: #1a1a1a;
-  --md-footer-bg-color--dark: #141414;
-  --md-footer-fg-color: #fafafa;
-  --md-footer-fg-color--light: #cfcfcf;
+  --md-code-bg-color: #F1EDE4;
+  --md-code-fg-color: #1E2126;
+
+  --md-footer-bg-color: #0F1115;
+  --md-footer-bg-color--dark: #0A0C0F;
+  --md-footer-fg-color: #F1EDE4;
+  --md-footer-fg-color--light: #B9B4A8;
 }
 
 [data-md-color-scheme="slate"] {
-  --md-hue: 0;
+  --md-hue: 40;
+  --rm-accent: #FFD166;
 
-  --md-primary-fg-color: #e8e8e8;
-  --md-primary-fg-color--light: #cfcfcf;
-  --md-primary-fg-color--dark: #ffffff;
-  --md-primary-bg-color: #121212;
+  --md-primary-fg-color: #0F1115;
+  --md-primary-fg-color--light: #1B1F26;
+  --md-primary-fg-color--dark: #0A0C0F;
+  --md-primary-bg-color: #F1EDE4;
+  --md-primary-bg-color--light: #F1EDE4B3;
 
-  --md-accent-fg-color: #6f9bce;
-  --md-accent-fg-color--transparent: #6f9bce1a;
+  --md-accent-fg-color: #FFD166;
+  --md-accent-fg-color--transparent: #FFD1661a;
 
-  --md-default-bg-color: #121212;
-  --md-default-fg-color: #e8e8e8;
-  --md-default-fg-color--light: #b8b8b8;
-  --md-default-fg-color--lighter: #7a7a7a;
-  --md-default-fg-color--lightest: #2a2a2a;
+  --md-default-bg-color: #0F1115;
+  --md-default-fg-color: #F1EDE4;
+  --md-default-fg-color--light: #9AA0A8;
+  --md-default-fg-color--lighter: #6E747C;
+  --md-default-fg-color--lightest: #2B3038;
 
-  --md-typeset-color: #d8d8d8;
-  --md-typeset-a-color: #6f9bce;
+  --md-typeset-color: #E4E0D7;
+  --md-typeset-a-color: #FFD166;
 
-  --md-code-bg-color: #1a1a1a;
-  --md-code-fg-color: #d8d8d8;
+  --md-code-bg-color: #14171C;
+  --md-code-fg-color: #E4E0D7;
 
-  --md-footer-bg-color: #0a0a0a;
+  --md-footer-bg-color: #0A0C0F;
   --md-footer-bg-color--dark: #000000;
-  --md-footer-fg-color: #e8e8e8;
-  --md-footer-fg-color--light: #a0a0a0;
+  --md-footer-fg-color: #F1EDE4;
+  --md-footer-fg-color--light: #9AA0A8;
+}
+
+/* The job title sits next to the name in the header, on every page */
+.md-header__title .md-header__topic:first-child .md-ellipsis::after,
+body:has(.rm-attn) .md-header__title .md-header__topic .md-ellipsis::after {
+  content: "Lead AI Engineer";
+  margin-left: 0.7em;
+  padding-left: 0.7em;
+  border-left: 1px solid var(--md-default-fg-color--lighter);
+  font-weight: 400;
+  color: var(--md-default-fg-color--light);
 }
 
 /* Generous whitespace — technical-minimal reads as unhurried, not dense */
@@ -72,7 +88,7 @@
 /* Display face for page and section titles; h3 and below stay in the text face */
 .md-typeset h1,
 .md-typeset h2 {
-  font-family: "Bricolage Grotesque", var(--md-text-font, sans-serif);
+  font-family: var(--md-text-font, sans-serif);
   letter-spacing: -0.02em;
 }
 
@@ -230,8 +246,9 @@
 /* Header, tabs and footer keep Zensical's native width; only the page body is a
    centred reading column */
 .md-content__inner {
-  max-width: 38rem;
+  max-width: 40rem;
   margin-inline: auto;
+  padding-inline: 1rem;
 }
 
 .md-typeset {
@@ -363,62 +380,350 @@
 }
 
 /* ===========================================================================
-   Home (overrides/home.html). Text lives in the front matter of index.md.
+   Home (overrides/home.html): a dark stage in both colour schemes. The name,
+   then one sentence whose words light up the evidence and the technologies.
+   Text and weights: front matter of index.md. Behaviour: javascripts/attention.js.
    =========================================================================== */
-.md-typeset .rm-hero {
-  padding: 2.5em 0 2em;
+.md-content__inner:has(.rm-attn) {
+  max-width: 70rem;
+  margin-top: 0;
+  padding-top: 0;
 }
 
-.md-typeset .rm-hero__name {
+/* Light: ink on paper, lit words get a highlighter. Dark: cream on ink, lit words glow. */
+[data-md-color-scheme="default"] .rm-attn {
+  --a-bg: #FAF8F3;
+  --a-fg: #14161A;
+  --a-mut: #6A6F76;
+  --a-faint: #C9C4B8;
+  --a-line: #E3DFD5;
+  --a-hot: #C98A00;
+  --a-hot-ink: #8F5300;
+  --a-hot-bg: transparent;
+  --a-glow: none;
+  --a-card-ink: #14161A;
+  --a-card-bg: #FFFFFF;
+  --a-card-shadow: 0 14px 34px rgba(20, 22, 26, 0.1), 0 2px 6px rgba(20, 22, 26, 0.05);
+}
+
+[data-md-color-scheme="slate"] .rm-attn {
+  --a-bg: #0F1115;
+  --a-fg: #F1EDE4;
+  --a-mut: #8E949C;
+  --a-faint: #4A5059;
+  --a-line: #2B3038;
+  --a-hot: #FFD166;
+  --a-hot-ink: #FFD166;
+  --a-hot-bg: transparent;
+  --a-glow: 0 0 26px rgba(255, 209, 102, 0.45);
+  --a-card-ink: #FFD166;
+  --a-card-bg: rgba(255, 209, 102, 0.11);
+  --a-card-shadow: 0 0 38px rgba(255, 209, 102, 0.22);
+}
+
+.md-typeset .rm-attn {
+  position: relative;
+  padding: 2.2rem 0 3em;
+  color: var(--a-fg);
+}
+
+/* The page title is in the header; this one is for screen readers only */
+.md-typeset .rm-attn__name {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   margin: 0;
-  font-family: "Sora", var(--md-text-font, sans-serif);
-  font-size: 2.6em;
-  font-weight: 600;
-  line-height: 1.05;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.md-typeset .rm-attn__sentence {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  text-align: justify;
+  text-align-last: left;
+  hyphens: none;
+  line-height: 1.65;
+}
+
+.md-typeset .rm-tok {
+  padding: 0 0 0.12em;
+  border-bottom: 2px solid transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  cursor: pointer;
+  font-family: var(--md-text-font, sans-serif);
+  font-size: clamp(1.25rem, 0.85rem + 1.5vw, 1.95rem);
+  font-weight: 700;
   letter-spacing: -0.03em;
+  color: var(--a-fg);
+  transition: color 0.15s, border-color 0.15s, opacity 0.15s, text-shadow 0.15s;
 }
 
-.md-typeset .rm-hero__role {
-  margin: 0.5em 0 0;
-  font-weight: 600;
-  color: var(--md-accent-fg-color);
+.md-typeset .rm-tok.is-on {
+  color: var(--a-hot-ink);
+  border-color: var(--a-hot);
+  background: var(--a-hot-bg);
+  text-shadow: var(--a-glow);
 }
 
-.md-typeset .rm-hero__intro {
-  margin: 1.25em 0 0;
-  font-size: 1.12em;
-  line-height: 1.55;
+.md-typeset .rm-tok.is-rel {
+  border-color: var(--a-mut);
 }
 
-.md-typeset .rm-hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6em;
-  margin: 1.75em 0 0;
+.md-typeset .rm-tok.is-dim {
+  opacity: 0.62;
 }
 
-.md-typeset .rm-hero__actions .md-button {
-  margin: 0;
+.md-typeset .rm-tok:hover {
+  border-color: var(--a-line);
 }
 
-.md-typeset .rm-pillars {
+.md-typeset .rm-tok:focus-visible,
+.md-typeset .rm-attn a:focus-visible {
+  outline: 2px solid var(--a-hot);
+  outline-offset: 4px;
+}
+
+/* Evidence: text on the stage, no boxes. Cold items are barely there; hot ones glow
+   and reveal their detail. */
+.md-typeset .rm-attn__targets {
+  position: relative;
+  z-index: 2;
   display: grid;
-  gap: 2em;
-  padding: 2.5em 0 1em;
-  border-top: 1px solid var(--md-default-fg-color--lightest);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1.3rem;
+  margin-top: 6.5rem;
 }
 
-.md-typeset .rm-pillar h2 {
-  margin: 0 0 0.35em;
-  font-size: 1.25em;
-}
-
-.md-typeset .rm-pillar p {
+.md-typeset .rm-attn__targets.is-off {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   margin: 0;
-  color: var(--md-default-fg-color--light);
+  overflow: hidden;
+  clip-path: inset(50%);
+  visibility: hidden;
 }
 
-.md-typeset .rm-pillar__link {
-  margin-top: 0.5em !important;
-  font-weight: 600;
+.md-typeset a.rm-tg {
+  display: grid;
+  gap: 0.3rem;
+  align-content: start;
+  min-width: 0;
+  margin: -0.7rem;
+  padding: 0.7rem;
+  border-radius: 12px;
+  color: var(--a-mut);
+  text-decoration: none;
+  opacity: calc(0.16 + var(--w, 0.5) * 0.5);
+  transition: color 0.2s, opacity 0.25s, background 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+
+/* At rest every experience is equally readable */
+.md-typeset .rm-attn.is-idle a.rm-tg {
+  opacity: 0.85;
+}
+
+.md-typeset a.rm-tg.is-hot {
+  opacity: 1;
+  background: var(--a-card-bg);
+  box-shadow: var(--a-card-shadow);
+  transform: translateY(-5px);
+}
+
+.md-typeset .rm-tg__top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+  font-family: var(--md-code-font, monospace);
+  font-size: 0.56rem;
+  color: var(--a-mut);
+}
+
+.md-typeset a.rm-tg.is-hot .rm-tg__top {
+  color: var(--a-hot-ink);
+}
+
+.md-typeset .rm-tg__node {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--a-faint);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+/* Company mark before the company name and dates */
+.md-typeset .rm-tg__co {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+.md-typeset .rm-tg__co svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+}
+
+.md-typeset .rm-tg small {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--md-code-font, monospace);
+  font-size: 0.56rem;
+  color: var(--a-mut);
+  white-space: nowrap;
+}
+
+.md-typeset .rm-tg b {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--a-fg);
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.md-typeset .rm-tg__text {
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
+.md-typeset a.rm-tg.is-hot .rm-tg__node {
+  background: var(--a-hot);
+  transform: scale(1.7);
+  box-shadow: 0 0 0 5px rgba(255, 209, 102, 0.28), 0 0 26px 6px rgba(255, 209, 102, 0.7);
+}
+
+.md-typeset a.rm-tg.is-hot b {
+  color: var(--a-card-ink);
+  text-shadow: var(--a-glow);
+}
+
+.md-typeset a.rm-tg.is-hot .rm-tg__pts span {
+  border-left-width: 3px;
+}
+
+.md-typeset a.rm-tg.is-hot small {
+  color: var(--a-fg);
+}
+
+/* Two results per experience, revealed with the description */
+.md-typeset .rm-tg__pts {
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+  font-size: 0.66rem;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.md-typeset .rm-tg__pts span {
+  padding-left: 0.6rem;
+  border-left: 2px solid var(--a-hot);
+  color: var(--a-fg);
+}
+
+.md-typeset a.rm-tg.is-hot .rm-tg__text {
+  color: var(--a-fg);
+}
+
+.md-typeset a.rm-tg:hover,
+.md-typeset a.rm-tg:focus-visible {
+  opacity: 1;
+}
+
+.md-typeset .rm-attn__lines {
+  overflow: visible;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  color: var(--a-hot);
+}
+
+.md-typeset .rm-attn__arc {
+  stroke: var(--a-fg);
+}
+
+/* Below 76em there is no room for seven columns and lines: the experiences become a
+   list. The ones the selected word rests on open; the others stay as a single line. */
+@media screen and (max-width: 75.99em) {
+  .md-typeset .rm-attn {
+    padding-top: 1.2rem;
+  }
+
+  .md-typeset .rm-attn__lines {
+    display: none;
+  }
+
+  .md-typeset .rm-attn__targets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 2rem;
+    margin-top: 2rem;
+    min-height: 0;
+  }
+
+  .md-typeset a.rm-tg {
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 0.7rem;
+    margin: 0 0 0.5rem;
+    padding: 0.7rem 0.8rem;
+  }
+
+  .md-typeset a.rm-tg.is-hot {
+    transform: none;
+  }
+
+  .md-typeset a.rm-tg > * {
+    grid-column: 2;
+  }
+
+  .md-typeset a.rm-tg > .rm-tg__top {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin: 0.3rem 0 0;
+  }
+
+  /* closed until lit, so the list stays short */
+  .md-typeset a.rm-tg .rm-tg__text,
+  .md-typeset a.rm-tg .rm-tg__pts {
+    display: none;
+  }
+
+  .md-typeset a.rm-tg.is-hot .rm-tg__text,
+  .md-typeset a.rm-tg.is-hot .rm-tg__pts {
+    display: grid;
+  }
+}
+
+@media screen and (max-width: 40em) {
+  .md-typeset .rm-attn__targets {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .md-typeset .rm-attn__sentence {
+    text-align: left;
+    line-height: 1.75;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .rm-tok,
+  .md-typeset a.rm-tg,
+  .md-typeset .rm-tg__node,
+  .md-typeset .rm-tg__top {
+    transition: none;
+  }
 }

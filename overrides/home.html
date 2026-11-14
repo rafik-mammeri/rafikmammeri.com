@@ -1,35 +1,38 @@
 {% extends "main.html" %}
 
 {#
-  Homepage layout. All text comes from the front matter of docs/index.md (English)
-  and docs-fr/index.md (French): edit the text there, not here.
+  Homepage: the name, then one sentence whose words "attend" to evidence.
+  Selecting a word lights up the experiences it rests on and reveals their results.
+  All text, logos and weights come from the `attention` front matter of docs/index.md
+  (English) and docs-fr/index.md (French). Behaviour: docs/javascripts/attention.js.
+  Each target's `w` holds one weight per word of the sentence, in order.
 #}
 {% block content %}
-{% set hero = page.meta.hero %}
-<div class="rm-home">
+{% set a = page.meta.attention %}
+<div class="rm-attn is-idle">
 
-  <header class="rm-hero">
-    <h1 class="rm-hero__name">{{ hero.name }}</h1>
-    <p class="rm-hero__role">{{ hero.role }}</p>
-    <p class="rm-hero__intro">{{ hero.intro }}</p>
-    <p class="rm-hero__actions">
-      {% for a in hero.actions %}
-      <a class="md-button{% if a.primary %} md-button--primary{% endif %}" href="{{ a.href }}">{{ a.label }}</a>
-      {% endfor %}
-    </p>
-  </header>
+  <h1 class="rm-attn__name">{{ a.name }}, {{ a.role }}</h1>
 
-  <section class="rm-pillars">
-    {% for p in page.meta.pillars %}
-    <div class="rm-pillar">
-      <h2>{{ p.title }}</h2>
-      <p>{{ p.text }}</p>
-      {% if p.link_href %}<p class="rm-pillar__link"><a href="{{ p.link_href }}">{{ p.link_label }}</a></p>{% endif %}
-    </div>
+  <p class="rm-attn__sentence" aria-label="{{ a.hint }}">
+    {% for t in a.tokens %}<span class="rm-tok" role="button" tabindex="0" id="rm-tok-{{ loop.index0 }}" data-self="{{ t.self }}">{{ t.text }}</span> {% endfor %}
+  </p>
+
+  {% for h in a.heads %}
+  <div class="rm-attn__targets{% if not loop.first %} is-off{% endif %}" data-head="{{ h.id }}">
+    {% for t in h.targets %}
+    <a class="rm-tg" href="{{ t.href }}" data-w="{{ t.w }}">
+      <span class="rm-tg__top"><span class="rm-tg__node"></span><span class="rm-tg__w"></span></span>
+      <small><span class="rm-tg__co">{% include ".icons/logos/" ~ t.logo ~ ".svg" %}</span><span>{{ t.tag }}</span></small>
+      <b>{{ t.title }}</b>
+      <span class="rm-tg__text">{{ t.text }}</span>
+      <span class="rm-tg__pts">{% for pt in t.points %}<span>{{ pt }}</span>{% endfor %}</span>
+    </a>
     {% endfor %}
-  </section>
+  </div>
+  {% endfor %}
+
+  <svg class="rm-attn__lines" aria-hidden="true"></svg>
 
   {{ page.content }}
-
 </div>
 {% endblock %}
