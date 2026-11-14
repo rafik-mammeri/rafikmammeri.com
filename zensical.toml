@@ -1,14 +1,15 @@
 [project]
 site_url = "https://www.rafikmammeri.com/"
 site_name = "Rafik Mammeri"
-site_description = "I take AI agents from whiteboard to production. Lead AI Engineer at Boulanger, four systems live across web, mobile, voice, and internal channels"
+site_description = "Lead AI Engineer. Tech lead of a team of AI engineers shipping AI agents to production at scale."
 site_author = "Rafik Mammeri"
 copyright = "&copy; 2026 Rafik Mammeri"
 
 nav = [
   { "Home" = "index.md" },
-  { "Writing" = "writing/index.md" },
-  { "Experience" = "experience.md" },
+  { "Projects" = "projects.md" },
+  { "Community" = "community.md" },
+  { "About" = "about.md" },
   { "Contact" = "contact.md" },
 ]
 
@@ -19,6 +20,10 @@ repo_name = "rafik-mammeri"
 
 [project.extra]
 generator = false
+alternate = [
+  { name = "English", link = "/", lang = "en" },
+  { name = "Français", link = "/fr/", lang = "fr" },
+]
 
 [project.theme]
 custom_dir = "overrides"

@@ -23,19 +23,19 @@ LLMS_OUT = ROOT / "docs" / "llms.txt"
 LLMS_HEADER = """\
 # Rafik Mammeri
 
-> Lead AI Engineer at Boulanger, one of
-> France's largest electronics retailers (€4B), leading a team of five
-> engineers. Four systems in production across three channels: a
-> customer-facing multi-agent shopping assistant (web and mobile),
-> natural-language BI over Snowflake via MCP, voice AI handling the
-> customer-service phone line, and business-owned agents in Google Chat.
-> Six years of regulated banking ML before that. PhD in mathematics.
-> Based in Lille, France.
+> Lead AI Engineer and PhD in mathematics, based in Lille, France. Tech lead
+> of a team of AI engineers that designs and ships AI agents to production at
+> scale: a customer-service voice bot answering thousands of calls a day, two
+> generations of shopping assistant on web and mobile, natural-language
+> analytics over the data warehouse via MCP, and internal agents for
+> employees. Six years of production ML in regulated banking before that.
+> A French version of the site is at https://www.rafikmammeri.com/fr/.
 
 ## Pages
 
-- [Experience](https://www.rafikmammeri.com/experience/): Full career path — Boulanger, freelance, BNP Paribas Datalab and Risk — plus education and certifications.
-- [Writing](https://www.rafikmammeri.com/writing/): Notes on building and running LLM systems in production.
+- [Projects](https://www.rafikmammeri.com/projects/): Four AI products in production, each with its context, what I did, and the result.
+- [Community](https://www.rafikmammeri.com/community/): Articles, talks, open source and teaching.
+- [About](https://www.rafikmammeri.com/about/): From a PhD in mathematics and regulated banking to AI engineering in production.
 - [Contact](https://www.rafikmammeri.com/contact/): Email, LinkedIn, GitHub, Medium, dev.to.
 
 ## Writing
@@ -109,7 +109,7 @@ def main() -> None:
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>{escape(FEED_TITLE)}</title>
-    <link>{SITE_URL}/writing/</link>
+    <link>{SITE_URL}/community/</link>
     <description>{escape(FEED_DESCRIPTION)}</description>
     <language>en</language>
     <lastBuildDate>{now}</lastBuildDate>

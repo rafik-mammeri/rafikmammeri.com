@@ -1,10 +1,10 @@
 [tasks.dev]
-description = "Run the local dev server with live reload"
+description = "Run the local dev server with live reload (English only; use preview-build to see both languages)"
 run = "uv run zensical serve"
 
 [tasks.build]
-description = "Build the static site into site/"
-run = "uv run zensical build --clean"
+description = "Build the bilingual site into site/ (English) and site/fr/ (French)"
+run = "bash scripts/build.sh"
 
 [tasks."preview-build"]
 description = "Build, then serve the exact static output (what GitHub Pages will deploy)"
