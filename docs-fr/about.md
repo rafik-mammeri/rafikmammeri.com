@@ -9,6 +9,7 @@ hide:
 # À propos
 
 Je suis venu à l'IA par les mathématiques. Mon doctorat m'a appris à aborder des problèmes qui n'ont pas encore de réponse toute faite, en partant de la théorie plutôt qu'en traitant un modèle comme une boîte noire.
+{ .rm-lede }
 
 J'ai passé six ans chez BNP Paribas : d'abord à modéliser le risque de crédit sous régulation bancaire, où chaque modèle doit être documenté et défendu, puis au Datalab, à mettre en production des projets de machine learning pour différents métiers. J'y ai appris à concevoir un système en partant du principe que le modèle se trompera un jour.
 

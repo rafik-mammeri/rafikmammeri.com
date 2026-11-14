@@ -11,40 +11,24 @@ hide:
 What I write and share about building AI agents in production.
 { .rm-lede }
 
-<div class="grid cards" markdown>
+## :lucide-pen-line: Articles
 
--   :lucide-pen-line: __Articles__
+[Latency is an architecture problem, not a prompt problem](/writing/2026-08-14-latency-is-an-architecture-problem/)  
+August 2026, also on Medium and dev.to
 
-    ---
+## :lucide-mic: Talks
 
-    [Latency is an architecture problem, not a prompt problem](/writing/2026-08-14-latency-is-an-architecture-problem/)
+Coming soon.
 
-    August 2026, also on Medium and dev.to
+## :fontawesome-brands-github: Open source
 
--   :lucide-mic: __Talks__
+[github.com/rafik-mammeri](https://github.com/rafik-mammeri)  
+More to come.
 
-    ---
+## :lucide-messages-square: Forums and communities
 
-    Coming soon.
+Coming soon.
 
--   :fontawesome-brands-github: __Open source__
+## :lucide-graduation-cap: Teaching
 
-    ---
-
-    [github.com/rafik-mammeri](https://github.com/rafik-mammeri)
-
-    More to come.
-
--   :lucide-messages-square: __Forums and communities__
-
-    ---
-
-    Coming soon.
-
--   :lucide-graduation-cap: __Teaching__
-
-    ---
-
-    Data Handling course. Details coming soon.
-
-</div>
+Data Handling course. Details coming soon.

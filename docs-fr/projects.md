@@ -16,32 +16,28 @@ Quatre produits IA en production. Pour chacun : le contexte, ce que j'ai fait, e
 2026 · Voix
 { .rm-meta }
 
-**Contexte.** Remplacer le serveur vocal à touches du service client par une conversation naturelle.
+Remplacer le serveur vocal à touches du service client par une conversation naturelle.
+{ .rm-lead }
 
-<div class="grid cards rm-figures" markdown>
+<div class="rm-figures" markdown>
 
--   __3 jours__
-
-    pour prendre 100 % des appels entrants
-
--   __Des milliers__
-
-    d'appels traités chaque jour
-
--   __4×__
-
-    plus d'appels résolus sans conseiller que prévu
+- **3 jours** pour prendre 100 % des appels entrants
+- **Des milliers** d'appels traités chaque jour
+- **4×** plus d'appels résolus sans conseiller que prévu
 
 </div>
 
-**Ce que j'ai fait**
+### Ce que j'ai fait
 
 - Impliqué de l'appel d'offres à la production
 - Conçu l'architecture qui garde la logique métier et l'accès aux données dans l'entreprise, le fournisseur ne gérant que la voix
 - Recommandé un lancement progressif
 - Analysé la première journée d'appels et livré cinq correctifs en 48 heures
 
-**Résultat.** 81 % des appels transférés arrivent au conseiller avec le motif déjà identifié.
+### Ce que ça a changé
+
+81 % des appels transférés arrivent au conseiller avec le motif déjà identifié.
+{ .rm-result }
 
 <div class="rm-stack" markdown>
 
@@ -59,30 +55,26 @@ Quatre produits IA en production. Pour chacun : le contexte, ce que j'ai fait, e
 2025 – 2026 · Web et mobile
 { .rm-meta }
 
-**Contexte.** Remplacer un chatbot à scénarios par un assistant génératif couvrant conseil, commandes et après-vente.
+Remplacer un chatbot à scénarios par un assistant génératif couvrant conseil, commandes et après-vente.
+{ .rm-lead }
 
-<div class="grid cards rm-figures" markdown>
+<div class="rm-figures" markdown>
 
--   __~2 000__
-
-    conversations par jour
-
--   __78 %__
-
-    d'avis positifs
-
--   __6 mois__
-
-    du lancement à la production
+- **~2 000** conversations par jour
+- **78 %** d'avis positifs
+- **6 mois** du lancement à la production
 
 </div>
 
-**Ce que j'ai fait**
+### Ce que j'ai fait
 
 - Première génération : architecture multi-agents, contrat d'API négocié avec les équipes web, iOS et Android, en production en six mois
 - Seconde génération : lead produit IA du programme ; j'ai convaincu les équipes après-vente de rejoindre la même plateforme
 
-**Résultat.** Un seul assistant pour la vente et l'après-vente, au lieu de projets séparés.
+### Ce que ça a changé
+
+Un seul assistant pour la vente et l'après-vente, au lieu de projets séparés.
+{ .rm-result }
 
 <div class="rm-stack" markdown>
 
@@ -100,16 +92,20 @@ Quatre produits IA en production. Pour chacun : le contexte, ce que j'ai fait, e
 2026 · Data
 { .rm-meta }
 
-**Contexte.** Les équipes métier attendaient les analystes pour obtenir leurs chiffres.
+Les équipes métier attendaient les analystes pour obtenir leurs chiffres.
+{ .rm-lead }
 
-**Ce que j'ai fait**
+### Ce que j'ai fait
 
 - Lancé le projet et l'ai mené avec les équipes data jusqu'à la production
 - Un serveur MCP sécurisé en quatre couches
 - Règles métier reprises des tableaux de bord existants, puis vérifiées contre eux
 - Modèle choisi par comparaison à l'aveugle
 
-**Résultat.** Des chiffres alignés sur les tableaux de bord officiels, et une architecture devenue la cible de l'entreprise.
+### Ce que ça a changé
+
+Des chiffres alignés sur les tableaux de bord officiels, et une architecture devenue la cible de l'entreprise.
+{ .rm-result }
 
 <div class="rm-stack" markdown>
 
@@ -126,14 +122,18 @@ Quatre produits IA en production. Pour chacun : le contexte, ce que j'ai fait, e
 2026 · Collaborateurs
 { .rm-meta }
 
-**Contexte.** Donner aux collaborateurs des assistants dans l'outil qu'ils utilisent déjà chaque jour.
+Donner aux collaborateurs des assistants dans l'outil qu'ils utilisent déjà chaque jour.
+{ .rm-lead }
 
-**Ce que j'ai fait**
+### Ce que j'ai fait
 
 - Construit la passerelle entre la messagerie interne et les agents
 - L'assistant RH officiel appartient aux RH : contenu, périmètre et validation
 
-**Résultat.** Ouvert à tous les collaborateurs depuis novembre 2026, avec quatre agents conçus par les métiers eux-mêmes.
+### Ce que ça a changé
+
+Ouvert à tous les collaborateurs depuis novembre 2026, avec quatre agents conçus par les métiers eux-mêmes.
+{ .rm-result }
 
 <div class="rm-stack" markdown>
 
