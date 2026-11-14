@@ -7,14 +7,14 @@ copyright = "&copy; 2026 Rafik Mammeri"
 
 nav = [
   { "Home" = "index.md" },
-  { "Projects" = "projects.md" },
+  { "Experience" = "experience.md" },
   { "Community" = "community.md" },
   { "About" = "about.md" },
   { "Contact" = "contact.md" },
 ]
 
 extra_css = ["stylesheets/extra.css"]
-extra_javascript = ["javascripts/language-switch.js"]
+extra_javascript = ["javascripts/language-switch.js", "javascripts/attention.js"]
 
 repo_url = "https://github.com/rafik-mammeri"
 repo_name = "rafik-mammeri"
@@ -32,7 +32,7 @@ alternate = [
 custom_dir = "overrides"
 language = "en"
 favicon = "assets/favicon.svg"
-logo = "assets/favicon.svg"
+logo = "assets/logo.svg"
 features = [
   "navigation.instant",
   "navigation.instant.prefetch",
@@ -48,12 +48,13 @@ features = [
 ]
 
 [project.theme.icon]
+alternate = "lucide/languages"
 repo = "fontawesome/brands/github"
 admonition.tip = "lucide/lightbulb"
 admonition.note = "lucide/shield-check"
 
 [project.theme.font]
-text = "Hanken Grotesk"
+text = "Space Grotesk"
 code = "JetBrains Mono"
 
 [[project.theme.palette]]

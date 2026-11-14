@@ -33,7 +33,7 @@ LLMS_HEADER = """\
 
 ## Pages
 
-- [Projects](https://www.rafikmammeri.com/projects/): Four AI products in production, each with its context, what I did, and the result.
+- [Experience](https://www.rafikmammeri.com/experience/): Each position held and what was built there: the project, its business impact, and the technology stack.
 - [Community](https://www.rafikmammeri.com/community/): Articles, talks, open source and teaching.
 - [About](https://www.rafikmammeri.com/about/): From a PhD in mathematics and regulated banking to AI engineering in production.
 - [Contact](https://www.rafikmammeri.com/contact/): Email, LinkedIn, GitHub, Medium, dev.to.
