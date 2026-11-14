@@ -19,8 +19,6 @@ nav = [
 extra_css = ["stylesheets/extra.css"]
 extra_javascript = ["javascripts/language-switch.js", "javascripts/attention.js"]
 
-repo_url = "https://github.com/rafik-mammeri"
-repo_name = "rafik-mammeri"
 
 [project.extra]
 generator = false
@@ -43,6 +41,7 @@ features = [
   "navigation.top",
   "navigation.tabs",
   "navigation.tabs.sticky",
+  "header.autohide",
   "navigation.indexes",
   "content.code.copy",
   "content.code.annotate",
@@ -57,24 +56,24 @@ admonition.tip = "lucide/lightbulb"
 admonition.note = "lucide/shield-check"
 
 [project.theme.font]
-text = "Space Grotesk"
+text = "Urbanist"
 code = "JetBrains Mono"
 
 [[project.theme.palette]]
 media = "(prefers-color-scheme)"
-toggle.icon = "lucide/sun-moon"
+toggle.icon = "rm/mode-auto"
 toggle.name = "Switch to light mode"
 
 [[project.theme.palette]]
 media = "(prefers-color-scheme: light)"
 scheme = "default"
-toggle.icon = "lucide/sun"
+toggle.icon = "rm/mode-light"
 toggle.name = "Switch to dark mode"
 
 [[project.theme.palette]]
 media = "(prefers-color-scheme: dark)"
 scheme = "slate"
-toggle.icon = "lucide/moon"
+toggle.icon = "rm/mode-dark"
 toggle.name = "Switch to system preference"
 
 [[project.extra.social]]

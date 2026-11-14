@@ -7,7 +7,7 @@ document$.subscribe(function () {
   var inFrench = path === "/fr" || path.indexOf("/fr/") === 0;
   var page = inFrench ? path.slice(3) || "/" : path;
 
-  document.querySelectorAll(".md-select__link[hreflang]").forEach(function (link) {
+  document.querySelectorAll(".rm-lang__link[hreflang]").forEach(function (link) {
     var lang = link.getAttribute("hreflang");
     var target = page;
     // Articles exist only in English: from one, French goes to the Community page
