@@ -68,21 +68,13 @@
   hyphens: manual;
 }
 
-/* Reading measure: ~65–75 characters, the comfortable middle of 45–90 */
-.md-typeset > p,
-.md-typeset > ul {
-  max-width: 36em;
-}
 
-/* Editorial serif for top-level headings — the register of someone who writes.
-   Inner headings (h3+), nav, cards, and labels stay Inter for contrast. */
+/* Display face for page and section titles; h3 and below stay in the text face */
 .md-typeset h1,
 .md-typeset h2 {
   font-family: "Bricolage Grotesque", var(--md-text-font, sans-serif);
-  font-weight: 700;
   letter-spacing: -0.02em;
 }
-
 
 /* Match form controls and scrollbars to the active scheme */
 [data-md-color-scheme="default"] {
@@ -227,67 +219,208 @@
   border-color: var(--md-accent-fg-color);
 }
 
-/* ---------------------------------------------------------------------------
-   Home (overrides/home.html): name, role, intro, actions, then three pillars.
-   Text lives in the front matter of docs/index.md and docs-fr/index.md.
-   --------------------------------------------------------------------------- */
-.md-typeset .rm-home {
-  max-width: 54rem;
-  margin: 0 auto;
+/* ===========================================================================
+   Layout and type system
+   - One centred column for the whole site: header, tabs, content and footer
+     share the same left and right edges.
+   - 18px text, 1.6 line height, ~70 characters per line.
+   - Type scale ratio 1.25. Spacing in multiples of one unit (1em), tighter
+     inside a group than between groups.
+   =========================================================================== */
+.md-grid {
+  max-width: 40rem;
 }
 
-.md-typeset .rm-hero {
-  padding: clamp(1.5rem, 5vw, 3.5rem) 0 clamp(1.5rem, 4vw, 2.5rem);
+.md-typeset {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.md-typeset p,
+.md-typeset ul,
+.md-typeset ol {
+  margin: 0 0 1em;
+}
+
+.md-typeset ul li,
+.md-typeset ol li {
+  margin-bottom: 0.35em;
+}
+
+.md-typeset h1 {
+  margin: 0 0 0.4em;
+  font-size: 2em;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset h2 {
+  margin: 2.5em 0 0.4em;
+  font-size: 1.55em;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.md-typeset h3 {
+  margin: 1.6em 0 0.5em;
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.md-typeset .headerlink {
+  font-size: 0.8em;
+}
+
+/* Lede under a page title, lead line under a project title */
+.md-typeset .rm-lede {
+  margin-bottom: 1.5em;
+  font-size: 1.12em;
+  line-height: 1.55;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-meta {
+  margin: 0 0 1em;
+  font-size: 0.85em;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset .rm-lead {
+  font-size: 1.05em;
+}
+
+.md-typeset .rm-result {
+  padding-left: 1em;
+  border-left: 2px solid var(--md-accent-fg-color);
+}
+
+/* Key figures: three equal columns, number above its caption */
+.md-typeset .rm-figures > ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5em;
+  margin: 1.5em 0;
+  padding: 1em 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
   border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  list-style: none;
+}
+
+.md-typeset .rm-figures > ul > li {
+  margin: 0;
+  font-size: 0.85em;
+  line-height: 1.4;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-figures strong {
+  display: block;
+  margin-bottom: 0.2em;
+  font-family: "Bricolage Grotesque", var(--md-text-font, sans-serif);
+  font-size: 1.75em;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--md-default-fg-color);
+}
+
+@media screen and (max-width: 30em) {
+  .md-typeset .rm-figures > ul {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1em;
+  }
+}
+
+/* Technologies: a Markdown list shown as small pills with official logos */
+.md-typeset .rm-stack > ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin: 1.25em 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.md-typeset .rm-stack > ul > li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0;
+  padding: 0.2em 0.65em;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 999px;
+  font-size: 0.8em;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-stack .twemoji,
+.md-typeset .rm-stack .twemoji svg {
+  width: 1.1em;
+  height: 1.1em;
+  max-height: none;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .rm-stack li:has(svg path[fill="#030710"]) svg,
+[data-md-color-scheme="slate"] .md-typeset .rm-stack li:has(svg path[fill="#1A1A1A"]) svg {
+  filter: invert(1);
+}
+
+/* Section icons in headings (Community) take the accent colour */
+.md-typeset h2 .twemoji {
+  color: var(--md-accent-fg-color);
+  margin-right: 0.15em;
+}
+
+/* ===========================================================================
+   Home (overrides/home.html). Text lives in the front matter of index.md.
+   =========================================================================== */
+.md-typeset .rm-hero {
+  padding: 2.5em 0 2em;
 }
 
 .md-typeset .rm-hero__name {
   margin: 0;
   font-family: "Sora", var(--md-text-font, sans-serif);
+  font-size: 2.6em;
   font-weight: 600;
-  font-size: clamp(2.2rem, 1.4rem + 3.6vw, 3.4rem);
   line-height: 1.05;
   letter-spacing: -0.03em;
-  color: var(--md-default-fg-color);
 }
 
 .md-typeset .rm-hero__role {
-  margin: 0.6em 0 0;
-  font-size: 1.15em;
+  margin: 0.5em 0 0;
   font-weight: 600;
   color: var(--md-accent-fg-color);
 }
 
 .md-typeset .rm-hero__intro {
-  max-width: 38rem;
-  margin: 1em 0 0;
-  font-size: 1.1em;
-  line-height: 1.6;
+  margin: 1.25em 0 0;
+  font-size: 1.12em;
+  line-height: 1.55;
 }
 
 .md-typeset .rm-hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin: 1.6em 0 0;
+  gap: 0.6em;
+  margin: 1.75em 0 0;
+}
+
+.md-typeset .rm-hero__actions .md-button {
+  margin: 0;
 }
 
 .md-typeset .rm-pillars {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem 2.5rem;
-  padding: clamp(1.8rem, 4vw, 2.8rem) 0;
-}
-
-.md-typeset .rm-pillar {
-  padding-top: 1rem;
-  border-top: 2px solid var(--md-accent-fg-color);
+  gap: 2em;
+  padding: 2.5em 0 1em;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
 }
 
 .md-typeset .rm-pillar h2 {
-  margin: 0 0 0.5em;
-  font-size: 1.3em;
-  line-height: 1.2;
+  margin: 0 0 0.35em;
+  font-size: 1.25em;
 }
 
 .md-typeset .rm-pillar p {
@@ -296,88 +429,6 @@
 }
 
 .md-typeset .rm-pillar__link {
-  margin-top: 0.8em !important;
+  margin-top: 0.5em !important;
   font-weight: 600;
-}
-
-@media screen and (max-width: 56em) {
-  .md-typeset .rm-pillars {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-/* ---------------------------------------------------------------------------
-   Content pages written in Markdown (Projects, Community, About).
-   Only small touches on top of Zensical's own components.
-   --------------------------------------------------------------------------- */
-.md-typeset .rm-lede {
-  font-size: 1.1em;
-  color: var(--md-default-fg-color--light);
-}
-
-.md-typeset .rm-meta {
-  margin-top: -0.6em;
-  font-size: 0.85em;
-  font-weight: 600;
-  color: var(--md-accent-fg-color);
-}
-
-.md-typeset h2[id] {
-  margin-top: 2.4em;
-  padding-top: 1.6em;
-  border-top: 1px solid var(--md-default-fg-color--lightest);
-}
-
-/* Key figures: Zensical grid cards, with the number set large */
-.md-typeset .rm-figures > ul > li > p:first-child strong {
-  display: block;
-  font-family: "Bricolage Grotesque", var(--md-text-font, sans-serif);
-  font-size: 1.8em;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--md-accent-fg-color);
-}
-
-.md-typeset .rm-figures > ul > li > p:last-child {
-  margin-top: 0.3em;
-  color: var(--md-default-fg-color--light);
-}
-
-/* Technology list: a Markdown list shown as pills, each with its official logo */
-.md-typeset .rm-stack > ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45em;
-  margin: 1em 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.md-typeset .rm-stack > ul > li {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45em;
-  margin: 0;
-  padding: 0.25em 0.7em;
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 999px;
-  font-size: 0.85em;
-  font-weight: 500;
-}
-
-.md-typeset .rm-stack .twemoji {
-  height: 1.1em;
-  vertical-align: middle;
-}
-
-.md-typeset .rm-stack .twemoji svg {
-  width: 1.1em;
-  height: 1.1em;
-  max-height: none;
-}
-
-/* Black logos (LangChain, MCP) turn white in dark mode */
-[data-md-color-scheme="slate"] .md-typeset .rm-stack li:has(svg path[fill="#030710"]) svg,
-[data-md-color-scheme="slate"] .md-typeset .rm-stack li:has(svg path[fill="#1A1A1A"]) svg {
-  filter: invert(1);
 }
