@@ -1,6 +1,35 @@
 {% extends "main.html" %}
 
-{# The homepage content (EN and FR) lives in index.md; this template only drops the page title. #}
+{#
+  Homepage layout. All text comes from the front matter of docs/index.md (English)
+  and docs-fr/index.md (French): edit the text there, not here.
+#}
 {% block content %}
-{{ page.content }}
+{% set hero = page.meta.hero %}
+<div class="rm-home">
+
+  <header class="rm-hero">
+    <h1 class="rm-hero__name">{{ hero.name }}</h1>
+    <p class="rm-hero__role">{{ hero.role }}</p>
+    <p class="rm-hero__intro">{{ hero.intro }}</p>
+    <p class="rm-hero__actions">
+      {% for a in hero.actions %}
+      <a class="md-button{% if a.primary %} md-button--primary{% endif %}" href="{{ a.href }}">{{ a.label }}</a>
+      {% endfor %}
+    </p>
+  </header>
+
+  <section class="rm-pillars">
+    {% for p in page.meta.pillars %}
+    <div class="rm-pillar">
+      <h2>{{ p.title }}</h2>
+      <p>{{ p.text }}</p>
+      {% if p.link_href %}<p class="rm-pillar__link"><a href="{{ p.link_href }}">{{ p.link_label }}</a></p>{% endif %}
+    </div>
+    {% endfor %}
+  </section>
+
+  {{ page.content }}
+
+</div>
 {% endblock %}

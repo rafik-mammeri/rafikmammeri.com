@@ -5,7 +5,140 @@ hide:
   - navigation
   - toc
 ---
-<div class="cvp">
-<header class="cvp-pagehead"><h1>Projets</h1><p>Quatre produits IA en production. Pour chacun : le contexte, ce que j'ai fait, et ce que ça a changé.</p></header>
-<section class="cvp-sec"><div class="cvp-row" id="voice-bot"><p class="cvp-lab"><b>2026</b>Voix</p><div class="cvp-body"><div class="cvp-feature"><h3 class="cvp-h3">Voice bot du service client</h3><p><b>Contexte.</b> Remplacer le serveur vocal à touches du service client par une conversation naturelle.</p><h4>Ce que j'ai fait</h4><ul><li>Impliqué de l'appel d'offres à la production</li><li>Conçu l'architecture qui garde la logique métier et l'accès aux données dans l'entreprise, le fournisseur ne gérant que la voix</li><li>Recommandé un lancement progressif</li><li>Analysé la première journée d'appels et livré cinq correctifs en 48 heures</li></ul><div class="cvp-figs"><p class="cvp-fig"><b>3 jours</b><span>pour prendre 100 % des appels entrants</span></p><p class="cvp-fig"><b>Des milliers</b><span>d'appels traités chaque jour</span></p><p class="cvp-fig"><b>4×</b><span>plus d'appels résolus sans conseiller que prévu</span></p></div><p><b>Résultat.</b> 81 % des appels transférés arrivent au conseiller avec le motif déjà identifié.</p><div class="cvp-chips"><span class="cvp-chip"><img src="/assets/logos/langgraph.svg" alt="" width="16" height="16">LangGraph</span><span class="cvp-chip"><img src="/assets/logos/claude.svg" alt="" width="16" height="16">Claude</span><span class="cvp-chip"><img src="/assets/logos/python.svg" alt="" width="16" height="16">Python</span><span class="cvp-chip"><img src="/assets/logos/fastapi.svg" alt="" width="16" height="16">FastAPI</span><span class="cvp-chip"><img src="/assets/logos/kubernetes.svg" alt="" width="16" height="16">Kubernetes</span><span class="cvp-chip"><img src="/assets/logos/mongodb.svg" alt="" width="16" height="16">MongoDB</span></div></div></div></div><div class="cvp-row" id="shopping-assistants"><p class="cvp-lab"><b>2025 – 2026</b>Web et mobile</p><div class="cvp-body"><h3 class="cvp-h3">Assistants d'achat, web et mobile</h3><p><b>Contexte.</b> Remplacer un chatbot à scénarios par un assistant génératif couvrant conseil, commandes et après-vente.</p><h4>Ce que j'ai fait</h4><ul><li>Première génération : architecture multi-agents, contrat d'API négocié avec les équipes web, iOS et Android, en production en six mois</li><li>Seconde génération : lead produit IA du programme ; j'ai convaincu les équipes après-vente de rejoindre la même plateforme</li></ul><div class="cvp-figs"><p class="cvp-fig"><b>~2 000</b><span>conversations par jour</span></p><p class="cvp-fig"><b>78 %</b><span>d'avis positifs</span></p><p class="cvp-fig"><b>6 mois</b><span>du lancement à la production</span></p></div><p><b>Résultat.</b> Un seul assistant pour la vente et l'après-vente, au lieu de projets séparés.</p><div class="cvp-chips"><span class="cvp-chip"><img src="/assets/logos/langgraph.svg" alt="" width="16" height="16">LangGraph</span><span class="cvp-chip"><img src="/assets/logos/azure.svg" alt="" width="16" height="16">Azure OpenAI</span><span class="cvp-chip"><img src="/assets/logos/python.svg" alt="" width="16" height="16">Python</span><span class="cvp-chip"><img src="/assets/logos/fastapi.svg" alt="" width="16" height="16">FastAPI</span><span class="cvp-chip"><img src="/assets/logos/kubernetes.svg" alt="" width="16" height="16">Kubernetes</span><span class="cvp-chip"><img src="/assets/logos/mongodb.svg" alt="" width="16" height="16">MongoDB</span></div></div></div><div class="cvp-row" id="self-bi"><p class="cvp-lab"><b>2026</b>Data</p><div class="cvp-body"><h3 class="cvp-h3">Self-BI : les données en langage naturel</h3><p><b>Contexte.</b> Les équipes métier attendaient les analystes pour obtenir leurs chiffres.</p><h4>Ce que j'ai fait</h4><ul><li>Lancé le projet et l'ai mené avec les équipes data jusqu'à la production</li><li>Un serveur MCP sécurisé en quatre couches</li><li>Règles métier reprises des tableaux de bord existants, puis vérifiées contre eux</li><li>Modèle choisi par comparaison à l'aveugle</li></ul><p><b>Résultat.</b> Des chiffres alignés sur les tableaux de bord officiels, et une architecture devenue la cible de l'entreprise.</p><div class="cvp-chips"><span class="cvp-chip"><img class="cvp-mono" src="/assets/logos/modelcontextprotocol.svg" alt="" width="16" height="16">MCP</span><span class="cvp-chip"><img src="/assets/logos/gemini.svg" alt="" width="16" height="16">Gemini</span><span class="cvp-chip"><img src="/assets/logos/snowflake.svg" alt="" width="16" height="16">Snowflake</span><span class="cvp-chip"><img src="/assets/logos/googlecloud.svg" alt="" width="16" height="16">Google Cloud</span><span class="cvp-chip"><img src="/assets/logos/python.svg" alt="" width="16" height="16">Python</span></div></div></div><div class="cvp-row" id="internal-agents"><p class="cvp-lab"><b>2026</b>Collaborateurs</p><div class="cvp-body"><h3 class="cvp-h3">Agents internes</h3><p><b>Contexte.</b> Donner aux collaborateurs des assistants dans l'outil qu'ils utilisent déjà chaque jour.</p><h4>Ce que j'ai fait</h4><ul><li>Construit la passerelle entre la messagerie interne et les agents</li><li>L'assistant RH officiel appartient aux RH : contenu, périmètre et validation</li></ul><p><b>Résultat.</b> Ouvert à tous les collaborateurs depuis novembre 2026, avec quatre agents conçus par les métiers eux-mêmes.</p><div class="cvp-chips"><span class="cvp-chip"><img src="/assets/logos/gemini.svg" alt="" width="16" height="16">Gemini</span><span class="cvp-chip"><img src="/assets/logos/googlecloud.svg" alt="" width="16" height="16">Google Cloud</span><span class="cvp-chip"><img src="/assets/logos/python.svg" alt="" width="16" height="16">Python</span></div></div></div></section>
+
+# Projets
+
+Quatre produits IA en production. Pour chacun : le contexte, ce que j'ai fait, et ce que ça a changé.
+{ .rm-lede }
+
+## Voice bot du service client { #voice-bot }
+
+2026 · Voix
+{ .rm-meta }
+
+**Contexte.** Remplacer le serveur vocal à touches du service client par une conversation naturelle.
+
+<div class="grid cards rm-figures" markdown>
+
+-   __3 jours__
+
+    pour prendre 100 % des appels entrants
+
+-   __Des milliers__
+
+    d'appels traités chaque jour
+
+-   __4×__
+
+    plus d'appels résolus sans conseiller que prévu
+
+</div>
+
+**Ce que j'ai fait**
+
+- Impliqué de l'appel d'offres à la production
+- Conçu l'architecture qui garde la logique métier et l'accès aux données dans l'entreprise, le fournisseur ne gérant que la voix
+- Recommandé un lancement progressif
+- Analysé la première journée d'appels et livré cinq correctifs en 48 heures
+
+**Résultat.** 81 % des appels transférés arrivent au conseiller avec le motif déjà identifié.
+
+<div class="rm-stack" markdown>
+
+- :logos-langgraph: LangGraph
+- :logos-claude: Claude
+- :logos-python: Python
+- :logos-fastapi: FastAPI
+- :logos-kubernetes: Kubernetes
+- :logos-mongodb: MongoDB
+
+</div>
+
+## Assistants d'achat, web et mobile { #shopping-assistants }
+
+2025 – 2026 · Web et mobile
+{ .rm-meta }
+
+**Contexte.** Remplacer un chatbot à scénarios par un assistant génératif couvrant conseil, commandes et après-vente.
+
+<div class="grid cards rm-figures" markdown>
+
+-   __~2 000__
+
+    conversations par jour
+
+-   __78 %__
+
+    d'avis positifs
+
+-   __6 mois__
+
+    du lancement à la production
+
+</div>
+
+**Ce que j'ai fait**
+
+- Première génération : architecture multi-agents, contrat d'API négocié avec les équipes web, iOS et Android, en production en six mois
+- Seconde génération : lead produit IA du programme ; j'ai convaincu les équipes après-vente de rejoindre la même plateforme
+
+**Résultat.** Un seul assistant pour la vente et l'après-vente, au lieu de projets séparés.
+
+<div class="rm-stack" markdown>
+
+- :logos-langgraph: LangGraph
+- :logos-azure: Azure OpenAI
+- :logos-python: Python
+- :logos-fastapi: FastAPI
+- :logos-kubernetes: Kubernetes
+- :logos-mongodb: MongoDB
+
+</div>
+
+## Self-BI : les données en langage naturel { #self-bi }
+
+2026 · Data
+{ .rm-meta }
+
+**Contexte.** Les équipes métier attendaient les analystes pour obtenir leurs chiffres.
+
+**Ce que j'ai fait**
+
+- Lancé le projet et l'ai mené avec les équipes data jusqu'à la production
+- Un serveur MCP sécurisé en quatre couches
+- Règles métier reprises des tableaux de bord existants, puis vérifiées contre eux
+- Modèle choisi par comparaison à l'aveugle
+
+**Résultat.** Des chiffres alignés sur les tableaux de bord officiels, et une architecture devenue la cible de l'entreprise.
+
+<div class="rm-stack" markdown>
+
+- :logos-modelcontextprotocol: MCP
+- :logos-gemini: Gemini
+- :logos-snowflake: Snowflake
+- :logos-googlecloud: Google Cloud
+- :logos-python: Python
+
+</div>
+
+## Agents internes { #internal-agents }
+
+2026 · Collaborateurs
+{ .rm-meta }
+
+**Contexte.** Donner aux collaborateurs des assistants dans l'outil qu'ils utilisent déjà chaque jour.
+
+**Ce que j'ai fait**
+
+- Construit la passerelle entre la messagerie interne et les agents
+- L'assistant RH officiel appartient aux RH : contenu, périmètre et validation
+
+**Résultat.** Ouvert à tous les collaborateurs depuis novembre 2026, avec quatre agents conçus par les métiers eux-mêmes.
+
+<div class="rm-stack" markdown>
+
+- :logos-gemini: Gemini
+- :logos-googlecloud: Google Cloud
+- :logos-python: Python
+
 </div>
