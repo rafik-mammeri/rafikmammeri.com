@@ -35,7 +35,7 @@ The fix that actually moved the needle on a production conversational assistant 
 
 ```mermaid
 flowchart TB
-    A[User message] --> B[Router identifies domain<br>(no LLM classification call)]
+    A[User message] --> B["Router identifies domain<br>(no LLM classification call)"]
     B --> C["Correct specialized agent activated<br>(no intermediate LLM call to get there)"]
     C --> D["Agent responds<br>(1–2 LLM calls total)"]
     D -- on topic change --> E["Native handoff<br>conversation state carried over<br>no restart, no re-explaining context"]

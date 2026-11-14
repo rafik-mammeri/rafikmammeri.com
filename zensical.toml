@@ -10,7 +10,6 @@ nav = [
   { "Experience" = "experience.md" },
   { "Community" = "community.md" },
   { "About" = "about.md" },
-  { "Contact" = "contact.md" },
 ]
 
 extra_css = ["stylesheets/extra.css"]
@@ -35,7 +34,6 @@ features = [
   "navigation.instant",
   "navigation.instant.prefetch",
   "navigation.tracking",
-  "navigation.top",
   "navigation.tabs",
   "navigation.tabs.sticky",
   "header.autohide",
@@ -86,7 +84,7 @@ icon = "fontawesome/brands/github"
 link = "https://github.com/rafik-mammeri"
 
 [[project.extra.social]]
-icon = "custom/medium"
+icon = "fontawesome/brands/medium"
 link = "https://medium.com/@rafik_23044"
 
 [[project.extra.social]]
