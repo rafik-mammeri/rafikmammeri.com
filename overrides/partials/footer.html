@@ -1,16 +1,17 @@
 {#-
-  Footer in the site's own language: one compact line with the ways to reach Rafik as tokens.
+  Footer: one compact, plain line. It replaces the Contact page, so it holds every way
+  to reach Rafik. Name and copyright on the left; the logos, in the text colour, on the right.
 -#}
-<footer class="rm-footer">
+<footer class="rm-footer" id="contact">
   <div class="rm-footer__inner md-grid">
-    <span class="rm-footer__who"><span class="rm-footer__dot"></span>Rafik Mammeri · Lead AI Engineer · Lille</span>
-    <span class="rm-footer__tokens">
-      <a class="rm-chip" href="mailto:rafik@rafikmammeri.com">rafik@rafikmammeri.com</a>
-      <a class="rm-chip" href="https://www.linkedin.com/in/rafikmammeri">LinkedIn</a>
-      <a class="rm-chip" href="https://github.com/rafik-mammeri">GitHub</a>
-      <a class="rm-chip" href="https://medium.com/@rafik_23044">Medium</a>
-      <a class="rm-chip" href="https://dev.to/rafik_mammeri">dev.to</a>
+    <span class="rm-footer__who"><span class="rm-footer__dot"></span>Rafik Mammeri</span>
+    <span class="rm-footer__copy">&copy; {{ build_date_utc.strftime("%Y") if build_date_utc else "2026" }}</span>
+    <span class="rm-footer__links">
+      <a class="is-mail" href="mailto:rafik@rafikmammeri.com" title="rafik@rafikmammeri.com" aria-label="Email: rafik@rafikmammeri.com">{% include ".icons/fontawesome/solid/envelope.svg" %}</a>
+      <a class="is-linkedin" href="https://www.linkedin.com/in/rafikmammeri" title="LinkedIn" aria-label="LinkedIn">{% include ".icons/fontawesome/brands/linkedin.svg" %}</a>
+      <a class="is-github" href="https://github.com/rafik-mammeri" title="GitHub" aria-label="GitHub">{% include ".icons/fontawesome/brands/github.svg" %}</a>
+      <a class="is-medium" href="https://medium.com/@rafik_23044" title="Medium" aria-label="Medium">{% include ".icons/fontawesome/brands/medium.svg" %}</a>
+      <a class="is-dev" href="https://dev.to/rafik_mammeri" title="dev.to" aria-label="dev.to">{% include ".icons/fontawesome/brands/dev.svg" %}</a>
     </span>
-    <span class="rm-footer__copy">{{ config.copyright }}</span>
   </div>
 </footer>
