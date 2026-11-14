@@ -1,0 +1,128 @@
+# French site, built into site/fr/ by scripts/build.sh. Keep in sync with zensical.toml.
+[project]
+site_url = "https://www.rafikmammeri.com/fr/"
+docs_dir = "docs-fr"
+site_dir = "site/fr"
+site_name = "Rafik Mammeri"
+site_description = "Lead AI Engineer. Tech lead d'une équipe d'ingénieurs IA qui met en production des agents IA à grande échelle."
+site_author = "Rafik Mammeri"
+copyright = "&copy; 2026 Rafik Mammeri"
+
+nav = [
+  { "Accueil" = "index.md" },
+  { "Projets" = "projects.md" },
+  { "Communauté" = "community.md" },
+  { "À propos" = "about.md" },
+  { "Contact" = "contact.md" },
+]
+
+extra_css = ["stylesheets/extra.css"]
+
+repo_url = "https://github.com/rafik-mammeri"
+repo_name = "rafik-mammeri"
+
+[project.extra]
+generator = false
+alternate = [
+  { name = "English", link = "/", lang = "en" },
+  { name = "Français", link = "/fr/", lang = "fr" },
+]
+
+[project.theme]
+custom_dir = "overrides"
+language = "fr"
+favicon = "assets/favicon.svg"
+logo = "assets/favicon.svg"
+features = [
+  "navigation.instant",
+  "navigation.instant.prefetch",
+  "navigation.tracking",
+  "navigation.top",
+  "navigation.tabs",
+  "navigation.tabs.sticky",
+  "navigation.indexes",
+  "content.code.copy",
+  "content.code.annotate",
+  "content.tooltips",
+  "content.footnote.tooltips",
+]
+
+[project.theme.icon]
+repo = "fontawesome/brands/github"
+admonition.tip = "lucide/lightbulb"
+admonition.note = "lucide/shield-check"
+
+[project.theme.font]
+text = "Hanken Grotesk"
+code = "JetBrains Mono"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to system preference"
+
+[[project.extra.social]]
+icon = "fontawesome/solid/envelope"
+link = "mailto:rafik@rafikmammeri.com"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/linkedin"
+link = "https://www.linkedin.com/in/rafikmammeri"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/rafik-mammeri"
+
+[[project.extra.social]]
+icon = "custom/medium"
+link = "https://medium.com/@rafik_23044"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/dev"
+link = "https://dev.to/rafik_mammeri"
+
+[project.markdown_extensions]
+abbr = {}
+attr_list = {}
+def_list = {}
+md_in_html = {}
+admonition = {}
+footnotes = {}
+tables = {}
+toc.permalink = true
+pymdownx.betterem = {}
+pymdownx.caret = {}
+pymdownx.details = {}
+pymdownx.highlight = {
+  anchor_linenums = true,
+  line_spans = "__span",
+  pygments_lang_class = true,
+}
+pymdownx.inlinehilite = {}
+pymdownx.keys = {}
+pymdownx.magiclink = {}
+pymdownx.mark = {}
+pymdownx.smartsymbols = {}
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+pymdownx.snippets = {}
+pymdownx.tabbed = { alternate_style = true, combine_header_slug = true }
+pymdownx.tasklist.custom_checkbox = true
+pymdownx.tilde = {}
+pymdownx.emoji = {
+  emoji_generator = "zensical.extensions.emoji.to_svg",
+  emoji_index = "zensical.extensions.emoji.twemoji",
+}
