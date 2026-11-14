@@ -5,7 +5,13 @@ hide:
   - navigation
   - toc
 ---
-<div class="cvp">
-<header class="cvp-pagehead"><h1>À propos</h1></header>
-<section class="cvp-prose"><p>Je suis venu à l'IA par les mathématiques. Mon doctorat m'a appris à aborder des problèmes qui n'ont pas encore de réponse toute faite, en partant de la théorie plutôt qu'en traitant un modèle comme une boîte noire.</p><p>J'ai passé six ans chez BNP Paribas : d'abord à modéliser le risque de crédit sous régulation bancaire, où chaque modèle doit être documenté et défendu, puis au Datalab, à mettre en production des projets de machine learning pour différents métiers. J'y ai appris à concevoir un système en partant du principe que le modèle se trompera un jour.</p><p>Depuis 2025, je suis Lead AI Engineer chez Boulanger, tech lead d'une équipe d'ingénieurs IA qui livre des agents en production pour les clients et les collaborateurs. Je vis à Lille.</p><p class="cvp-cta"><a href="/fr/projects/">Voir les projets</a><a href="/fr/contact/">Me contacter</a></p></section>
-</div>
+
+# À propos
+
+Je suis venu à l'IA par les mathématiques. Mon doctorat m'a appris à aborder des problèmes qui n'ont pas encore de réponse toute faite, en partant de la théorie plutôt qu'en traitant un modèle comme une boîte noire.
+
+J'ai passé six ans chez BNP Paribas : d'abord à modéliser le risque de crédit sous régulation bancaire, où chaque modèle doit être documenté et défendu, puis au Datalab, à mettre en production des projets de machine learning pour différents métiers. J'y ai appris à concevoir un système en partant du principe que le modèle se trompera un jour.
+
+Depuis 2025, je suis Lead AI Engineer chez Boulanger, tech lead d'une équipe d'ingénieurs IA qui livre des agents en production pour les clients et les collaborateurs. Je vis à Lille.
+
+[Voir les projets](projects.md){ .md-button .md-button--primary } [Me contacter](contact.md){ .md-button }

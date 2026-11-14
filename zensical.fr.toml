@@ -125,4 +125,5 @@ pymdownx.tilde = {}
 pymdownx.emoji = {
   emoji_generator = "zensical.extensions.emoji.to_svg",
   emoji_index = "zensical.extensions.emoji.twemoji",
+  options = { custom_icons = ["overrides/.icons"] },
 }
