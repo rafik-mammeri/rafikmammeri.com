@@ -1,26 +1,12 @@
 {#-
-  Language selector. Same as the theme's, except each link points to the current
-  page in the other language instead of its homepage. Both languages use the same
-  page paths; articles under writing/ exist only in English, so from there the
-  link goes to the Community page, which lists them.
+  Language switch, as two tokens: the current language is filled, the other is a link to
+  the same page in that language. Both languages use the same page paths; articles under
+  writing/ exist only in English, so from there French goes to the Community page.
+  docs/javascripts/language-switch.js refreshes the links after instant navigation.
 -#}
 {% set path = "community/" if page.url is startingwith("writing/") else page.url %}
-<div class="md-header__option">
-  <div class="md-select">
-    {% set icon = config.theme.icon.alternate or "material/translate" %}
-    <button class="md-header__button md-icon" aria-label="{{ lang.t('select.language') }}">
-      {% include ".icons/" ~ icon ~ ".svg" %}
-    </button>
-    <div class="md-select__inner">
-      <ul class="md-select__list">
-        {% for alt in config.extra.alternate %}
-          <li class="md-select__item">
-            <a href="{{ alt.link ~ (page.url if alt.lang == config.theme.language else path) }}" hreflang="{{ alt.lang }}" class="md-select__link">
-              {{ alt.name }}
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
+<div class="md-header__option rm-lang">
+  {% for alt in config.extra.alternate %}
+  <a class="rm-lang__link{% if alt.lang == config.theme.language %} is-current{% endif %}" href="{{ alt.link ~ (page.url if alt.lang == config.theme.language else path) }}" hreflang="{{ alt.lang }}" lang="{{ alt.lang }}" title="{{ alt.name }}"{% if alt.lang == config.theme.language %} aria-current="true"{% endif %}>{{ alt.lang | upper }}</a>
+  {% endfor %}
 </div>
