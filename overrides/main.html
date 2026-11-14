@@ -48,6 +48,8 @@
 {% block extrahead %}
   <link rel="icon" type="image/png" sizes="96x96" href="{{ config.site_url }}assets/favicon-96.png">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ config.site_url }}assets/apple-touch-icon.png">
+  {#- The theme loads Urbanist at 300, 400 and 700; the homepage paragraph and active tabs use 500 -#}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;600&display=swap">
   <link rel="alternate" type="application/rss+xml" title="Rafik Mammeri — Writing" href="{{ config.site_url }}feed.xml">
   {% if page.canonical_url == config.site_url %}
   <script type="application/ld+json">

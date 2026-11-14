@@ -78,12 +78,12 @@ document$.subscribe(function () {
     t.ends.forEach(function (e, n) {
       var w = ws[n], my = (y + e[1]) / 2;
       paths += '<path d="M' + x + "," + y + " C" + x + "," + my + " " + e[0] + "," + my + " " + e[0] + "," + e[1] +
-        '" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="' + (1 + w * 5).toFixed(2) + '" opacity="' + w.toFixed(3) + '"/>';
+        '" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="' + (0.8 + w * 2.2).toFixed(2) + '" opacity="' + w.toFixed(3) + '"/>';
     });
     t.arcs.forEach(function (c) {
       var top = Math.min(c[1], c[3]) - 26;
       paths += '<path class="rm-attn__arc" d="M' + c[0] + "," + c[1] + " C" + c[0] + "," + top + " " + c[2] + "," + top + " " + c[2] + "," + c[3] +
-        '" fill="none" stroke-width="2" stroke-dasharray="3 5" stroke-linecap="round" style="opacity:' + (0.5 * fade).toFixed(2) + '"/>';
+        '" fill="none" stroke-width="1.4" stroke-dasharray="3 5" stroke-linecap="round" style="opacity:' + (0.5 * fade).toFixed(2) + '"/>';
     });
     svg.innerHTML = paths;
   }
