@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Rafik Mammeri — Writing</title>
-    <link>https://www.rafikmammeri.com/writing/</link>
+    <link>https://www.rafikmammeri.com/community/</link>
     <description>Notes on building and running LLM systems in production.</description>
     <language>en</language>
-    <lastBuildDate>Wed, 19 Aug 2026 07:13:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Nov 2026 10:46:49 +0000</lastBuildDate>
     <atom:link href="https://www.rafikmammeri.com/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Latency is an architecture problem, not a prompt problem</title>
@@ -28,16 +28,16 @@
 <p>If your latency budget is dominated by "time waiting for an LLM to decide something," before any LLM call that actually helps the user, you're paying an architecture tax — not a prompt tax.</p>
 </div>
 <h2>What changes when routing is native, not delegated</h2>
-<p>The fix that actually moved the needle on a production conversational assistant handling several thousand conversations a day wasn't a better router prompt. It was removing the router's LLM call entirely for the common case:</p>
+<p>The fix that actually moved the needle on a production conversational assistant handling about 2,000 conversations a day wasn't a better router prompt. It was removing the router's LLM call entirely for the common case:</p>
 <div class="highlight"><pre><span></span><code>flowchart TB
-    A[User message] --&gt; B[Router identifies domain directly]
+    A[User message] --&gt; B[Router identifies domain&lt;br&gt;(no LLM classification call)]
     B --&gt; C[&quot;Correct specialized agent activated&lt;br&gt;(no intermediate LLM call to get there)&quot;]
     C --&gt; D[&quot;Agent responds&lt;br&gt;(1–2 LLM calls total)&quot;]
     D -- on topic change --&gt; E[&quot;Native handoff&lt;br&gt;conversation state carried over&lt;br&gt;no restart, no re-explaining context&quot;]
     E --&gt; C
 </code></pre></div>
 <p>The router still exists — it still has to figure out which agent should own a message. What changed is <em>how</em> it decides: deterministic signal matching and graph-native routing where possible, instead of asking a general-purpose LLM to classify intent on every single turn. The handoff between agents, when a conversation genuinely changes topic mid-flow, is also native to the orchestration graph rather than a fresh LLM call bolted on top — so switching agents doesn't mean losing the conversation's accumulated context.</p>
-<p>The result: most messages resolve in <strong>one to two LLM calls total</strong>, down from three or more. That's not a 10% latency improvement from a leaner prompt — it's removing a whole category of round-trip.</p>
+<p>The result: most messages resolve in <strong>one to two LLM calls total</strong>, versus the three or more an orchestrator-first design needs. That's not a 10% latency improvement from a leaner prompt — it's removing a whole category of round-trip.</p>
 <h2>Why this is easy to miss</h2>
 <p>Prompt-level optimization is visible and satisfying: you can diff two prompts, run an eval, see a number move. Architectural latency is invisible until you actually trace a request end to end and count how many times you're calling out to a model before anything useful happens. It's also easy to under-count, because "just one more classification step" always looks cheap in isolation — it's the sum across the whole conversation flow that hurts.</p>
 <p>The practical habit that catches this: before optimizing any single prompt, draw the actual sequence of LLM calls a real message triggers, node by node, including the ones that feel like plumbing (classification, formatting, validation). If more than one of those nodes is a full LLM call and could plausibly be a rule, a smaller/cheaper model, or a native part of the orchestration layer instead — that's where the latency budget is actually going.</p>

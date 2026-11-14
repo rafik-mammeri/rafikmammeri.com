@@ -1,83 +1,344 @@
 ---
-title: Experience
-description: From regulated credit-risk modeling at BNP Paribas to technical lead for production AI agents at Boulanger — the full path, education, and certifications.
+title: "Experience"
+description: "Positions I have held and what I built in each: what it was, its business impact, and the technology behind it."
+hide:
+  - navigation
+  - toc
 ---
 
 # Experience
 
-Seven-plus years across two demanding engineering cultures: regulated credit risk at a major bank, then generative AI in production retail. The through-line: taking models out of notebooks and making them things an organization can actually run, trust, and build on.
+The positions I have held and what I built in each: what it was, what it changed for the business, and the technology behind it.
+{ .rm-lede }
 
-## Boulanger — Senior AI Engineer, technical lead for AI agents
-`Apr 2025 — Present` · France
+## Boulanger { #boulanger }
 
-Boulanger is one of France's largest electronics and appliance retailers (~€4B revenue, ~10,000 employees). I joined to build its generative AI assistant and have become the technical lead for AI agents across the company — owning architecture, development, Kubernetes deployment, API exposure, security, response quality, and the relationship with business teams, across four production systems on three channels.
+Lead AI Engineer · April 2025 – present · Lille
+{ .rm-meta }
 
-**Customer AI assistant — web & mobile.**
-Replaced a legacy rule-based chatbot with a production LLM assistant covering the full customer journey. Six months from start to production; live since October 2025; in continuous release since.
+Tech lead of a team of AI engineers that builds and runs the company's AI agents, for customers and for employees.
 
-- Designed a **LangGraph swarm architecture** — specialized agents, direct routing, native handoffs — built to minimize LLM calls per interaction (~2.4s average response time)
-- Deployed on **Kubernetes** with a fully async pipeline (FastAPI + Motor + httpx) sized for concurrent load; exposed and secured the API on an enterprise gateway with per-channel subscription plans
-- **Led the API contract negotiation across three front-end teams** (web, iOS, Android): 12 polymorphic content types, per-client capability declaration, escalation flows — the longest and most cross-functional part of the build
-- Built the security layer into the graph itself: prompt-injection detection, off-scope filtering, per-agent tool isolation
-- Run the quality loop with the business: acceptance sessions, feedback prioritization, versioned Markdown prompts iterated with **Langfuse** LLM-judge scoring on live traffic
-- **Impact:** ~2,000 conversations/day · 73–75% resolved without escalation · 78% satisfaction across 10,450+ ratings — and organizationally, chat is now a baseline requirement in every new IT project at the company
+### Customer-service voice bot { #voice-bot }
 
-**Self-BI — natural-language access to Snowflake.**
-Designed and built an **MCP server** exposing the data warehouse's query and semantic-search capabilities, paired with **Google ADK agents on Vertex AI** inside Gemini Enterprise. Four independent security layers — gateway auth, validated service headers, SQL statement-type enforcement, read-only per-use-case Snowflake roles — so even a hallucinated query cannot touch data it shouldn't. Solved private connectivity between public GCP and internal infrastructure (Private Service Connect + conditional proxy layer).
+The conversational AI behind the customer-service phone line, in production since 28 October 2026. I lead it end to end: architecture, code, integrations, customer authentication, monitoring and production analysis, working with the voice vendor and the customer-service teams. Involved from the vendor tender in late 2025, I co-designed the architecture that keeps business logic and customer data in-house. The agent is connected to 15 internal services, from order tracking and repairs to invoices, loyalty, stores and the product catalogue.
 
-**Internal agents — Google Chat & Gemini Enterprise.**
-Deployed business-owned agents for employees, including the company's **official HR assistant** — HR owns content, scope, and validation; I own the technical platform. Pattern being industrialized as a reusable Terraform template so each new departmental agent is a provisioning task, not a project.
+<div class="rm-impact" markdown>
 
-**Vox — voice callbot.**
-Extending the assistant to the phone channel: token-by-token SSE streaming (speech synthesis starts before generation ends), deterministic hard-rule escalation with zero superfluous LLM calls, hexagonal architecture with a framework-free domain layer.
+**Impact**
 
-`Python · LangGraph · Azure OpenAI GPT-4o · Gemini 2.5 Pro · Google ADK · MCP · FastAPI · Kubernetes · Vertex AI · Snowflake · Langfuse`
+- Every inbound call handled within three days of launch, thousands of calls a day
+- Over 10% of calls resolved without an advisor from the second day, against 2% planned, and 29% on product questions
+- 81% of transferred calls reach the advisor with the reason already identified
+- Five fixes in 48 hours after the first day, cutting hang-ups by more than a third
+- About half a second before the voice starts answering
 
-## ITS Group — AI / DevOps Engineer, Freelance
-`Oct 2024 — Mar 2025` · Remote
+</div>
 
-Sole technical owner of a RAG system matching consultant profiles to client requirements — from blank page to production, alone.
+<div class="rm-stack" markdown>
 
-- Full pipeline: CV ingestion → semantic embeddings (Weaviate) → retrieval → generation (OpenAI GPT)
-- Conversational interface with iterative refinement (LangChain + Streamlit)
-- GCP infrastructure from scratch — VPC, GKE, Terraform, Terragrunt — deployed on Kubernetes
+- :logos-langgraph: LangGraph
+- :logos-anthropic: Anthropic
+- :logos-python: Python
+- :logos-fastapi: FastAPI
+- :logos-kubernetes: Kubernetes
+- :logos-gravitee: Gravitee
+- :logos-mongodb: MongoDB
+- :logos-langfuse: Langfuse
+- :logos-prometheus: Prometheus
+- :logos-grafana: Grafana
+- :logos-gitlab: GitLab CI
 
-`Python · LangChain · Weaviate · OpenAI · Streamlit · GCP · Terraform · Kubernetes`
+</div>
 
-## BNP Paribas Datalab — Senior Data Scientist
-`Sep 2021 — May 2024` · Levallois-Perret
+### Shopping assistant, first generation { #shopping-assistant }
 
-BNP Paribas's data & AI innovation lab. Shipped four ML projects to production across different business lines — each one packaged, monitored, and handed over, not just demonstrated.
+A generative assistant on the website and mobile apps for product advice, orders and after-sales, replacing a scripted chatbot. Multi-agent design, and one API contract negotiated with the web, iOS and Android teams.
 
-- **Customer support chatbot** — fine-tuned SBERT for semantic Q&A over a knowledge base, cutting support workload by 40%
-- **Fraud detection (Cetelem)** — XGBoost with a full MLOps pipeline: CI/CD, API, batch CLI
-- **First-unpaid scoring** (Belgian subsidiary) — unpaid-installment prediction, fully production-packaged
-- **Call-center volume forecasting** — LSTM + XGBoost ensemble, −30% forecast error, −15% operational cost
+<div class="rm-impact" markdown>
 
-`Python · Scikit-learn · XGBoost · HuggingFace Transformers · PyTorch · FastAPI · MLflow · Docker`
+**Impact**
 
-## BNP Paribas Risk — Data Scientist / Risk Manager
-`Apr 2018 — Sep 2021` · Bordeaux
+- In production in six months; about 2,000 conversations a day in spring 2026
+- 78% positive ratings from customers
+- Chat became a standard part of every new IT project
 
-Credit-risk modeling for BNP Paribas's risk division across four markets — France, Turkey, Germany, Belgium — in a Basel II/III regulated environment: model documentation, independent validation reviews, defended decisions.
+</div>
 
-- Built the division's internal Python scoring library — modular SOLID architecture, CI/CD, documentation
-- **SME credit scoring (Turkey)** — logistic regression + random forest, +20% decision precision
-- **Credit card behavioral scoring** (German subsidiary) — gradient boosting + CatBoost, +15% precision
+<div class="rm-stack" markdown>
 
-This is where I learned model governance the hard way — under regulators. It's the discipline behind how I approach LLM security, observability, and validation today: the assumption that a model *will* be wrong, and the system has to be designed for that day.
+- :logos-langgraph: LangGraph
+- :logos-openai: OpenAI
+- :logos-azureaisearch: Azure AI Search
+- :logos-python: Python
+- :logos-fastapi: FastAPI
+- :logos-kubernetes: Kubernetes
+- :logos-gravitee: Gravitee
+- :logos-mongodb: MongoDB
+- :logos-langfuse: Langfuse
+- :logos-gitlab: GitLab CI
 
-`Python · Scikit-learn · XGBoost · CatBoost · Pandas`
+</div>
 
----
+### Shopping assistant, second generation { #shopping-agent }
 
-## Education
+AI product lead of the program: a sales assistant, guided after-sales, product care, and the move to the company's standard platform.
 
-**PhD, Fundamental Mathematics** — Université de Lille
-A doctorate in pure mathematics is an unusual path into AI engineering. It shows up less in the frameworks I use and more in how I approach problems without a standard answer yet — reading the underlying optimization or probability theory rather than treating a model as a black box.
+<div class="rm-impact" markdown>
 
-**M2, Data Science** — Université Paris-Saclay
+**Impact**
 
-## Certifications
+- One assistant for sales and after-sales instead of separate integrations
+- Launched in October 2026 with a gradual rollout on the website, then on the mobile apps in November
 
-- **Professional Data Engineer** — Google Cloud
+</div>
+
+<div class="rm-stack" markdown>
+
+- :logos-langgraph: LangGraph
+- :logos-openai: OpenAI
+- :logos-azureaisearch: Azure AI Search
+- :logos-python: Python
+- :logos-fastapi: FastAPI
+- :logos-kubernetes: Kubernetes
+- :logos-gravitee: Gravitee
+- :logos-mongodb: MongoDB
+- :logos-langfuse: Langfuse
+- :logos-prometheus: Prometheus
+- :logos-grafana: Grafana
+- :logos-gitlab: GitLab CI
+
+</div>
+
+### Self-BI: data in plain language { #self-bi }
+
+Started the project and took it to production with the data teams: business teams ask the data warehouse questions in plain language in Gemini Enterprise, through an in-house MCP server. Access is secured in four layers, from user sign-in with OAuth 2.0 and OpenID Connect to role-based access to the data.
+
+<div class="rm-impact" markdown>
+
+**Impact**
+
+- Two business scopes in production; a new scope can be added in about three days
+- Answers without waiting for an analyst, with figures that match the official dashboards
+- Median answer time cut from 150 to 60 seconds with specialised tools
+- Validated by the security team and IT architects, then chosen as the company's target architecture
+
+</div>
+
+<div class="rm-stack" markdown>
+
+- :logos-modelcontextprotocol: MCP
+- :logos-gemini: Gemini Enterprise
+- :logos-snowflake: Snowflake
+- :logos-googlecloud: Google Cloud
+- :logos-gravitee: Gravitee
+- OAuth 2.0
+- :logos-openid: OpenID Connect
+- RBAC
+- :logos-python: Python
+- :logos-langfuse: Langfuse
+- :logos-prometheus: Prometheus
+- :logos-grafana: Grafana
+
+</div>
+
+### Internal agents { #internal-agents }
+
+The bridge that brings business-owned agents into the company messaging tool, starting with the official HR assistant, whose content HR owns.
+
+<div class="rm-impact" markdown>
+
+**Impact**
+
+- Opened to every employee in November 2026, announced by HR and finance leadership
+- Four agents designed by the business teams themselves
+
+</div>
+
+<div class="rm-stack" markdown>
+
+- :logos-gemini: Gemini
+- :logos-googlecloud: Google Cloud
+- :logos-python: Python
+
+</div>
+
+## Freelance { #freelance }
+
+Generative AI Engineer · October 2024 – March 2025 · Remote
+{ .rm-meta }
+
+### Consultant matching { #consultant-matching }
+
+A conversational tool for an IT services firm: a salesperson describes a client need in plain language, the tool asks follow-up questions, then returns the best-matching consultant profiles. Built alone, from the first line to production, including the cloud infrastructure.
+
+<div class="rm-impact" markdown>
+
+**Impact**
+
+- Profiles found in seconds instead of a manual search
+- More precise matches against each client's specific requirements
+
+</div>
+
+<div class="rm-stack" markdown>
+
+- :logos-python: Python
+- :logos-langchain: LangChain
+- :logos-openai: OpenAI
+- Weaviate
+- Streamlit
+- :logos-googlecloud: Google Cloud
+- :logos-terraform: Terraform
+- :logos-kubernetes: Kubernetes
+- :logos-docker: Docker
+
+</div>
+
+## BNP Paribas, Datalab { #bnp-paribas-datalab }
+
+Senior Data Scientist · June 2021 – May 2024 · Paris
+{ .rm-meta }
+
+The group's data and AI lab: four machine-learning projects taken to production for different business lines.
+
+### Customer-support chatbot { #support-chatbot }
+
+Answers customer requests from the support knowledge base before they reach an advisor, using a fine-tuned language model.
+
+<div class="rm-impact" markdown>
+
+**Impact**
+
+- 65% of incoming requests handled automatically
+- 40% less workload for the support teams
+- Support available around the clock
+
+</div>
+
+<div class="rm-stack" markdown>
+
+- :logos-python: Python
+- :logos-pytorch: PyTorch
+- :logos-huggingface: Hugging Face Transformers
+- :logos-fastapi: FastAPI
+- :logos-docker: Docker
+- :logos-mlflow: MLflow
+
+</div>
+
+### Call-volume forecasting { #call-forecasting }
+
+Daily forecasts of incoming calls for a debt-collection call centre, to plan staffing around holidays and collection campaigns.
+
+<div class="rm-impact" markdown>
+
+**Impact**
+
+- 30% lower forecast error on call peaks
+- 15% lower operating cost
+
+</div>
+
+<div class="rm-stack" markdown>
+
+- :logos-python: Python
+- XGBoost
+- :logos-fastapi: FastAPI
+- :logos-docker: Docker
+- :logos-mlflow: MLflow
+
+</div>
+
+### Fraud and payment-default scoring { #fraud-scoring }
+
+Fraud detection on online consumer-credit applications, and prediction of first missed payments for the Belgian subsidiary, each taken to production with automated testing and deployment.
+
+<div class="rm-impact" markdown>
+
+**Impact**
+
+- Fewer credit applications reviewed by hand, and faster answers to customers
+- Collection teams can act first on the customers most likely to miss a payment
+
+</div>
+
+<div class="rm-stack" markdown>
+
+- :logos-python: Python
+- XGBoost
+- :logos-scikitlearn: scikit-learn
+- :logos-fastapi: FastAPI
+- :logos-docker: Docker
+- :logos-gitlab: GitLab CI
+
+</div>
+
+## BNP Paribas, Risk { #bnp-paribas-risk }
+
+Data Scientist · January 2018 – May 2021 · Bordeaux
+{ .rm-meta }
+
+Credit-risk models for four countries under banking regulation (Basel II/III): every model documented and defended in independent review.
+
+### SME credit scoring, Turkey { #sme-scoring }
+
+Scoring of small and medium businesses applying for credit.
+
+<div class="rm-impact" markdown>
+
+**Impact**
+
+- 20% more precise lending decisions
+- Fewer payment defaults
+
+</div>
+
+<div class="rm-stack" markdown>
+
+- :logos-python: Python
+- :logos-scikitlearn: scikit-learn
+- pandas
+
+</div>
+
+### Credit-card scoring, Germany { #card-scoring }
+
+Behavioural scoring of credit-card customers for the German subsidiary.
+
+<div class="rm-impact" markdown>
+
+**Impact**
+
+- 15% more precise risk scores
+- Lower losses on bad debt
+
+</div>
+
+<div class="rm-stack" markdown>
+
+- :logos-python: Python
+- :logos-scikitlearn: scikit-learn
+- CatBoost
+- pandas
+
+</div>
+
+### Shared scoring library { #scoring-library }
+
+The team's internal library for building scoring models, with tests, automated delivery and documentation.
+
+<div class="rm-impact" markdown>
+
+**Impact**
+
+- Fewer code errors across teams
+- Faster delivery on the projects that followed
+
+</div>
+
+<div class="rm-stack" markdown>
+
+- :logos-python: Python
+- :logos-gitlab: GitLab CI
+
+</div>

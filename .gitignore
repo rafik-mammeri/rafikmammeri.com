@@ -22,3 +22,8 @@ site/
 # Local AI assistant instructions — never published
 CLAUDE.md
 .claude/
+
+# Copied from docs/ at build time by scripts/build.sh
+docs-fr/assets/
+docs-fr/stylesheets/
+docs-fr/javascripts/

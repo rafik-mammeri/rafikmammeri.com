@@ -23,18 +23,19 @@ LLMS_OUT = ROOT / "docs" / "llms.txt"
 LLMS_HEADER = """\
 # Rafik Mammeri
 
-> Senior AI Engineer and technical lead for AI agents at Boulanger, one of
-> France's largest electronics retailers (€4B). Four systems in production
-> across three channels: a customer-facing multi-agent assistant (web and
-> mobile), natural-language BI over Snowflake via MCP, a streaming voice
-> callbot, and RAG-backed internal agents. Seven years of regulated banking
-> ML before that. PhD in mathematics. Based in Lille, France.
+> Lead AI Engineer and PhD in mathematics, based in Lille, France. Tech lead
+> of a team of AI engineers that designs and ships AI agents to production at
+> scale: a customer-service voice bot answering thousands of calls a day, two
+> generations of shopping assistant on web and mobile, natural-language
+> analytics over the data warehouse via MCP, and internal agents for
+> employees. Six years of production ML in regulated banking before that.
+> A French version of the site is at https://www.rafikmammeri.com/fr/.
 
 ## Pages
 
-- [Projects](https://www.rafikmammeri.com/projects/): Four production AI systems written as case studies — the stakes, the trade-off decisions (including what was rejected and why), and the organizational outcomes.
-- [Experience](https://www.rafikmammeri.com/experience/): Full career path — Boulanger, freelance, BNP Paribas Datalab and Risk — plus education and certifications.
-- [Writing](https://www.rafikmammeri.com/writing/): Notes on building and running LLM systems in production.
+- [Experience](https://www.rafikmammeri.com/experience/): Each position held and what was built there: the project, its business impact, and the technology stack.
+- [Community](https://www.rafikmammeri.com/community/): Articles, talks, open source and teaching.
+- [About](https://www.rafikmammeri.com/about/): From a PhD in mathematics and regulated banking to AI engineering in production.
 - [Contact](https://www.rafikmammeri.com/contact/): Email, LinkedIn, GitHub, Medium, dev.to.
 
 ## Writing
@@ -108,7 +109,7 @@ def main() -> None:
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>{escape(FEED_TITLE)}</title>
-    <link>{SITE_URL}/writing/</link>
+    <link>{SITE_URL}/community/</link>
     <description>{escape(FEED_DESCRIPTION)}</description>
     <language>en</language>
     <lastBuildDate>{now}</lastBuildDate>
