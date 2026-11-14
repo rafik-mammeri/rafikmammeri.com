@@ -1,6 +1,6 @@
 ---
 title: "Community"
-description: "Articles, talks, open source and teaching: what I share about building AI agents in production."
+description: "Articles, open source and teaching: what I share about building AI agents in production."
 hide:
   - navigation
   - toc
@@ -16,18 +16,18 @@ What I write and share about building AI agents in production.
 [Latency is an architecture problem, not a prompt problem](/writing/2026-08-14-latency-is-an-architecture-problem/)  
 August 2026, also on Medium and dev.to
 
+<!-- Hidden until there is content
 ## :lucide-mic: Talks
-
-Coming soon.
+-->
 
 ## :fontawesome-brands-github: Open source
 
 [github.com/rafik-mammeri](https://github.com/rafik-mammeri)  
 More to come.
 
+<!-- Hidden until there is content
 ## :lucide-messages-square: Forums and communities
-
-Coming soon.
+-->
 
 ## :lucide-graduation-cap: Teaching
 

@@ -17,7 +17,7 @@ In 2021 I joined the bank's data and AI lab in Paris. The work changed from buil
 
 When generative AI arrived, I wanted to build with it rather than watch. I spent six months as an independent engineer, taking a product on my own from the first line of code to production.
 
-In 2025 I joined Boulanger to build its customer assistant. One project led to the next: a second-generation shopping assistant, a voice bot for the customer-service line, tools for employees. Along the way I became the tech lead of the team that builds them: I set the technical direction and make sure every engineer can ship with confidence.
+In 2025 I joined Boulanger to build its customer assistant. One project led to the next: a second-generation shopping assistant, a voice bot for the customer-service line, tools for employees. Along the way I became the tech lead of the team that builds them. I set the technical direction, and I still work in the code, from architecture to production analysis.
 
 I live in Lille.
 

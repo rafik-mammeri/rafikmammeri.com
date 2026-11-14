@@ -26,11 +26,10 @@ The conversational AI behind the customer-service phone line, in production sinc
 
 **Impact**
 
-- Every inbound call handled within three days of launch, thousands of calls a day
-- Over 10% of calls resolved without an advisor from the second day, against 2% planned, and 29% on product questions
-- 81% of transferred calls reach the advisor with the reason already identified
+- Rolled out from 25% to 100% of inbound calls in three days, a gradual ramp-up I recommended
+- Over 50,000 calls in the first six days, 98% handled by the AI
+- Over 10% of calls resolved without an advisor from the second day, against 2% planned
 - Five fixes in 48 hours after the first day, cutting hang-ups by more than a third
-- About half a second before the voice starts answering
 
 </div>
 
@@ -81,14 +80,15 @@ A generative assistant on the website and mobile apps for product advice, orders
 
 ### Shopping assistant, second generation { #shopping-agent }
 
-AI product lead of the program: a sales assistant, guided after-sales, product care, and the move to the company's standard platform.
+I lead the program as AI product lead: a sales assistant, guided after-sales, product care, and the move to the company's standard platform.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
 - One assistant for sales and after-sales instead of separate integrations
-- Launched in October 2026 with a gradual rollout on the website, then on the mobile apps in November
+- A/B test on 50% of website traffic since October 2026
+- iOS and Android apps live since 3 November 2026
 
 </div>
 
@@ -119,7 +119,7 @@ Started the project and took it to production with the data teams: business team
 
 - Two business scopes in production; a new scope can be added in about three days
 - Answers without waiting for an analyst, with figures that match the official dashboards
-- Median answer time cut from 150 to 60 seconds with specialised tools
+- Median answer time cut from 150 to 60 seconds with specialized tools
 - Validated by the security team and IT architects, then chosen as the company's target architecture
 
 </div>
@@ -303,7 +303,7 @@ Scoring of small and medium businesses applying for credit.
 
 ### Credit-card scoring, Germany { #card-scoring }
 
-Behavioural scoring of credit-card customers for the German subsidiary.
+Behavioral scoring of credit-card customers for the German subsidiary.
 
 <div class="rm-impact" markdown>
 
