@@ -20,6 +20,8 @@ repo_name = "rafik-mammeri"
 
 [project.extra]
 generator = false
+# Both languages share stored preferences (light/dark theme), so switching language keeps the theme
+scope = "/"
 alternate = [
   { name = "English", link = "/", lang = "en" },
   { name = "Français", link = "/fr/", lang = "fr" },
