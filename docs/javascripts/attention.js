@@ -32,6 +32,8 @@ document$.subscribe(function () {
     }
     root.classList.remove("is-idle");
     var self = (toks[cur].dataset.self || "").split(",").filter(Boolean).map(Number);
+    // while the paragraph streams in, link only to phrases that are already written
+    if (root.classList.contains("is-streaming")) self = self.filter(function (k) { return toks[k].classList.contains("is-in"); });
     toks.forEach(function (b, i) {
       b.classList.toggle("is-on", i === cur);
       b.classList.toggle("is-rel", self.indexOf(i) !== -1);
