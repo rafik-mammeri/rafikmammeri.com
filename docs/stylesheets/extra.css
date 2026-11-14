@@ -227,8 +227,11 @@
    - Type scale ratio 1.25. Spacing in multiples of one unit (1em), tighter
      inside a group than between groups.
    =========================================================================== */
-.md-grid {
-  max-width: 40rem;
+/* Header, tabs and footer keep Zensical's native width; only the page body is a
+   centred reading column */
+.md-content__inner {
+  max-width: 38rem;
+  margin-inline: auto;
 }
 
 .md-typeset {
