@@ -53,12 +53,12 @@ attention:
           w: "0.50,0.70,0.95,0.05,0.50,0.70,0.90,0.95,0.95,0.85,0.80,0.70,0.50,0.95,0.05,0.90,0.05"
           logo: "boulanger"
           points:
-            - "Every inbound call within 3 days"
+            - "Thousands of calls a day"
             - "4× the planned self-service"
         - tag: "2025–26"
           title: "Shopping assistant"
           text: "Advice, orders and after-sales on web and mobile, over two generations."
-          href: "experience/#shopping-assistant"
+          href: "experience/#shopping-agent"
           w: "0.50,0.80,0.95,0.05,0.50,0.55,0.80,0.90,0.85,0.90,0.90,0.70,0.90,0.95,0.05,0.95,0.05"
           logo: "boulanger"
           points:

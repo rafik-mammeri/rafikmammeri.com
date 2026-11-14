@@ -445,6 +445,23 @@
   background: var(--rm-chip-3);
 }
 
+/* Opening: tokens are hidden until they stream in (attention.js) */
+.md-typeset .rm-attn.is-streaming .rm-tok:not(.is-in) {
+  opacity: 0;
+  filter: blur(4px);
+}
+
+.md-typeset .rm-attn.is-streaming .rm-tok {
+  transition: opacity 0.55s ease-out, filter 0.55s ease-out, background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .rm-attn.is-streaming .rm-tok:not(.is-in) {
+    opacity: 1;
+    filter: none;
+  }
+}
+
 .md-typeset .rm-tok:hover {
   box-shadow: inset 0 0 0 1.5px var(--a-hot);
 }
@@ -767,18 +784,198 @@
   color: var(--md-default-fg-color);
 }
 
-/* Theme toggle: the attention dot. Resting in light mode, lit in dark mode. */
-[data-md-component="palette"] .md-header__button {
-  color: var(--md-default-fg-color--light);
-  transition: color 0.2s;
+/* Theme switch: a pendant lamp. Light mode: lit, a warm bulb, a halo and a soft cone.
+   Dark mode: switched off. Clicking it sways the lamp, and the light spreads from it over
+   the whole page, or draws back into it (theme-lamp.js, View Transitions). */
+.rm-lamp.md-header__button {
+  display: inline-grid;
+  place-items: center;
+  margin: 0 0.2rem;
+  padding: 0.25rem 0.35rem;
+  border-radius: 8px;
+  color: var(--md-default-fg-color);
+  transition: background 0.2s;
 }
 
-[data-md-component="palette"] .md-header__button:hover {
-  color: var(--rm-hot);
+.rm-lamp[hidden] {
+  display: none;
 }
 
-[data-md-color-scheme="slate"] [data-md-component="palette"] .md-header__button {
-  color: var(--rm-hot);
+.rm-lamp:hover {
+  background: color-mix(in srgb, var(--md-default-fg-color) 7%, transparent);
+}
+
+.rm-lamp svg {
+  display: block;
+  overflow: visible;
+}
+
+.rm-lamp__swing {
+  transform-box: view-box;
+  transform-origin: 16px 0;
+}
+
+.rm-lamp svg.is-pulled .rm-lamp__swing {
+  animation: rm-lamp-sway 0.9s cubic-bezier(0.3, 0.1, 0.3, 1);
+}
+
+@keyframes rm-lamp-sway {
+  0% { transform: rotate(0); }
+  20% { transform: rotate(9deg); }
+  45% { transform: rotate(-6deg); }
+  70% { transform: rotate(3deg); }
+  100% { transform: rotate(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rm-lamp svg.is-pulled .rm-lamp__swing {
+    animation: none;
+  }
+}
+
+.rm-lamp__stop {
+  stop-color: var(--rm-sel);
+}
+
+.rm-lamp__bulb {
+  fill: #FFE3D6;
+  filter: drop-shadow(0 0 2px var(--rm-sel));
+}
+
+[data-md-color-scheme="slate"] .rm-lamp__light {
+  opacity: 0;
+}
+
+[data-md-color-scheme="slate"] .rm-lamp__bulb {
+  fill: var(--md-default-fg-color--lighter);
+  filter: none;
+}
+
+/* No colour transitions while the theme changes (see theme-lamp.js) */
+.rm-theme-swap,
+.rm-theme-swap *,
+.rm-theme-swap *::before,
+.rm-theme-swap *::after {
+  transition: none !important;
+}
+
+/* The header (with the menu) is its own layer during the change: it stays in place on
+   top and only changes colour */
+.md-header {
+  view-transition-name: rm-header;
+}
+
+::view-transition-group(rm-header) {
+  z-index: 3;
+  animation-duration: 0.4s;
+}
+
+/* The light: the page is masked by a cone that opens from the lamp (an angle, --rm-a) and
+   reaches down the page (a radius, --rm-r), both with soft edges */
+@property --rm-a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --rm-r {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.rm-lamp-on::view-transition-new(root),
+.rm-lamp-off::view-transition-old(root) {
+  z-index: 2;
+  -webkit-mask-image:
+    conic-gradient(from calc(180deg - var(--rm-a) - 14deg) at var(--rm-lx) var(--rm-ly), transparent 0deg, #000 14deg, #000 calc(var(--rm-a) * 2 + 14deg), transparent calc(var(--rm-a) * 2 + 28deg)),
+    radial-gradient(circle at var(--rm-lx) var(--rm-ly), #000 calc(var(--rm-r) - 120px), transparent var(--rm-r));
+  -webkit-mask-composite: source-in;
+  mask-image:
+    conic-gradient(from calc(180deg - var(--rm-a) - 14deg) at var(--rm-lx) var(--rm-ly), transparent 0deg, #000 14deg, #000 calc(var(--rm-a) * 2 + 14deg), transparent calc(var(--rm-a) * 2 + 28deg)),
+    radial-gradient(circle at var(--rm-lx) var(--rm-ly), #000 calc(var(--rm-r) - 120px), transparent var(--rm-r));
+  mask-composite: intersect;
+}
+
+/* On: a narrow beam falls first, then opens to the whole page */
+.rm-lamp-on::view-transition-new(root) {
+  animation: rm-light-on 1.1s cubic-bezier(0.45, 0, 0.2, 1) both;
+}
+
+/* Off: the light closes back into the lamp, a little faster */
+.rm-lamp-off::view-transition-old(root) {
+  animation: rm-light-on 0.85s cubic-bezier(0.5, 0, 0.6, 1) reverse both;
+}
+
+@keyframes rm-light-on {
+  0% {
+    --rm-a: 0deg;
+    --rm-r: 0px;
+  }
+
+  35% {
+    --rm-a: 16deg;
+    --rm-r: calc(var(--rm-far) * 0.7);
+  }
+
+  100% {
+    --rm-a: 110deg;
+    --rm-r: calc(var(--rm-far) + 140px);
+  }
+}
+
+/* The bulb blooms as it switches on, and fades as it switches off */
+.rm-lamp-glow {
+  position: fixed;
+  top: calc(var(--rm-ly) - 60px);
+  left: calc(var(--rm-lx) - 60px);
+  z-index: 4;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--rm-sel) 55%, transparent), transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  view-transition-name: rm-glow;
+}
+
+::view-transition-group(rm-glow) {
+  z-index: 4;
+}
+
+::view-transition-old(rm-glow) {
+  display: none;
+}
+
+.rm-lamp-on::view-transition-new(rm-glow) {
+  animation: rm-bloom 1.1s ease-out both;
+}
+
+.rm-lamp-off::view-transition-new(rm-glow) {
+  animation: rm-bloom 0.7s ease-out both reverse;
+}
+
+@keyframes rm-bloom {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  25% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
 }
 
 /* Footer: one compact line (it wraps on narrow screens): name and copyright left, logos right. */
@@ -787,6 +984,7 @@
   border-top: 1px solid var(--md-default-fg-color--lightest);
   background: var(--md-default-bg-color);
   color: var(--md-default-fg-color--light);
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
 }
 
 .rm-footer__inner {
@@ -804,6 +1002,7 @@
   gap: 0.5rem;
   color: var(--md-default-fg-color);
   font-weight: 700;
+  transition: color 0.3s;
 }
 
 .rm-footer__dot {
@@ -812,6 +1011,31 @@
   border-radius: 50%;
   background: var(--rm-hot);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--rm-hot) 22%, transparent);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+/* Hovering the footer lights it up in the persimmon of the selected menu tab and the
+   RM mark: the whole band turns orange, with ink text, dot and logos. */
+.rm-footer:hover,
+.rm-footer:focus-within {
+  border-top-color: var(--rm-sel);
+  background: var(--rm-sel);
+  color: var(--rm-sel-ink);
+}
+
+.rm-footer:hover .rm-footer__who,
+.rm-footer:hover .rm-footer__copy,
+.rm-footer:hover .rm-footer__links a,
+.rm-footer:focus-within .rm-footer__who,
+.rm-footer:focus-within .rm-footer__copy,
+.rm-footer:focus-within .rm-footer__links a {
+  color: var(--rm-sel-ink);
+}
+
+.rm-footer:hover .rm-footer__dot,
+.rm-footer:focus-within .rm-footer__dot {
+  background: var(--rm-sel-ink);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--rm-sel-ink) 18%, transparent);
 }
 
 .rm-footer__links {
@@ -827,7 +1051,7 @@
   display: inline-flex;
   padding: 0.15rem;
   color: var(--md-default-fg-color);
-  transition: opacity 0.2s, transform 0.2s;
+  transition: color 0.2s, transform 0.2s;
 }
 
 .rm-footer__links svg {
@@ -844,6 +1068,7 @@
 .rm-footer__copy {
   margin-left: -0.5rem;
   color: var(--md-default-fg-color--light);
+  transition: color 0.3s;
 }
 
 /* No repository widget in the header: hide the empty slot the theme keeps for it */

@@ -16,7 +16,7 @@ nav = [
 ]
 
 extra_css = ["stylesheets/extra.css"]
-extra_javascript = ["javascripts/language-switch.js", "javascripts/attention.js"]
+extra_javascript = ["javascripts/language-switch.js", "javascripts/attention.js", "javascripts/theme-lamp.js"]
 
 
 [project.extra]
@@ -58,21 +58,16 @@ text = "Urbanist"
 code = "JetBrains Mono"
 
 [[project.theme.palette]]
-media = "(prefers-color-scheme)"
-toggle.icon = "rm/mode-auto"
-toggle.name = "Switch to light mode"
-
-[[project.theme.palette]]
 media = "(prefers-color-scheme: light)"
 scheme = "default"
 toggle.icon = "rm/mode-light"
-toggle.name = "Switch to dark mode"
+toggle.name = "Mode sombre"
 
 [[project.theme.palette]]
 media = "(prefers-color-scheme: dark)"
 scheme = "slate"
 toggle.icon = "rm/mode-dark"
-toggle.name = "Switch to system preference"
+toggle.name = "Mode clair"
 
 [[project.extra.social]]
 icon = "fontawesome/solid/envelope"
