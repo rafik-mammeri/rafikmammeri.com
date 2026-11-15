@@ -41,7 +41,7 @@ LLMS_HEADER = """\
 """
 
 SITE_URL = "https://www.rafikmammeri.com"
-FEED_TITLE = "Rafik Mammeri — Writing"
+FEED_TITLE = "Articles by Rafik Mammeri"
 FEED_DESCRIPTION = "Notes on building and running LLM systems in production."
 
 

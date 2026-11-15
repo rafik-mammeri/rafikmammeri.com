@@ -62,27 +62,30 @@
   </style>
 {% endblock %}
 
+{#- the homepage is page.url == "" (page.is_homepage does not exist in Zensical) -#}
 {% block htmltitle %}
-  {% if page.meta and page.meta.title and page.meta.title != config.site_name %}
-    <title>{{ page.meta.title }} - {{ config.site_name }}</title>
+  {% if page.url == "" %}
+    <title>{{ config.site_name }}, Lead AI Engineer</title>
+  {% elif page.meta and page.meta.title and page.meta.title != config.site_name %}
+    <title>{{ page.meta.title }} | {{ config.site_name }}</title>
   {% elif page.title and not page.is_homepage and page.title | striptags != config.site_name %}
-    <title>{{ page.title | striptags }} - {{ config.site_name }}</title>
+    <title>{{ page.title | striptags }} | {{ config.site_name }}</title>
   {% else %}
-    <title>{{ config.site_name }} — Lead AI Engineer</title>
+    <title>{{ config.site_name }}, Lead AI Engineer</title>
   {% endif %}
 {% endblock %}
 
 {% block extrahead %}
   <link rel="icon" type="image/png" sizes="96x96" href="{{ config.site_url }}assets/favicon-96.png">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ config.site_url }}assets/apple-touch-icon.png">
-  <link rel="alternate" type="application/rss+xml" title="Rafik Mammeri — Writing" href="{{ config.site_url }}feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="Articles by Rafik Mammeri" href="{{ config.site_url }}feed.xml">
   {% if page.canonical_url == config.site_url %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Rafik Mammeri",
-    "alternateName": ["rafikmammeri.com", "Rafik Mammeri — Lead AI Engineer"],
+    "alternateName": ["rafikmammeri.com", "Rafik Mammeri, Lead AI Engineer"],
     "url": "https://www.rafikmammeri.com/"
   }
   </script>
@@ -133,10 +136,12 @@
   }
   </script>
   {% endif %}
-  {% if page.meta and page.meta.title and page.meta.title != config.site_name %}
-    {% set og_title = page.meta.title ~ " — " ~ config.site_name %}
+  {% if page.url == "" %}
+    {% set og_title = config.site_name ~ ", Lead AI Engineer" %}
+  {% elif page.meta and page.meta.title and page.meta.title != config.site_name %}
+    {% set og_title = page.meta.title %}
   {% elif page.title and page.title | striptags != config.site_name %}
-    {% set og_title = page.title | striptags ~ " — " ~ config.site_name %}
+    {% set og_title = page.title | striptags %}
   {% else %}
     {% set og_title = config.site_name %}
   {% endif %}

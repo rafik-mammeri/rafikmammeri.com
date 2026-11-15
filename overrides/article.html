@@ -125,7 +125,7 @@
           // long quotes are matched by their first and last words
           var words = quote.replace(/…$/, "").split(/\s+/), enc = function (x) { return encodeURIComponent(x).replace(/-/g, "%2D"); };
           var frag = words.length > 12 ? enc(words.slice(0, 5).join(" ")) + "," + enc(words.slice(-5).join(" ")) : enc(words.join(" "));
-          copy("“" + quote + "”\n— Rafik Mammeri, " + title + "\n" + url + "#:~:text=" + frag, qb);
+          copy("“" + quote + "”\nRafik Mammeri, " + title + "\n" + url + "#:~:text=" + frag, qb);
         });
       }
 
