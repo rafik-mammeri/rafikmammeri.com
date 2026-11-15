@@ -35,6 +35,19 @@
       <meta name="generator" content="{{ generator }}">
     {% endblock %}
 
+{#- Announcement bar (theme feature), on the homepage only: the site is still being built -#}
+{% block announce %}
+  {%- if page and page.url == "" -%}
+    <p class="rm-banner"><span class="rm-banner__dot" aria-hidden="true"></span>
+    {%- if config.theme.language == "fr" -%}
+      Site en construction : certaines informations peuvent être illustratives ou non exhaustives.
+    {%- else -%}
+      This site is under construction: some information may be illustrative or not exhaustive.
+    {%- endif -%}
+    </p>
+  {%- endif -%}
+{% endblock %}
+
 {% block htmltitle %}
   {% if page.meta and page.meta.title and page.meta.title != config.site_name %}
     <title>{{ page.meta.title }} - {{ config.site_name }}</title>

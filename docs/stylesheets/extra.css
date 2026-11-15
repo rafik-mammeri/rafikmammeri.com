@@ -351,7 +351,7 @@
   filter: invert(1);
 }
 
-/* Section icons in headings (Community) take the accent colour */
+/* Section icons in headings take the accent colour */
 .md-typeset h2 .twemoji {
   color: var(--md-accent-fg-color);
   margin-right: 0.15em;
@@ -978,6 +978,447 @@
   }
 }
 
+/* Articles (scripts/gen_articles.py, javascripts/articles.js).
+   Left, per month: a stamp with the month, year, number of articles and minutes of reading,
+   which stays in place while its articles scroll past. Then one line per article: title,
+   then day, reading time, topic and series part. Nothing is ever dimmed: the article under
+   the pointer sits on a white plate, title in persimmon, and the card on the right shows
+   its summary, keywords, sections (a line under each, as long as its share of the reading
+   time) and what to read next, ordered by relation score with the score in a ring.
+   Sizes are in em of the 16px body text, as in the design mock-ups. */
+.md-content__inner:has(.rm-ar-wrap) {
+  max-width: 74rem;
+}
+
+.md-typeset .rm-ar-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18.75em;
+  gap: 2.25em;
+  margin-top: 1.5em;
+}
+
+.md-typeset .rm-ar-main {
+  min-width: 0;
+}
+
+.md-typeset .rm-ar-g {
+  display: grid;
+  grid-template-columns: 8.25em minmax(0, 1fr);
+  gap: 1.6em;
+  padding: 0.9em 0 0.4em;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .rm-ar-g:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.md-typeset .rm-ar-st {
+  position: sticky;
+  top: 7rem;
+  align-self: start;
+  line-height: 1;
+}
+
+.md-typeset .rm-ar-st b {
+  display: block;
+  font-size: 2.1em;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .rm-ar-st span {
+  display: block;
+  margin-top: 0.25em;
+  font-family: var(--md-code-font, monospace);
+  font-size: 0.76em;
+  font-weight: 600;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset .rm-ar-st em {
+  display: block;
+  margin-top: 0.75em;
+  font-family: var(--md-code-font, monospace);
+  font-size: 0.68em;
+  font-style: normal;
+  line-height: 1.5;
+  color: var(--rm-hot);
+}
+
+.md-typeset a.rm-ar {
+  display: block;
+  margin: 0 -0.75em;
+  padding: 0.56em 0.75em 0.62em;
+  border-radius: 12px;
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.md-typeset a.rm-ar.is-on,
+.md-typeset a.rm-ar:focus-visible {
+  background: #FFFFFF;
+  box-shadow: 0 18px 44px rgba(20, 20, 20, 0.09), 0 2px 6px rgba(20, 20, 20, 0.05);
+}
+
+[data-md-color-scheme="slate"] .md-typeset a.rm-ar.is-on,
+[data-md-color-scheme="slate"] .md-typeset a.rm-ar:focus-visible {
+  background: #1A1A1A;
+  box-shadow: 0 0 40px color-mix(in srgb, var(--rm-hot) 12%, transparent);
+}
+
+.md-typeset a.rm-ar:focus-visible {
+  outline: 2px solid var(--rm-hot);
+  outline-offset: 2px;
+}
+
+.md-typeset .rm-ar__ttl {
+  display: block;
+  font-size: 1.14em;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  transition: color 0.2s;
+}
+
+.md-typeset .rm-ar__sub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2em 0.75em;
+  margin-top: 0.2em;
+  font-family: var(--md-code-font, monospace);
+  font-size: 0.72em;
+  color: var(--md-default-fg-color--lighter);
+  transition: color 0.2s;
+}
+
+.md-typeset .rm-ar__ser {
+  padding: 0 0.45em;
+  border-radius: 5px;
+  background: var(--rm-chip-3);
+  font-weight: 600;
+  color: var(--rm-hot);
+}
+
+.md-typeset a.rm-ar.is-on :is(.rm-ar__ttl, .rm-ar__sub) {
+  color: var(--rm-hot);
+}
+
+/* the summary under the title is for narrow screens only, where there is no card */
+.md-typeset .rm-ar__sum {
+  display: none;
+}
+
+/* the card */
+.md-typeset .rm-ar-card {
+  position: sticky;
+  top: 7rem;
+  align-self: start;
+  padding: 1.1em;
+  border-radius: 16px;
+  background: #FFFFFF;
+  box-shadow: 0 18px 44px rgba(20, 20, 20, 0.09), 0 2px 6px rgba(20, 20, 20, 0.05);
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .rm-ar-card {
+  background: #1A1A1A;
+  box-shadow: 0 0 40px color-mix(in srgb, var(--rm-hot) 12%, transparent);
+}
+
+.md-typeset .rm-arc__title {
+  display: block;
+  margin: 0 0 0.25em;
+  font-size: 1.1em;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+}
+
+.md-typeset a.rm-arc__title:hover {
+  color: var(--md-typeset-a-color);
+}
+
+.md-typeset .rm-arc__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2em 0.7em;
+  margin-bottom: 0.8em;
+  font-family: var(--md-code-font, monospace);
+  font-size: 0.78em;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset .rm-arc__series {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+  margin: 0 0 0.8em;
+  padding: 0.5em 0.65em;
+  border-radius: 10px;
+  background: var(--rm-chip-3);
+  font-size: 0.86em;
+  font-weight: 700;
+}
+
+.md-typeset .rm-arc__dots {
+  display: flex;
+  gap: 0.3em;
+}
+
+.md-typeset .rm-arc__dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--rm-hot) 25%, transparent);
+}
+
+.md-typeset .rm-arc__dots i.is-done {
+  background: var(--rm-hot);
+}
+
+.md-typeset .rm-arc__dots i.is-here {
+  background: var(--rm-hot);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--rm-hot) 25%, transparent);
+}
+
+.md-typeset .rm-arc__sum {
+  margin: 0 0 0.7em;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-arc__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+}
+
+.md-typeset .rm-arc__tags span {
+  padding: 0.05em 0.5em;
+  border-radius: 6px;
+  background: var(--rm-chip-1);
+  font-size: 0.86em;
+  font-weight: 600;
+}
+
+.md-typeset .rm-arc__tags span:nth-child(3n + 2) {
+  background: var(--rm-chip-2);
+}
+
+.md-typeset .rm-arc__tags span:nth-child(3n) {
+  background: var(--rm-chip-3);
+}
+
+.md-typeset h5.rm-arc__label {
+  margin: 1.1em 0 0.5em;
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--md-default-fg-color--light);
+  text-transform: none;
+}
+
+/* sections: full-width titles, a line of light under each */
+.md-typeset .rm-arc__toc > div {
+  padding: 0.35em 0 0.45em;
+}
+
+.md-typeset .rm-arc__toc > div > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+.md-typeset .rm-arc__toc span {
+  font-size: 0.95em;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.md-typeset .rm-arc__toc em,
+.md-typeset .rm-nx small,
+.md-typeset .rm-arc__item small {
+  font-family: var(--md-code-font, monospace);
+  font-size: 0.74em;
+  font-style: normal;
+  color: var(--md-default-fg-color--lighter);
+  white-space: nowrap;
+}
+
+.md-typeset .rm-arc__toc i {
+  display: block;
+  height: 2px;
+  margin-top: 0.3em;
+  border-radius: 1px;
+  background: linear-gradient(90deg, var(--rm-hot), color-mix(in srgb, var(--rm-hot) 20%, transparent));
+}
+
+/* read next: ordered by relation score, the score in a ring */
+.md-typeset .rm-nx {
+  display: grid;
+  grid-template-columns: 2.1em minmax(0, 1fr);
+  gap: 0.1em 0.65em;
+  align-items: center;
+  padding: 0.5em 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.md-typeset .rm-nx:first-child {
+  border-top: 0;
+}
+
+.md-typeset .rm-nx b {
+  font-size: 0.97em;
+  line-height: 1.25;
+  transition: color 0.2s;
+}
+
+.md-typeset .rm-nx small {
+  grid-column: 2;
+  white-space: normal;
+}
+
+.md-typeset .rm-nx:hover b,
+.md-typeset .rm-nx:focus-visible b {
+  color: var(--rm-hot);
+}
+
+.md-typeset .rm-nx__why {
+  font-weight: 600;
+  color: var(--rm-hot);
+}
+
+.md-typeset .rm-nx__ring {
+  position: relative;
+  grid-row: span 2;
+  width: 2.1em;
+  height: 2.1em;
+}
+
+.md-typeset .rm-nx__ring svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.md-typeset .rm-nx__track {
+  fill: none;
+  stroke: var(--rm-chip-2);
+  stroke-width: 3.5;
+}
+
+.md-typeset .rm-nx__fill {
+  fill: none;
+  stroke: var(--rm-sel);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+
+.md-typeset .rm-nx__ring > span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--md-code-font, monospace);
+  font-size: 0.68em;
+  font-weight: 700;
+}
+
+/* the card at rest: series and latest article */
+.md-typeset .rm-arc__item {
+  display: block;
+  padding: 0.45em 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  cursor: pointer;
+}
+
+.md-typeset .rm-arc__item:first-child {
+  border-top: 0;
+}
+
+.md-typeset .rm-arc__item b {
+  display: block;
+  font-size: 0.97em;
+  line-height: 1.25;
+}
+
+.md-typeset .rm-arc__item:hover b {
+  color: var(--rm-hot);
+}
+
+.md-typeset .rm-arc__also {
+  margin: 0.8em 0 0;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-arc__also a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* Narrow screens: no card; months become headings and each line shows its summary */
+@media screen and (max-width: 59.99em) {
+  .md-typeset .rm-ar-wrap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .md-typeset .rm-ar-card {
+    display: none;
+  }
+
+  .md-typeset .rm-ar-g {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.4em;
+  }
+
+  .md-typeset .rm-ar-st {
+    position: static;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6em;
+  }
+
+  .md-typeset .rm-ar-st em {
+    margin: 0;
+  }
+
+  .md-typeset .rm-ar-st em br {
+    display: none;
+  }
+
+  .md-typeset .rm-ar__sum {
+    display: block;
+    margin-top: 0.3em;
+    font-size: 0.9em;
+    color: var(--md-default-fg-color--light);
+  }
+}
+
+.md-typeset .rm-posts__feed {
+  margin-top: 2.5rem;
+  font-size: 0.66rem;
+}
+
+.md-typeset .rm-posts__feed a {
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-posts__feed a:hover {
+  color: var(--md-typeset-a-color);
+}
+
 /* Footer: one compact line (it wraps on narrow screens): name and copyright left, logos right. */
 .rm-footer {
   margin-top: 2.5rem;
@@ -1074,4 +1515,35 @@
 /* No repository widget in the header: hide the empty slot the theme keeps for it */
 .md-header__source {
   display: none;
+}
+
+/* Announcement bar (overrides/main.html, homepage only): a quiet tinted line with the
+   live dot, not the theme's full-colour band */
+.md-banner {
+  background: var(--rm-chip-3);
+  color: var(--md-default-fg-color);
+}
+
+.md-banner__inner {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.64rem;
+}
+
+.md-typeset .rm-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin: 0;
+  text-align: center;
+}
+
+.rm-banner__dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--rm-hot);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--rm-hot) 22%, transparent);
 }
