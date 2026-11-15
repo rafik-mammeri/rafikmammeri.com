@@ -77,6 +77,8 @@ def articles():
         if not date_match:
             continue
         meta, body = split_front_matter(path.read_text(encoding="utf-8"))
+        if meta.get("demo") == "true":  # demo articles, written to show the layout, stay out of the feed
+            continue
         published = datetime(
             *(int(g) for g in date_match.groups()), 12, 0, tzinfo=timezone.utc
         )

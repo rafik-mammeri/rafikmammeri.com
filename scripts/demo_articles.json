@@ -28,36 +28,6 @@
   "part": 4
  },
  {
-  "title": "Evals before features",
-  "description": "A small, boring evaluation bench saved us more time than any new capability we shipped.",
-  "tags": [
-   "Evaluation",
-   "LLMOps"
-  ],
-  "topic": "Running in production",
-  "date": "2026-11-14",
-  "minutes": 4,
-  "words": 1027,
-  "sections": [
-   [
-    "The problem",
-    1
-   ],
-   [
-    "What we tried first",
-    1
-   ],
-   [
-    "What worked",
-    1
-   ],
-   [
-    "What I would do differently",
-    1
-   ]
-  ]
- },
- {
   "title": "The router does not need to be an LLM",
   "description": "Deterministic routing where it works, a model only where the ambiguity is real.",
   "tags": [

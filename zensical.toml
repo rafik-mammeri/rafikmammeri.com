@@ -86,6 +86,20 @@ link = "https://medium.com/@rafik_23044"
 icon = "fontawesome/brands/dev"
 link = "https://dev.to/rafik_mammeri"
 
+# Where readers can follow new articles (article pages, right column). Add entries here,
+# for example Medium: icon = "fontawesome/brands/medium", link = "https://medium.com/@…", color = "#000000"
+[[project.extra.follow]]
+name = "LinkedIn"
+icon = "fontawesome/brands/linkedin-in"
+link = "https://www.linkedin.com/in/rafikmammeri"
+color = "#0A66C2"
+
+[[project.extra.follow]]
+name = "RSS"
+icon = "fontawesome/solid/rss"
+link = "/feed.xml"
+color = "#F26522"
+
 [project.markdown_extensions]
 abbr = {}
 attr_list = {}

@@ -48,6 +48,20 @@
   {%- endif -%}
 {% endblock %}
 
+{#- Fonts, self-hosted (docs/assets/fonts, SIL Open Font License): one variable file per
+    family covers every weight the site uses, served from the site itself, so there is no
+    connection to a third-party font service and the text font is fetched early.
+    Both languages share the same files at the site root. -#}
+{% block fonts %}
+  <link rel="preload" href="/assets/fonts/urbanist-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face { font-family: "Urbanist"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("/assets/fonts/urbanist-latin.woff2") format("woff2"); }
+    @font-face { font-family: "Urbanist"; font-style: italic; font-weight: 100 900; font-display: swap; src: url("/assets/fonts/urbanist-italic-latin.woff2") format("woff2"); }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100 800; font-display: swap; src: url("/assets/fonts/jetbrains-mono-latin.woff2") format("woff2"); }
+    :root { --md-text-font: "Urbanist"; --md-code-font: "JetBrains Mono"; }
+  </style>
+{% endblock %}
+
 {% block htmltitle %}
   {% if page.meta and page.meta.title and page.meta.title != config.site_name %}
     <title>{{ page.meta.title }} - {{ config.site_name }}</title>
@@ -61,8 +75,6 @@
 {% block extrahead %}
   <link rel="icon" type="image/png" sizes="96x96" href="{{ config.site_url }}assets/favicon-96.png">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ config.site_url }}assets/apple-touch-icon.png">
-  {#- The theme loads Urbanist at 300, 400 and 700; the homepage paragraph and active tabs use 500 -#}
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;600&display=swap">
   <link rel="alternate" type="application/rss+xml" title="Rafik Mammeri — Writing" href="{{ config.site_url }}feed.xml">
   {% if page.canonical_url == config.site_url %}
   <script type="application/ld+json">
@@ -133,18 +145,26 @@
   {% else %}
     {% set og_description = config.site_description %}
   {% endif %}
-  <meta property="og:type" content="website">
+  {#- an article has its own share image, made by scripts/gen_og.py -#}
+  {% set og_image = config.site_url ~ "assets/og-card.png" %}
+  {% set og_type = "website" %}
+  {% if page.meta and page.meta.template == "article.html" %}
+    {% set og_slug = page.meta.slug if page.meta.slug else (page.url | replace("writing/", "") | replace("/", "")) %}
+    {% set og_image = config.site_url ~ "assets/og/" ~ og_slug ~ ".png" %}
+    {% set og_type = "article" %}
+  {% endif %}
+  <meta property="og:type" content="{{ og_type }}">
   <meta property="og:site_name" content="{{ config.site_name }}">
   <meta property="og:title" content="{{ og_title }}">
   <meta property="og:description" content="{{ og_description }}">
   {% if page.canonical_url %}
     <meta property="og:url" content="{{ page.canonical_url }}">
   {% endif %}
-  <meta property="og:image" content="{{ config.site_url }}assets/og-card.png">
+  <meta property="og:image" content="{{ og_image }}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ og_title }}">
   <meta name="twitter:description" content="{{ og_description }}">
-  <meta name="twitter:image" content="{{ config.site_url }}assets/og-card.png">
+  <meta name="twitter:image" content="{{ og_image }}">
 {% endblock %}

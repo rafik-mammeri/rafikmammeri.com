@@ -1,0 +1,63 @@
+{#-
+  End of the article, before "Read next": one quiet line to share it, in the same fine
+  circles as Follow in the right column, each taking its brand colour when pointed at.
+  LinkedIn opens a ready post (takeaway, quote or question, editable) that unfolds under the
+  line; X its post window; Hacker News its pre-filled submission page; then the link, and
+  the device's own share menu where there is one.
+-#}
+{% set url = config.site_url ~ page.url %}
+{% set hn = "https://news.ycombinator.com/submitlink?u=" ~ (url | urlencode) ~ "&t=" ~ (page.title | urlencode) %}
+{% set takeaways = (page.meta.takeaways if page.meta and page.meta.takeaways else []) %}
+<section class="rm-ss rm-share-end" aria-label="Share"
+  data-url="{{ url }}" data-title="{{ page.title }}" data-take="{{ takeaways | join('||') }}"
+  data-quote="{{ page.meta.share_quote if page.meta and page.meta.share_quote else '' }}"
+  data-question="{{ page.meta.share_question if page.meta and page.meta.share_question else '' }}">
+  <div class="rm-ssm__row">
+    <span class="rm-ssm__lbl">Share</span>
+    <div class="rm-ssm__c">
+      <button type="button" data-act="li" style="--brand: #0A66C2" title="Share on LinkedIn, with a ready post" aria-label="Share on LinkedIn, with a ready post" aria-expanded="false">{% include ".icons/fontawesome/brands/linkedin-in.svg" %}</button>
+      <a href="https://x.com/intent/post?text={{ page.title | urlencode }}&url={{ url | urlencode }}" target="_blank" rel="noopener" style="--brand: var(--rm-x); --brand-ink: var(--rm-x-ink)" title="Share on X" aria-label="Share on X">{% include ".icons/fontawesome/brands/x-twitter.svg" %}</a>
+      <a href="{{ hn }}" target="_blank" rel="noopener" style="--brand: #FF6600" title="Discuss it on Hacker News" aria-label="Discuss it on Hacker News">{% include ".icons/rm/hn-y.svg" %}</a>
+      <button type="button" data-act="copy" title="Copy the link" aria-label="Copy the link">{% include ".icons/lucide/link.svg" %}</button>
+      <button type="button" data-act="more" title="More ways to share (Slack, WhatsApp, Reddit…)" aria-label="More ways to share" hidden>{% include ".icons/lucide/share-2.svg" %}</button>
+    </div>
+    <span class="rm-ssm__say" aria-live="polite"></span>
+  </div>
+  <div class="rm-ss__draft"><div>
+    <div class="rm-ss__compose">
+      <div class="rm-ss__tabs"><button type="button" class="is-on" data-k="take">Takeaway</button><button type="button" data-k="quote">Quote</button><button type="button" data-k="question">Question</button><button type="button" class="rm-ss__x" aria-label="Close">×</button></div>
+      <textarea rows="7" aria-label="Your LinkedIn post"></textarea>
+      <div class="rm-ss__go"><button type="button" data-act="post">Copy and open LinkedIn</button><span>Edit freely before posting.</span></div>
+    </div>
+  </div></div>
+</section>
+<script>
+(function () {
+  var se = document.querySelector(".rm-share-end");
+  if (!se) return;
+  var url = se.dataset.url, title = se.dataset.title, take = (se.dataset.take || "").split("||").filter(Boolean), quote = se.dataset.quote;
+  var P = {
+    take: title + "\n\n" + take.join(" ") + "\n\n" + url,
+    quote: (quote ? "“" + quote + "”\n\n" : "") + title + "\n" + url,
+    question: (se.dataset.question ? se.dataset.question + "\n\n" : "") + title + "\n" + url
+  };
+  var say = se.querySelector(".rm-ssm__say"), draft = se.querySelector(".rm-ss__draft"), ta = se.querySelector("textarea"), li = se.querySelector('[data-act="li"]'), t = null;
+  function tell(btn, text) { say.textContent = text; btn.classList.add("is-done"); clearTimeout(t); t = setTimeout(function () { say.textContent = ""; btn.classList.remove("is-done"); }, 1800); }
+  function copy(text, btn, msg) { (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { tell(btn, msg); }, function () { tell(btn, "Copy blocked by the browser"); }); }
+  function setKind(k) { ta.value = P[k]; se.querySelectorAll("[data-k]").forEach(function (b) { b.classList.toggle("is-on", b.dataset.k === k); }); }
+  function open(on) { draft.classList.toggle("is-open", on); li.setAttribute("aria-expanded", on); li.classList.toggle("is-done", on); if (on) setTimeout(function () { ta.focus({ preventScroll: true }); draft.scrollIntoView({ behavior: "smooth", block: "nearest" }); }, 300); }
+  setKind("take");
+  li.addEventListener("click", function () { open(!draft.classList.contains("is-open")); });
+  se.querySelector('[data-act="copy"]').addEventListener("click", function (e) { copy(url, e.currentTarget, "Link copied"); });
+  // the device's own share menu (phones, some browsers): Slack, WhatsApp, Reddit, Messages…
+  var more = se.querySelector('[data-act="more"]');
+  if (more && navigator.share) { more.hidden = false; more.addEventListener("click", function () { navigator.share({ title: title, url: url }).catch(function () {}); }); }
+  se.querySelectorAll("[data-k]").forEach(function (b) { b.addEventListener("click", function () { setKind(b.dataset.k); }); });
+  se.querySelector(".rm-ss__x").addEventListener("click", function () { open(false); });
+  se.querySelector('[data-act="post"]').addEventListener("click", function (e) {
+    var b = e.currentTarget, text = ta.value;
+    copy(text, b, "Post copied, opening LinkedIn");
+    setTimeout(function () { window.open("https://www.linkedin.com/feed/?shareActive=true&text=" + encodeURIComponent(text), "_blank", "noopener"); }, 500);
+  });
+})();
+</script>
