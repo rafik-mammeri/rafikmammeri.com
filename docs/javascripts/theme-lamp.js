@@ -27,6 +27,26 @@
     });
   }
 
+  // The browser's own bar (Safari's tab bar) takes the colour of the page. It follows a
+  // theme-color set here, changed only once the light has settled, so it never jumps to the
+  // new colour while the page is still changing
+  // (the theme rewrites it as soon as the scheme changes: during the change it is put back)
+  var frozen = null;
+  function bar() {
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (!m) { m = document.createElement("meta"); m.name = "theme-color"; document.head.appendChild(m); }
+    return m;
+  }
+  function tint() { frozen = null; bar().content = getComputedStyle(document.body).backgroundColor; }
+  tint();
+  new MutationObserver(function () { if (!busy) tint(); })
+    .observe(document.body, { attributes: true, attributeFilter: ["data-md-color-scheme"] });
+  new MutationObserver(function () {
+    if (frozen === null) return;
+    var m = bar();
+    if (m.content !== frozen) m.content = frozen;
+  }).observe(document.head, { subtree: true, childList: true, attributes: true, attributeFilter: ["content"] });
+
   document.addEventListener("click", function (e) {
     var label = e.target.closest && e.target.closest('[data-md-component="palette"] label');
     if (!label) return;
@@ -38,6 +58,7 @@
     busy = true;
 
     var on = input.getAttribute("data-md-color-scheme") !== "slate";
+    frozen = bar().content;
     // the cord is tugged; switching on, the ring warms up before the light leaves
     fx(on ? ["rm-fx-tug", "rm-fx-warm"] : ["rm-fx-tug"]);
     setTimeout(function () { light(label, input, on); }, on ? 600 : 340);
@@ -61,22 +82,17 @@
     // rm-theme-swap turns off colour transitions, so the page is captured in its final colours
     html.classList.add(cls, "rm-theme-swap");
 
-    var glow = document.createElement("div");
-    glow.className = "rm-lamp-glow";
-    glow.setAttribute("aria-hidden", "true");
-
     var t = document.startViewTransition(function () {
       input.click();
-      document.body.appendChild(glow);
       // switching off, the lamp stays lit while the light goes back into it
       if (!on) fx(["rm-fx-hold"]);
     });
     t.finished.finally(function () {
-      glow.remove();
       html.classList.remove(cls);
       requestAnimationFrame(function () {
         html.classList.remove("rm-theme-swap");
         busy = false;
+        tint();
         // then, switching off, the ring cools down
         if (on) fx(null);
         else { fx(["rm-fx-cool"]); timer = setTimeout(function () { fx(null); }, 1700); }
