@@ -1059,54 +1059,6 @@
   }
 }
 
-/* The bulb blooms as it switches on, and fades as it switches off */
-.rm-lamp-glow {
-  position: fixed;
-  top: calc(var(--rm-ly) - 60px);
-  left: calc(var(--rm-lx) - 60px);
-  z-index: 4;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--rm-sel) 55%, transparent), transparent 70%);
-  pointer-events: none;
-  opacity: 0;
-  view-transition-name: rm-glow;
-}
-
-::view-transition-group(rm-glow) {
-  z-index: 4;
-}
-
-::view-transition-old(rm-glow) {
-  display: none;
-}
-
-.rm-lamp-on::view-transition-new(rm-glow) {
-  animation: rm-bloom 1.1s ease-out both;
-}
-
-.rm-lamp-off::view-transition-new(rm-glow) {
-  animation: rm-bloom 0.7s ease-out both reverse;
-}
-
-@keyframes rm-bloom {
-  0% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-
-  25% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: scale(1.8);
-  }
-}
-
 /* Articles (scripts/gen_articles.py, javascripts/articles.js).
    Left, per month: a stamp with the month, year, number of articles and minutes of reading,
    which stays in place while its articles scroll past. Then one line per article: title,
