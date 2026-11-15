@@ -34,7 +34,7 @@ LLMS_HEADER = """\
 ## Pages
 
 - [Experience](https://www.rafikmammeri.com/experience/): Each position held and what was built there: the project, its business impact, and the technology stack.
-- [Community](https://www.rafikmammeri.com/community/): Articles, talks, open source and teaching.
+- [Articles](https://www.rafikmammeri.com/articles/): Articles on building and running AI agents in production.
 - [About](https://www.rafikmammeri.com/about/): From a PhD in mathematics and regulated banking to AI engineering in production.
 
 ## Writing
@@ -108,7 +108,7 @@ def main() -> None:
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>{escape(FEED_TITLE)}</title>
-    <link>{SITE_URL}/community/</link>
+    <link>{SITE_URL}/articles/</link>
     <description>{escape(FEED_DESCRIPTION)}</description>
     <language>en</language>
     <lastBuildDate>{now}</lastBuildDate>

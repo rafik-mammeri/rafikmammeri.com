@@ -1,0 +1,801 @@
+[
+ {
+  "title": "What a voice agent teaches you about turn-taking",
+  "description": "Barge-in, silences and half sentences: the parts of a phone call that text chat never prepared us for.",
+  "tags": [
+   "Voice agents",
+   "Real time"
+  ],
+  "topic": "Voice",
+  "date": "2026-11-27",
+  "minutes": 8,
+  "words": 1977,
+  "sections": [
+   [
+    "Why phone calls are different",
+    4
+   ],
+   [
+    "Measuring it in production",
+    2
+   ],
+   [
+    "What we changed",
+    2
+   ]
+  ],
+  "series": "Voice agents in production",
+  "part": 4
+ },
+ {
+  "title": "Evals before features",
+  "description": "A small, boring evaluation bench saved us more time than any new capability we shipped.",
+  "tags": [
+   "Evaluation",
+   "LLMOps"
+  ],
+  "topic": "Running in production",
+  "date": "2026-11-14",
+  "minutes": 4,
+  "words": 1027,
+  "sections": [
+   [
+    "The problem",
+    1
+   ],
+   [
+    "What we tried first",
+    1
+   ],
+   [
+    "What worked",
+    1
+   ],
+   [
+    "What I would do differently",
+    1
+   ]
+  ]
+ },
+ {
+  "title": "The router does not need to be an LLM",
+  "description": "Deterministic routing where it works, a model only where the ambiguity is real.",
+  "tags": [
+   "Agents",
+   "Architecture"
+  ],
+  "topic": "Agents and architecture",
+  "date": "2026-11-19",
+  "minutes": 4,
+  "words": 951,
+  "sections": [
+   [
+    "The shape everyone starts with",
+    1
+   ],
+   [
+    "What changed in production",
+    2
+   ],
+   [
+    "Where it does not apply",
+    1
+   ]
+  ]
+ },
+ {
+  "title": "Designing tools an agent can actually use",
+  "description": "Names, arguments and error messages written for a model reader, not a human one.",
+  "tags": [
+   "Tool use",
+   "MCP"
+  ],
+  "topic": "Agents and architecture",
+  "date": "2026-10-19",
+  "minutes": 6,
+  "words": 1481,
+  "sections": [
+   [
+    "The shape everyone starts with",
+    2
+   ],
+   [
+    "What changed in production",
+    2
+   ],
+   [
+    "Where it does not apply",
+    1
+   ]
+  ]
+ },
+ {
+  "title": "MCP in the enterprise: security in four layers",
+  "description": "From user sign-in to role-based access on the data, and why each layer exists.",
+  "tags": [
+   "MCP",
+   "Security",
+   "OAuth 2.0"
+  ],
+  "topic": "Data and security",
+  "date": "2026-10-10",
+  "minutes": 3,
+  "words": 797,
+  "sections": [
+   [
+    "Background",
+    1
+   ],
+   [
+    "How it works",
+    1
+   ],
+   [
+    "Trade-offs",
+    1
+   ]
+  ]
+ },
+ {
+  "title": "Ship the fallback first",
+  "description": "Every production agent needs a boring path for when the clever one fails.",
+  "tags": [
+   "Reliability"
+  ],
+  "topic": "Running in production",
+  "date": "2026-10-04",
+  "minutes": 5,
+  "words": 1298,
+  "sections": [
+   [
+    "The problem",
+    1
+   ],
+   [
+    "What we tried first",
+    1
+   ],
+   [
+    "What worked",
+    1
+   ],
+   [
+    "What I would do differently",
+    1
+   ]
+  ]
+ },
+ {
+  "title": "Prompts are code: version them, review them, test them",
+  "description": "Treating prompts as artefacts with owners, diffs and a test suite.",
+  "tags": [
+   "LLMOps",
+   "Langfuse"
+  ],
+  "topic": "Running in production",
+  "date": "2026-09-07",
+  "minutes": 6,
+  "words": 1507,
+  "sections": [
+   [
+    "The problem",
+    2
+   ],
+   [
+    "What we tried first",
+    2
+   ],
+   [
+    "What worked",
+    1
+   ],
+   [
+    "What I would do differently",
+    1
+   ]
+  ]
+ },
+ {
+  "title": "Reading production traces like a detective",
+  "description": "How a week of traces told us more than a month of user feedback.",
+  "tags": [
+   "Observability",
+   "Langfuse",
+   "Grafana"
+  ],
+  "topic": "Running in production",
+  "date": "2026-09-10",
+  "minutes": 15,
+  "words": 3513,
+  "sections": [
+   [
+    "The problem",
+    4
+   ],
+   [
+    "What we tried first",
+    3
+   ],
+   [
+    "What worked",
+    4
+   ],
+   [
+    "What I would do differently",
+    4
+   ]
+  ]
+ },
+ {
+  "title": "From pilot to all traffic in three days",
+  "description": "A gradual ramp-up plan, the metrics we watched at each step, and what made us go faster.",
+  "tags": [
+   "Rollout",
+   "Voice agents"
+  ],
+  "topic": "Voice",
+  "date": "2026-09-17",
+  "minutes": 5,
+  "words": 1276,
+  "sections": [
+   [
+    "Why phone calls are different",
+    2
+   ],
+   [
+    "Measuring it in production",
+    1
+   ],
+   [
+    "What we changed",
+    2
+   ]
+  ],
+  "series": "Voice agents in production",
+  "part": 3
+ },
+ {
+  "title": "Natural-language BI without hallucinated numbers",
+  "description": "Why the figures must match the official dashboards, and how we made sure they do.",
+  "tags": [
+   "Self-BI",
+   "Data"
+  ],
+  "topic": "Data and security",
+  "date": "2026-08-04",
+  "minutes": 8,
+  "words": 1971,
+  "sections": [
+   [
+    "Background",
+    3
+   ],
+   [
+    "How it works",
+    2
+   ],
+   [
+    "Trade-offs",
+    3
+   ]
+  ]
+ },
+ {
+  "title": "The cost of a conversation",
+  "description": "Breaking down tokens, tools and retries to see what a single conversation really costs.",
+  "tags": [
+   "Cost",
+   "Production LLMs"
+  ],
+  "topic": "Running in production",
+  "date": "2026-08-22",
+  "minutes": 9,
+  "words": 2089,
+  "sections": [
+   [
+    "The problem",
+    2
+   ],
+   [
+    "What we tried first",
+    2
+   ],
+   [
+    "What worked",
+    3
+   ],
+   [
+    "What I would do differently",
+    2
+   ]
+  ]
+ },
+ {
+  "title": "Context windows are not memory",
+  "description": "What to keep, what to summarise and what to forget across a long conversation.",
+  "tags": [
+   "Agents",
+   "Memory"
+  ],
+  "topic": "Agents and architecture",
+  "date": "2026-08-23",
+  "minutes": 15,
+  "words": 3539,
+  "sections": [
+   [
+    "The shape everyone starts with",
+    5
+   ],
+   [
+    "What changed in production",
+    6
+   ],
+   [
+    "Where it does not apply",
+    4
+   ]
+  ],
+  "series": "Agent architecture notes",
+  "part": 4
+ },
+ {
+  "title": "Handoffs between agents without losing the thread",
+  "description": "Passing conversation state from one specialised agent to another, natively in the graph.",
+  "tags": [
+   "LangGraph",
+   "Multi-agent systems"
+  ],
+  "topic": "Agents and architecture",
+  "date": "2026-07-09",
+  "minutes": 12,
+  "words": 2881,
+  "sections": [
+   [
+    "The shape everyone starts with",
+    4
+   ],
+   [
+    "What changed in production",
+    3
+   ],
+   [
+    "Where it does not apply",
+    5
+   ]
+  ],
+  "series": "Agent architecture notes",
+  "part": 3
+ },
+ {
+  "title": "Tech lead, not manager",
+  "description": "What leading a team of AI engineers looks like when you still write code every week.",
+  "tags": [
+   "Leadership"
+  ],
+  "topic": "Leading a team",
+  "date": "2026-07-22",
+  "minutes": 4,
+  "words": 1034,
+  "sections": [
+   [
+    "Where it started",
+    1
+   ],
+   [
+    "The decision",
+    2
+   ],
+   [
+    "Lessons for the next team",
+    2
+   ]
+  ]
+ },
+ {
+  "title": "Hiring AI engineers: what I look for",
+  "description": "Curiosity about failure modes beats familiarity with the latest framework.",
+  "tags": [
+   "Leadership",
+   "Hiring"
+  ],
+  "topic": "Leading a team",
+  "date": "2026-07-15",
+  "minutes": 7,
+  "words": 1700,
+  "sections": [
+   [
+    "Where it started",
+    2
+   ],
+   [
+    "The decision",
+    3
+   ],
+   [
+    "Lessons for the next team",
+    2
+   ]
+  ]
+ },
+ {
+  "title": "A/B testing a conversational assistant",
+  "description": "Half the traffic, two generations, and the metrics that actually moved.",
+  "tags": [
+   "Experimentation"
+  ],
+  "topic": "Running in production",
+  "date": "2026-06-24",
+  "minutes": 5,
+  "words": 1213,
+  "sections": [
+   [
+    "The problem",
+    2
+   ],
+   [
+    "What we tried first",
+    1
+   ],
+   [
+    "What worked",
+    1
+   ],
+   [
+    "What I would do differently",
+    1
+   ]
+  ]
+ },
+ {
+  "title": "Structured outputs saved our integration",
+  "description": "One API contract between the agent, the web app and two mobile apps.",
+  "tags": [
+   "API design",
+   "Structured outputs"
+  ],
+  "topic": "Agents and architecture",
+  "date": "2026-06-15",
+  "minutes": 9,
+  "words": 2172,
+  "sections": [
+   [
+    "The shape everyone starts with",
+    3
+   ],
+   [
+    "What changed in production",
+    4
+   ],
+   [
+    "Where it does not apply",
+    2
+   ]
+  ],
+  "series": "Agent architecture notes",
+  "part": 2
+ },
+ {
+  "title": "Half a second to first word",
+  "description": "Where the time goes in a voice pipeline, and the changes that mattered.",
+  "tags": [
+   "Voice agents",
+   "Latency"
+  ],
+  "topic": "Voice",
+  "date": "2026-06-18",
+  "minutes": 15,
+  "words": 3521,
+  "sections": [
+   [
+    "Why phone calls are different",
+    5
+   ],
+   [
+    "Measuring it in production",
+    4
+   ],
+   [
+    "What we changed",
+    6
+   ]
+  ],
+  "series": "Voice agents in production",
+  "part": 2
+ },
+ {
+  "title": "Guardrails that do not get in the way",
+  "description": "Checks that protect customers without turning every answer into a refusal.",
+  "tags": [
+   "Safety",
+   "Production LLMs"
+  ],
+  "topic": "Running in production",
+  "date": "2026-05-03",
+  "minutes": 9,
+  "words": 2115,
+  "sections": [
+   [
+    "The problem",
+    3
+   ],
+   [
+    "What we tried first",
+    2
+   ],
+   [
+    "What worked",
+    2
+   ],
+   [
+    "What I would do differently",
+    2
+   ]
+  ]
+ },
+ {
+  "title": "Six years of ML in a bank, and what carried over",
+  "description": "Model risk, documentation and independent review: habits that make agents safer.",
+  "tags": [
+   "Machine learning",
+   "Banking"
+  ],
+  "topic": "Foundations",
+  "date": "2026-05-19",
+  "minutes": 5,
+  "words": 1196,
+  "sections": [
+   [
+    "Context",
+    1
+   ],
+   [
+    "The idea",
+    1
+   ],
+   [
+    "Why it matters for agents",
+    2
+   ]
+  ]
+ },
+ {
+  "title": "Why we stopped fine-tuning (for now)",
+  "description": "Retrieval, better tools and evals beat a custom model for our use cases this year.",
+  "tags": [
+   "Fine-tuning",
+   "RAG"
+  ],
+  "topic": "Foundations",
+  "date": "2026-05-20",
+  "minutes": 7,
+  "words": 1754,
+  "sections": [
+   [
+    "Context",
+    2
+   ],
+   [
+    "The idea",
+    2
+   ],
+   [
+    "Why it matters for agents",
+    3
+   ]
+  ]
+ },
+ {
+  "title": "Retrieval that knows when it does not know",
+  "description": "Teaching an assistant to say it found nothing instead of inventing something.",
+  "tags": [
+   "RAG",
+   "Search"
+  ],
+  "topic": "Data and security",
+  "date": "2026-04-20",
+  "minutes": 8,
+  "words": 2007,
+  "sections": [
+   [
+    "Background",
+    3
+   ],
+   [
+    "How it works",
+    3
+   ],
+   [
+    "Trade-offs",
+    2
+   ]
+  ]
+ },
+ {
+  "title": "Load testing an LLM service",
+  "description": "Simulating thousands of calls before launch day, and what broke first.",
+  "tags": [
+   "Performance"
+  ],
+  "topic": "Running in production",
+  "date": "2026-04-18",
+  "minutes": 3,
+  "words": 790,
+  "sections": [
+   [
+    "The problem",
+    1
+   ],
+   [
+    "What we tried first",
+    1
+   ],
+   [
+    "What worked",
+    1
+   ],
+   [
+    "What I would do differently",
+    1
+   ]
+  ]
+ },
+ {
+  "title": "Small models, big wins",
+  "description": "Moving classification and extraction to cheaper models without losing quality.",
+  "tags": [
+   "Cost",
+   "Models"
+  ],
+  "topic": "Foundations",
+  "date": "2026-04-02",
+  "minutes": 9,
+  "words": 2118,
+  "sections": [
+   [
+    "Context",
+    3
+   ],
+   [
+    "The idea",
+    2
+   ],
+   [
+    "Why it matters for agents",
+    4
+   ]
+  ]
+ },
+ {
+  "title": "The agent is the easy part",
+  "description": "Integrations, authentication and data access take most of the work in a real company.",
+  "tags": [
+   "Integration",
+   "Architecture"
+  ],
+  "topic": "Agents and architecture",
+  "date": "2026-03-20",
+  "minutes": 4,
+  "words": 933,
+  "sections": [
+   [
+    "The shape everyone starts with",
+    2
+   ],
+   [
+    "What changed in production",
+    1
+   ],
+   [
+    "Where it does not apply",
+    1
+   ]
+  ],
+  "series": "Agent architecture notes",
+  "part": 1
+ },
+ {
+  "title": "Writing for a model reader",
+  "description": "Clear instructions, examples and constraints: prompt writing as technical writing.",
+  "tags": [
+   "Prompting"
+  ],
+  "topic": "Foundations",
+  "date": "2026-03-12",
+  "minutes": 4,
+  "words": 1077,
+  "sections": [
+   [
+    "Context",
+    1
+   ],
+   [
+    "The idea",
+    1
+   ],
+   [
+    "Why it matters for agents",
+    1
+   ]
+  ]
+ },
+ {
+  "title": "Monitoring what users actually ask",
+  "description": "Clustering real questions to decide what to build next.",
+  "tags": [
+   "Product",
+   "Analytics"
+  ],
+  "topic": "Data and security",
+  "date": "2026-03-21",
+  "minutes": 3,
+  "words": 754,
+  "sections": [
+   [
+    "Background",
+    1
+   ],
+   [
+    "How it works",
+    1
+   ],
+   [
+    "Trade-offs",
+    1
+   ]
+  ]
+ },
+ {
+  "title": "A mathematician's view of attention",
+  "description": "The idea behind transformers, explained without a single matrix.",
+  "tags": [
+   "Transformers",
+   "Mathematics"
+  ],
+  "topic": "Foundations",
+  "date": "2026-02-16",
+  "minutes": 8,
+  "words": 1959,
+  "sections": [
+   [
+    "Context",
+    3
+   ],
+   [
+    "The idea",
+    3
+   ],
+   [
+    "Why it matters for agents",
+    2
+   ]
+  ]
+ },
+ {
+  "title": "Five fixes in forty-eight hours",
+  "description": "The first days of a voice agent in production, told through its incidents.",
+  "tags": [
+   "Incidents",
+   "Voice agents"
+  ],
+  "topic": "Voice",
+  "date": "2026-02-11",
+  "minutes": 12,
+  "words": 2949,
+  "sections": [
+   [
+    "Why phone calls are different",
+    5
+   ],
+   [
+    "Measuring it in production",
+    3
+   ],
+   [
+    "What we changed",
+    3
+   ]
+  ],
+  "series": "Voice agents in production",
+  "part": 1
+ }
+]
