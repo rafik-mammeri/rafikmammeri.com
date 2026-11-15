@@ -27,3 +27,7 @@ CLAUDE.md
 docs-fr/assets/
 docs-fr/stylesheets/
 docs-fr/javascripts/
+
+# Local styling preview with made-up articles (scripts write it; never deployed)
+docs/articles-preview.md
+docs/articles-lab.md

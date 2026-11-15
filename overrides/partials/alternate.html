@@ -1,10 +1,10 @@
 {#-
   Language switch, as two tokens: the current language is filled, the other is a link to
   the same page in that language. Both languages use the same page paths; articles under
-  writing/ exist only in English, so from there French goes to the Community page.
+  writing/ exist only in English, so from there French goes to the Articles page.
   docs/javascripts/language-switch.js refreshes the links after instant navigation.
 -#}
-{% set path = "community/" if page.url is startingwith("writing/") else page.url %}
+{% set path = "articles/" if page.url is startingwith("writing/") else page.url %}
 <div class="md-header__option rm-lang">
   {% for alt in config.extra.alternate %}
   <a class="rm-lang__link{% if alt.lang == config.theme.language %} is-current{% endif %}" href="{{ alt.link ~ (page.url if alt.lang == config.theme.language else path) }}" hreflang="{{ alt.lang }}" lang="{{ alt.lang }}" title="{{ alt.name }}"{% if alt.lang == config.theme.language %} aria-current="true"{% endif %}>{{ alt.lang | upper }}</a>

@@ -7,6 +7,9 @@ cd "$(dirname "$0")/.."
 
 ZENSICAL="${ZENSICAL:-uv run zensical}"
 
+# the Articles pages are generated from docs/writing/*.md
+python3 scripts/gen_articles.py
+
 rm -rf docs-fr/assets docs-fr/stylesheets docs-fr/javascripts
 cp -R docs/assets docs-fr/assets
 cp -R docs/stylesheets docs-fr/stylesheets

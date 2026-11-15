@@ -8,12 +8,12 @@ copyright = "&copy; 2026 Rafik Mammeri"
 nav = [
   { "Home" = "index.md" },
   { "Experience" = "experience.md" },
-  { "Community" = "community.md" },
+  { "Articles" = "articles.md" },
   { "About" = "about.md" },
 ]
 
 extra_css = ["stylesheets/extra.css"]
-extra_javascript = ["javascripts/language-switch.js", "javascripts/attention.js", "javascripts/theme-lamp.js"]
+extra_javascript = ["javascripts/language-switch.js", "javascripts/attention.js", "javascripts/theme-lamp.js", "javascripts/articles.js"]
 
 
 [project.extra]

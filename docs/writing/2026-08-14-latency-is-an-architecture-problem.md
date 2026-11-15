@@ -1,6 +1,11 @@
 ---
 title: Latency is an architecture problem, not a prompt problem
 description: Why the biggest latency win in a production multi-agent system rarely comes from prompt optimization.
+description_fr: Pourquoi le plus gros gain de latence d'un système multi-agents en production vient rarement de l'optimisation des prompts.
+topic: Agents and architecture
+also:
+  - Medium: https://medium.com/@rafik_23044
+  - dev.to: https://dev.to/rafik_mammeri
 tags:
   - LangGraph
   - Multi-agent systems

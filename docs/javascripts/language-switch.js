@@ -10,8 +10,8 @@ document$.subscribe(function () {
   document.querySelectorAll(".rm-lang__link[hreflang]").forEach(function (link) {
     var lang = link.getAttribute("hreflang");
     var target = page;
-    // Articles exist only in English: from one, French goes to the Community page
-    if (lang === "fr" && page.indexOf("/writing/") === 0) target = "/community/";
+    // Articles exist only in English: from one, French goes to the Articles page
+    if (lang === "fr" && page.indexOf("/writing/") === 0) target = "/articles/";
     link.href = (lang === "fr" ? "/fr" : "") + target;
   });
 });

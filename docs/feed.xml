@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Rafik Mammeri — Writing</title>
-    <link>https://www.rafikmammeri.com/community/</link>
+    <link>https://www.rafikmammeri.com/articles/</link>
     <description>Notes on building and running LLM systems in production.</description>
     <language>en</language>
-    <lastBuildDate>Sat, 14 Nov 2026 16:53:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Nov 2026 20:49:42 +0000</lastBuildDate>
     <atom:link href="https://www.rafikmammeri.com/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Latency is an architecture problem, not a prompt problem</title>
@@ -30,7 +30,7 @@
 <h2>What changes when routing is native, not delegated</h2>
 <p>The fix that actually moved the needle on a production conversational assistant handling about 2,000 conversations a day wasn't a better router prompt. It was removing the router's LLM call entirely for the common case:</p>
 <div class="highlight"><pre><span></span><code>flowchart TB
-    A[User message] --&gt; B[Router identifies domain&lt;br&gt;(no LLM classification call)]
+    A[User message] --&gt; B[&quot;Router identifies domain&lt;br&gt;(no LLM classification call)&quot;]
     B --&gt; C[&quot;Correct specialized agent activated&lt;br&gt;(no intermediate LLM call to get there)&quot;]
     C --&gt; D[&quot;Agent responds&lt;br&gt;(1–2 LLM calls total)&quot;]
     D -- on topic change --&gt; E[&quot;Native handoff&lt;br&gt;conversation state carried over&lt;br&gt;no restart, no re-explaining context&quot;]
