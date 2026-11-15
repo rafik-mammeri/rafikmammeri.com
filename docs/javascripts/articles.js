@@ -43,7 +43,7 @@ document$.subscribe(function () {
     fill("rm-arc-idle");
   }
   rows.forEach(function (r) {
-    r.addEventListener("mouseenter", function () { clearTimeout(timer); timer = setTimeout(function () { select(r); }, 90); });
+    r.addEventListener("mouseenter", function () { clearTimeout(timer); timer = setTimeout(function () { select(r); }, 60); });
     r.addEventListener("focus", function () { select(r); });
   });
   main.addEventListener("mouseleave", function (e) { clearTimeout(timer); if (!card.contains(e.relatedTarget)) rest(); });

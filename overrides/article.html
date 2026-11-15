@@ -1,0 +1,192 @@
+{% extends "main.html" %}
+
+{#-
+  Article page (front matter: template: article.html). The article itself stays native
+  Zensical Markdown: headings, admonitions, diagrams, code, footnotes, and abbreviations
+  (terms explained on hover). This template adds around it, from partials written by
+  scripts/gen_articles.py:
+  - a header: the title, date, reading time and topic,
+    the summary as a lead, the series progress, keywords and where else it is published,
+    then the key takeaways and the project the article comes from;
+  - left, on wide screens: a link to all articles, then the section names beside a spine of
+    capsules, each as tall as its section's reading time; the section being read lights up;
+  - right, on very wide screens: related articles with their summary and relation score;
+  - selecting a sentence offers to copy it as a quote, with a link to that passage;
+  - under the related articles, where to follow new articles (partials/share-side.html);
+  - at the end of the text, one quiet line to share it (partials/share-end.html): LinkedIn
+    with a ready post, Hacker News, the link;
+  - at the end, what to read next and a link to all articles;
+  - previews of the site's own pages when pointing at a link to them; J / K to move between
+    sections (? lists the keys); coming back later, an offer to continue where you stopped;
+  - a thin reading-progress line along the top of the window.
+-#}
+{% set slug = page.meta.slug if page.meta and page.meta.slug else (page.url | replace("writing/", "") | replace("/", "")) %}
+
+{% block content %}
+  {% include "partials/actions.html" %}
+  <div class="rm-art-progress" aria-hidden="true"><i></i></div>
+  <div class="rm-art-layout">
+    <div class="rm-art-main">
+      <header class="rm-art-head">
+        <h1>{{ page.title }}</h1>
+        {% include "partials/articles/" ~ slug ~ ".html" ignore missing %}
+      </header>
+      {% include "partials/articles/" ~ slug ~ "-intro.html" ignore missing %}
+      {{ page.content }}
+      {% include "partials/share-end.html" %}
+      {% include "partials/articles/" ~ slug ~ "-next.html" ignore missing %}
+    </div>
+    <aside class="rm-art-side"><div class="rm-art-stick">
+      {% include "partials/articles/" ~ slug ~ "-toc.html" ignore missing %}
+    </div></aside>
+    <aside class="rm-art-right"><div class="rm-art-stick">
+      {% include "partials/articles/" ~ slug ~ "-side.html" ignore missing %}
+      {% set url = config.site_url ~ page.url %}
+      <div class="rm-share" data-url="{{ url }}" data-title="{{ page.title }}" hidden></div>
+      {% include "partials/share-side.html" %}
+    </div></aside>
+  </div>
+  <button type="button" class="rm-quote" hidden><span aria-hidden="true">“</span><span class="rm-share__lbl">Copy as a quote</span></button>
+  <div class="rm-preview" hidden></div>
+  <div class="rm-toast" role="status" aria-live="polite"></div>
+  <div class="rm-keys" hidden><div><b>Keyboard</b><p><kbd>J</kbd> next section<br><kbd>K</kbd> previous section<br><kbd>?</kbd> this list<br><kbd>Esc</kbd> close</p></div></div>
+  <script>
+    (function () {
+      var main = document.querySelector(".rm-art-main");
+      if (!main) return;
+      var bar = document.querySelector(".rm-art-progress i");
+      var heads = Array.prototype.slice.call(main.querySelectorAll(":scope > h2[id]"));
+      var items = Array.prototype.slice.call(document.querySelectorAll(".rm-art-toc li"));
+      var share = document.querySelector("div.rm-share");
+      var secBtn = document.querySelector(".rm-share__section");
+      var cur = -1;
+      // the contents list follows the article's own headings, in order
+      items.forEach(function (li, k) { var a = li.querySelector("a"), h = heads[k]; if (h) a.href = "#" + h.id; else li.hidden = true; });
+
+      function update() {
+        var d = document.documentElement, max = d.scrollHeight - window.innerHeight;
+        if (bar) bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ")";
+        // the section being read: the last heading above the upper third of the window
+        // the reading line sits a third of the way down the window, and slides to the bottom
+        // over the last screen, so the last sections are read through to the end
+        var tail = max > 0 ? Math.max(0, Math.min(1, (window.scrollY - (max - window.innerHeight)) / window.innerHeight)) : 1;
+        var line = window.innerHeight * (1 / 3 + 2 / 3 * tail); cur = -1;
+        heads.forEach(function (h, k) { if (h.getBoundingClientRect().top < line) cur = k; });
+        items.forEach(function (li, k) { li.classList.toggle("is-here", k === cur); li.classList.toggle("is-read", k < cur); });
+        if (secBtn) secBtn.hidden = cur < 0;
+      }
+
+      // the side columns start level with the text, under the header, whatever its height
+      var head = main.querySelector(".rm-art-head");
+      function align() {
+        if (!head) return;
+        document.querySelectorAll(".rm-art-side, .rm-art-right").forEach(function (s) { s.style.paddingTop = head.offsetHeight + "px"; });
+      }
+
+      // sharing: copy buttons confirm what they did, the main one in words
+      var qb = document.querySelector(".rm-quote"), quote = "";
+      function done(btn) {
+        btn.classList.add("is-done");
+        var lbl = btn.querySelector(".rm-share__lbl"), old = lbl ? lbl.textContent : null;
+        if (lbl) lbl.textContent = btn === qb ? "Quote copied" : "Link copied";
+        setTimeout(function () { btn.classList.remove("is-done"); if (lbl) lbl.textContent = old; }, 1600);
+      }
+      function copy(text, btn) {
+        (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { done(btn); }, function () {});
+      }
+      if (share) {
+        var url = share.dataset.url, title = share.dataset.title;
+        share.querySelectorAll("[data-copy]").forEach(function (b) { b.addEventListener("click", function () { copy(b.dataset.copy, b); }); });
+        if (secBtn) secBtn.addEventListener("click", function () { if (cur >= 0) copy(url + "#" + heads[cur].id, secBtn); });
+        var cite = share.querySelector(".rm-share__cite"), time = document.querySelector(".rm-art-meta time");
+        if (cite) cite.addEventListener("click", function () {
+          var d = time ? new Date(time.getAttribute("datetime") + "T12:00:00") : null;
+          var when = d ? d.getFullYear() + ", " + d.toLocaleDateString("en-GB", { month: "long" }) + " " + d.getDate() : "n.d.";
+          copy("Mammeri, R. (" + when + "). " + title + ". rafikmammeri.com. " + url, cite);
+        });
+        var nat = share.querySelector(".rm-share__native");
+        if (nat && navigator.share) {
+          nat.hidden = false;
+          nat.addEventListener("click", function () { navigator.share({ title: title, url: url }).catch(function () {}); });
+        }
+        // select a sentence in the article: a small button offers to copy it as a quote
+        document.addEventListener("selectionchange", function () {
+          var sel = window.getSelection(), text = sel ? sel.toString().trim() : "";
+          if (!text || text.length < 12 || !sel.rangeCount || !main.contains(sel.getRangeAt(0).commonAncestorContainer)) { qb.hidden = true; return; }
+          var r = sel.getRangeAt(0).getBoundingClientRect();
+          quote = text.length > 280 ? text.slice(0, 277) + "…" : text;
+          qb.style.left = Math.round(r.left + r.width / 2 + window.scrollX) + "px";
+          qb.style.top = Math.round(r.top + window.scrollY - 44) + "px";
+          qb.hidden = false;
+        });
+        qb.addEventListener("mousedown", function (e) { e.preventDefault(); });
+        qb.addEventListener("click", function () {
+          // the link opens the article scrolled to the quote, highlighted (a text fragment);
+          // long quotes are matched by their first and last words
+          var words = quote.replace(/…$/, "").split(/\s+/), enc = function (x) { return encodeURIComponent(x).replace(/-/g, "%2D"); };
+          var frag = words.length > 12 ? enc(words.slice(0, 5).join(" ")) + "," + enc(words.slice(-5).join(" ")) : enc(words.join(" "));
+          copy("“" + quote + "”\n— Rafik Mammeri, " + title + "\n" + url + "#:~:text=" + frag, qb);
+        });
+      }
+
+      // a short message at the bottom of the window
+      var toast = document.querySelector(".rm-toast"), toastT = null;
+      function say(html, ms) { toast.innerHTML = html; toast.classList.add("is-on"); clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove("is-on"); }, ms || 2400); return toast; }
+
+      // previews: pointing at a link to another page of the site shows its title and
+      // opening lines (or those of the section it points to), fetched from the site itself
+      var pv = document.querySelector(".rm-preview"), pages = {}, pvT = null;
+      main.querySelectorAll('a[href^="/"]:not(.headerlink):not(.rm-art-all)').forEach(function (a) {
+        a.addEventListener("mouseenter", function () { clearTimeout(pvT); pvT = setTimeout(function () { preview(a); }, 250); });
+        a.addEventListener("mouseleave", function () { clearTimeout(pvT); pv.hidden = true; });
+      });
+      function preview(a) {
+        var href = a.getAttribute("href"), path = href.split("#")[0] || location.pathname, hash = href.split("#")[1];
+        (pages[path] || (pages[path] = fetch(path).then(function (r) { return r.text(); }).then(function (t) { return new DOMParser().parseFromString(t, "text/html"); })))
+          .then(function (doc) {
+            var head = hash ? doc.getElementById(decodeURIComponent(hash)) : doc.querySelector(".md-content h1"), text = "";
+            if (!head) return;
+            if (hash) { var n = head.nextElementSibling; while (n && n.tagName !== "P") n = n.nextElementSibling; text = n ? n.textContent : ""; }
+            else { var l = doc.querySelector(".rm-lede, .rm-art-dek, .md-content p"); text = l ? l.textContent : ""; }
+            var where = (doc.querySelector(".md-content h1") || {}).textContent || "";
+            text = text.trim();
+            pv.innerHTML = "<b>" + head.textContent.replace(/¶/g, "").trim() + "</b><p>" + text.slice(0, 220) + (text.length > 220 ? "…" : "") + "</p>" + (hash && where ? "<small>" + where.replace(/¶/g, "").trim() + "</small>" : "");
+            var r = a.getBoundingClientRect();
+            pv.style.left = Math.max(8, Math.min(r.left, window.innerWidth - 380) + window.scrollX) + "px";
+            pv.style.top = (r.bottom + window.scrollY + 8) + "px";
+            pv.hidden = false;
+          }).catch(function () {});
+      }
+
+      // keyboard: J / K for the next / previous section, ? for the list, Esc to close
+      var keys = document.querySelector(".rm-keys");
+      document.addEventListener("keydown", function (e) {
+        if (e.metaKey || e.ctrlKey || e.altKey || /INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || "")) return;
+        if (e.key === "j" || e.key === "J") { if (heads[cur + 1]) heads[cur + 1].scrollIntoView({ behavior: "smooth" }); }
+        else if (e.key === "k" || e.key === "K") { (cur > 0 ? heads[cur - 1] : main).scrollIntoView({ behavior: "smooth" }); }
+        else if (e.key === "?") { keys.hidden = !keys.hidden; }
+        else if (e.key === "Escape") { keys.hidden = true; pv.hidden = true; }
+      });
+      keys.addEventListener("click", function () { keys.hidden = true; });
+
+      // continue reading: the section reached is remembered in this browser; coming back
+      // to the article later, a short message offers to jump back to it
+      var memKey = "rm-read-" + location.pathname, memT = null;
+      function remember() { clearTimeout(memT); memT = setTimeout(function () { try { if (cur >= 0) localStorage.setItem(memKey, JSON.stringify({ k: cur, y: Math.round(window.scrollY) })); } catch (e) {} }, 500); }
+      try {
+        var was = JSON.parse(localStorage.getItem(memKey) || "null");
+        if (was && was.k > 0 && heads[was.k] && window.scrollY < 80 && !location.hash) {
+          var t = say('Continue where you left off: <b>' + heads[was.k].textContent.replace(/¶/g, "").trim() + '</b><button type="button">Continue</button>', 9000);
+          t.querySelector("button").addEventListener("click", function () { window.scrollTo({ top: was.y, behavior: "smooth" }); toast.classList.remove("is-on"); });
+        }
+      } catch (e) {}
+      window.addEventListener("scroll", remember, { passive: true });
+
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", function () { align(); update(); });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
+      align();
+      update();
+    })();
+  </script>
+{% endblock %}
