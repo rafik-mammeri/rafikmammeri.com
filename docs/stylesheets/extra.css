@@ -1714,9 +1714,18 @@
   display: none;
 }
 
+/* the theme's navigation column is empty here (the menu is in the header) but still takes
+   its width on the left and pushes the article right; on small screens it is the menu
+   drawer, so it is only removed on wide ones */
+@media screen and (min-width: 76.25em) {
+  .md-main:has(.rm-art-layout) .md-sidebar--primary {
+    display: none;
+  }
+}
+
 .md-typeset .rm-art-layout {
   display: grid;
-  grid-template-columns: 11rem minmax(0, 36rem) 14rem;
+  grid-template-columns: 13rem minmax(0, 37rem) 13rem;
   grid-template-areas: "side main right";
   justify-content: center;
   column-gap: 2.4rem;
@@ -1915,7 +1924,7 @@
 
 @media screen and (max-width: 89.99em) {
   .md-typeset .rm-art-layout {
-    grid-template-columns: 11rem minmax(0, 38rem);
+    grid-template-columns: 12rem minmax(0, 37rem);
     grid-template-areas: "side main";
   }
 
