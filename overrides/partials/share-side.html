@@ -1,0 +1,10 @@
+{#-
+  Right column, under the related articles: where to follow new articles. The places are
+  listed in zensical.toml ([[project.extra.follow]]); add one there and it appears here.
+-#}
+<section class="rm-ss rm-follow" aria-label="Follow">
+  <div class="rm-ssm__row is-stacked">
+    <span class="rm-ssm__lbl">Follow</span>
+    <div class="rm-ssm__c">{% for f in config.extra.follow or [] %}<a href="{{ f.link }}"{% if f.link is startingwith("http") %} target="_blank" rel="noopener"{% endif %}{% if f.color %} style="--brand: {{ f.color }}"{% endif %} title="Follow on {{ f.name }}" aria-label="Follow on {{ f.name }}">{% include ".icons/" ~ f.icon ~ ".svg" %}</a>{% endfor %}</div>
+  </div>
+</section>

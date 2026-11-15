@@ -129,8 +129,8 @@
   color: var(--md-accent-fg-color);
 }
 
-/* Admonitions restyled to the site's register: monochrome body, steel-blue
-   spine — instead of the theme's default green/blue color coding */
+/* Admonitions in the site's register: a persimmon spine and a lightly tinted title,
+   instead of the theme's colour coding by type */
 .md-typeset .admonition {
   border-color: var(--md-accent-fg-color);
   box-shadow: none;
@@ -1406,19 +1406,6 @@
   }
 }
 
-.md-typeset .rm-posts__feed {
-  margin-top: 2.5rem;
-  font-size: 0.66rem;
-}
-
-.md-typeset .rm-posts__feed a {
-  color: var(--md-default-fg-color--light);
-}
-
-.md-typeset .rm-posts__feed a:hover {
-  color: var(--md-typeset-a-color);
-}
-
 /* Footer: one compact line (it wraps on narrow screens): name and copyright left, logos right. */
 .rm-footer {
   margin-top: 2.5rem;
@@ -1546,4 +1533,1189 @@
   border-radius: 50%;
   background: var(--rm-hot);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--rm-hot) 22%, transparent);
+}
+
+/* ===========================================================================
+   Article pages (overrides/article.html). The body stays native Zensical; the
+   header, the end block and the diagrams take the site's look.
+   =========================================================================== */
+.md-typeset .rm-art-head {
+  margin: 0.5rem 0 2.2rem;
+}
+
+.md-typeset a.rm-art-back {
+  display: inline-block;
+  margin-bottom: 1.1rem;
+  padding: 0.15em 0.55em;
+  border-radius: 7px;
+  background: var(--rm-chip-2);
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.md-typeset a.rm-art-back:hover {
+  background: var(--rm-sel);
+  color: var(--rm-sel-ink);
+}
+
+.md-typeset .rm-art-head h1 {
+  margin: 0 0 0.6rem;
+  font-size: 2.1em;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.md-typeset .rm-art-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3em 1em;
+  margin-bottom: 1.1rem;
+  font-family: var(--md-code-font, monospace);
+  font-size: 0.68em;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-art-meta__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--rm-hot);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--rm-hot) 22%, transparent);
+}
+
+/* the summary as the article's lead */
+.md-typeset .rm-art-dek {
+  margin: 0 0 1rem;
+  font-size: 1.2em;
+  line-height: 1.5;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-art-head .rm-arc__series {
+  max-width: 26rem;
+  font-size: 0.72em;
+}
+
+.md-typeset .rm-art-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  font-size: 0.8em;
+}
+
+.md-typeset .rm-art-also {
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-art-also a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.md-typeset .rm-art-also a:hover {
+  color: var(--md-typeset-a-color);
+}
+
+/* reading progress: a thin persimmon line along the top of the window */
+.rm-art-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: 2px;
+  pointer-events: none;
+}
+
+.rm-art-progress i {
+  display: block;
+  height: 100%;
+  background: var(--rm-hot);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--rm-hot) 50%, transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* the end of the article: what to read next, then all articles */
+.md-typeset .rm-art-next {
+  margin-top: 3rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset h2.rm-art-next__title {
+  margin: 0 0 0.6rem;
+  font-size: 0.8em;
+  font-weight: 700;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-art-next .rm-arc__next {
+  max-width: 30rem;
+  margin-bottom: 1.2rem;
+}
+
+.md-typeset a.rm-art-all {
+  display: inline-block;
+  padding: 0.25em 0.7em;
+  border-radius: 7px;
+  background: var(--rm-chip-1);
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.md-typeset a.rm-art-all:hover {
+  background: var(--rm-sel);
+  color: var(--rm-sel-ink);
+}
+
+/* diagrams in the site's colours: tinted nodes, quiet lines */
+:root,
+[data-md-color-scheme="default"],
+[data-md-color-scheme="slate"] {
+  --md-mermaid-font-family: var(--md-text-font, sans-serif);
+  --md-mermaid-node-bg-color: var(--rm-chip-3);
+  --md-mermaid-node-fg-color: var(--md-default-fg-color);
+  --md-mermaid-edge-color: var(--md-default-fg-color--light);
+  --md-mermaid-label-bg-color: var(--md-default-bg-color);
+  --md-mermaid-label-fg-color: var(--md-default-fg-color);
+}
+
+.md-typeset .mermaid {
+  margin: 1.5em 0;
+  padding: 1.2em 0.8em;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--rm-chip-2) 45%, transparent);
+}
+
+/* Article layout. Very wide screens: contents | text | notes. Wide screens: contents | text.
+   Otherwise one column. The text comes first in the page (reading order, screen readers);
+   the columns are placed around it. The theme's own contents sidebar is not used here. */
+.md-main:has(.rm-art-layout) .md-grid {
+  max-width: 80rem;
+}
+
+.md-content__inner:has(.rm-art-layout) {
+  max-width: none;
+}
+
+.md-main:has(.rm-art-layout) .md-sidebar--secondary {
+  display: none;
+}
+
+.md-typeset .rm-art-layout {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 36rem) 14rem;
+  grid-template-areas: "side main right";
+  justify-content: center;
+  column-gap: 2.4rem;
+}
+
+.md-typeset .rm-art-main {
+  grid-area: main;
+  min-width: 0;
+}
+
+.md-typeset .rm-art-side {
+  grid-area: side;
+  margin-right: -1rem;
+}
+
+.md-typeset .rm-art-right {
+  grid-area: right;
+}
+
+/* the columns hold one sticky block each; their top padding (set in the page) brings it
+   level with the text */
+.md-typeset .rm-art-stick {
+  position: sticky;
+  top: 6.5rem;
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.md-typeset .rm-art-stick::-webkit-scrollbar {
+  display: none;
+}
+
+.md-typeset .rm-art-toc h5 {
+  margin-right: 1.05rem;
+  text-align: right;
+}
+
+.md-typeset .rm-art-toc h5,
+.md-typeset .rm-side h5 {
+  margin: 0 0 0.6rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--md-default-fg-color--light);
+  text-transform: none;
+}
+
+/* The contents: section names aligned against a spine of capsules, each as tall as its
+   section's reading time; the capsule of the section being read lights up. */
+.md-typeset .rm-art-toc ol,
+[dir] .md-typeset .rm-art-toc ol {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.md-typeset .rm-art-toc ol li,
+[dir] .md-typeset .rm-art-toc ol li {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 0.3rem;
+  gap: 0 0.75rem;
+  margin: 0 0 0.25rem;
+  padding: 0;
+  text-align: right;
+}
+
+.md-typeset .rm-art-toc ol li a {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.md-typeset .rm-art-toc ol li .rm-cap {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.md-typeset .rm-cap {
+  height: calc(var(--m) * 1.1rem + 1.2rem);
+  border-radius: 0.15rem;
+  background: var(--md-default-fg-color--lightest);
+  transition: background 0.35s, box-shadow 0.35s;
+}
+
+/* the section being read: its capsule lights up */
+.md-typeset .rm-art-toc li.is-here .rm-cap {
+  background: var(--rm-hot);
+  box-shadow: 0 0 10px 1px color-mix(in srgb, var(--rm-hot) 45%, transparent);
+}
+
+.md-typeset .rm-art-toc a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  padding-top: 0.05rem;
+  color: var(--md-default-fg-color--light);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.md-typeset .rm-art-toc a span {
+  font-size: 0.64rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.md-typeset .rm-art-toc li.is-here a,
+.md-typeset .rm-art-toc a:hover {
+  color: var(--md-default-fg-color);
+}
+
+/* right column and the intro block (narrower screens) */
+.md-typeset .rm-side__block {
+  margin: 0 0 1.6rem;
+  font-size: 0.66rem;
+  line-height: 1.5;
+}
+
+.md-typeset .rm-side__block[hidden] {
+  display: none;
+}
+
+.md-typeset ul.rm-side__take,
+[dir] .md-typeset ul.rm-side__take {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.md-typeset ul.rm-side__take li,
+[dir] .md-typeset ul.rm-side__take li {
+  position: relative;
+  margin: 0 0 0.55rem;
+  padding-left: 0.9rem;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset ul.rm-side__take li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--rm-hot);
+}
+
+.md-typeset .rm-side__field {
+  display: block;
+  margin-bottom: 0.5rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: 10px;
+  background: var(--rm-chip-3);
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.md-typeset a.rm-side__field:hover {
+  background: var(--rm-chip-1);
+}
+
+.md-typeset .rm-side__field b {
+  display: block;
+  line-height: 1.3;
+}
+
+.md-typeset .rm-side__field span {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-side__block .rm-arc__tags span {
+  font-size: 0.92em;
+}
+
+/* takeaways and project, under the header */
+.md-typeset .rm-art-intro {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 0 1.6rem;
+  margin: -0.6rem 0 2rem;
+  padding: 1rem 1.1rem 0.2rem;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--rm-chip-2) 45%, transparent);
+}
+
+.md-typeset .rm-art-intro .rm-side__block {
+  font-size: 0.72rem;
+}
+
+@media screen and (max-width: 89.99em) {
+  .md-typeset .rm-art-layout {
+    grid-template-columns: 11rem minmax(0, 38rem);
+    grid-template-areas: "side main";
+  }
+
+  .md-typeset .rm-art-right {
+    display: none;
+  }
+
+}
+
+@media screen and (max-width: 76.24em) {
+  .md-typeset .rm-art-layout {
+    grid-template-columns: minmax(0, 40rem);
+    grid-template-areas: "main";
+  }
+
+  .md-typeset .rm-art-side {
+    display: none;
+  }
+}
+
+/* intro in one column on narrow screens */
+@media screen and (max-width: 44.99em) {
+  .md-typeset .rm-art-intro {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* terms explained in the text (Markdown abbreviations, shown on hover by the theme) */
+.md-typeset abbr {
+  text-decoration: underline dotted;
+  text-decoration-color: var(--rm-hot);
+  text-underline-offset: 0.2em;
+  cursor: help;
+}
+
+
+/* Related, right column: quiet. A small dot whose fill is the relation score, the title in
+   a soft tone, minutes and score in small print. Pointing at one brings it forward and opens
+   its summary underneath. */
+.md-typeset .rm-rel {
+  display: grid;
+  grid-template-columns: 0.55rem minmax(0, 1fr);
+  gap: 0 0.55rem;
+  padding: 0.45rem 0;
+  color: var(--md-default-fg-color--light);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+.md-typeset .rm-rel__dot {
+  grid-row: span 2;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-top: 0.3rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--rm-hot) calc(var(--v) * 100%), var(--md-default-fg-color--lightest));
+  transition: box-shadow 0.25s;
+}
+
+.md-typeset .rm-rel__t {
+  font-size: 0.66rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.md-typeset .rm-rel__m {
+  margin-top: 0.1rem;
+  font-family: var(--md-code-font, monospace);
+  font-size: 0.52rem;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset .rm-rel__d {
+  grid-column: 2;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.md-typeset .rm-rel__d > span {
+  overflow: hidden;
+  font-size: 0.62rem;
+  line-height: 1.45;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-rel:hover,
+.md-typeset .rm-rel:focus-visible {
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .rm-rel:hover .rm-rel__dot,
+.md-typeset .rm-rel:focus-visible .rm-rel__dot {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--rm-hot) 22%, transparent);
+}
+
+.md-typeset .rm-rel:hover .rm-rel__d,
+.md-typeset .rm-rel:focus-visible .rm-rel__d {
+  grid-template-rows: 1fr;
+}
+
+.md-typeset .rm-rel:hover .rm-rel__d > span {
+  padding-top: 0.25rem;
+}
+
+.md-typeset .rm-rel.is-example {
+  cursor: default;
+}
+
+.md-typeset .rm-rel__note {
+  margin: 0.4rem 0 0 1.1rem;
+  font-size: 0.54rem;
+  font-style: italic;
+  color: var(--md-default-fg-color--lighter);
+}
+
+/* Pass it on: the link as one token that says what it did, the rest as round tokens in
+   the site's tints. Hover lifts a token and lights its icon persimmon; a copy fills it. */
+.md-typeset .rm-share__main {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--rm-chip-1);
+  font: 600 0.64rem/1 var(--md-text-font, sans-serif);
+  color: var(--md-default-fg-color);
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+
+.md-typeset .rm-share__ic {
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: var(--md-default-bg-color);
+}
+
+.md-typeset .rm-share__ic svg,
+.md-typeset .rm-share__btn svg {
+  width: 0.62rem;
+  height: 0.62rem;
+  fill: currentColor;
+}
+
+.md-typeset .rm-share__ic svg[stroke],
+.md-typeset .rm-share__btn svg[stroke],
+.md-typeset .rm-share__ic svg [stroke],
+.md-typeset .rm-share__btn svg [stroke] {
+  fill: none;
+}
+
+.md-typeset .rm-share__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.md-typeset .rm-share__btn {
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--rm-chip-2);
+  color: var(--md-default-fg-color--light);
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+
+.md-typeset .rm-share__btn:nth-child(3n + 1) {
+  background: var(--rm-chip-3);
+}
+
+.md-typeset .rm-share__btn[hidden] {
+  display: none;
+}
+
+.md-typeset .rm-share__main:hover,
+.md-typeset .rm-share__btn:hover,
+.md-typeset .rm-share__main:focus-visible,
+.md-typeset .rm-share__btn:focus-visible {
+  color: var(--rm-hot);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px color-mix(in srgb, var(--rm-hot) 20%, transparent);
+}
+
+.md-typeset .rm-share__main.is-done,
+.md-typeset .rm-share__btn.is-done {
+  background: var(--rm-sel);
+  color: var(--rm-sel-ink);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--rm-sel) 22%, transparent);
+}
+
+.md-typeset .rm-share__main.is-done .rm-share__ic {
+  background: color-mix(in srgb, #FFFFFF 70%, transparent);
+}
+
+.md-typeset .rm-share__hint {
+  margin: 0.7rem 0 0;
+  font-size: 0.56rem;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset .rm-share__hint span {
+  margin-right: 0.25rem;
+  font-family: Georgia, serif;
+  font-size: 1.4em;
+  line-height: 0;
+  vertical-align: -0.3em;
+  color: var(--rm-hot);
+}
+
+/* the button offered when a sentence is selected */
+.rm-quote {
+  position: absolute;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transform: translateX(-50%);
+  padding: 0.35rem 0.75rem 0.35rem 0.6rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--md-default-fg-color);
+  color: var(--md-default-bg-color);
+  font: 600 0.62rem/1 var(--md-text-font, sans-serif);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.rm-quote > span:first-child {
+  font-family: Georgia, serif;
+  font-size: 1.5em;
+  line-height: 0;
+  color: var(--rm-sel);
+}
+
+.rm-quote[hidden] {
+  display: none;
+}
+
+.rm-quote:hover,
+.rm-quote.is-done {
+  background: var(--rm-sel);
+  color: var(--rm-sel-ink);
+}
+
+.rm-quote:hover > span:first-child,
+.rm-quote.is-done > span:first-child {
+  color: var(--rm-sel-ink);
+}
+
+/* the contents column is short: no scroll box, so the pin and its glow are never clipped */
+.md-typeset .rm-art-side .rm-art-stick {
+  max-height: none;
+  overflow: visible;
+}
+
+.md-typeset .rm-art-toc a.rm-art-back {
+  display: table;
+  margin: 0 1.05rem 1.4rem auto;
+}
+
+/* a passage reached through a shared quote link (text fragment) is highlighted in the
+   site's colour instead of the browser's yellow */
+::target-text {
+  background: var(--rm-chip-1);
+  color: var(--md-default-fg-color);
+}
+
+/* Article page: link previews, the short message at the bottom, the keyboard list */
+.rm-preview {
+  position: absolute;
+  z-index: 40;
+  width: 18rem;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  background: var(--md-default-bg-color);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.16), 0 0 0 1px var(--md-default-fg-color--lightest);
+  font-size: 0.64rem;
+  line-height: 1.45;
+  animation: rm-pop 0.18s ease-out;
+}
+
+.rm-preview[hidden],
+.rm-keys[hidden] {
+  display: none;
+}
+
+.rm-preview b {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.78rem;
+}
+
+.rm-preview p {
+  margin: 0;
+  color: var(--md-default-fg-color--light);
+}
+
+.rm-preview small {
+  display: block;
+  margin-top: 0.45rem;
+  font-family: var(--md-code-font, monospace);
+  color: var(--rm-hot);
+}
+
+@keyframes rm-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.rm-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.4rem;
+  z-index: 50;
+  max-width: 90vw;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: var(--md-default-fg-color);
+  color: var(--md-default-bg-color);
+  font: 600 0.64rem/1.3 var(--md-text-font, sans-serif);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 1rem);
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.rm-toast.is-on {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.rm-toast button {
+  margin-left: 0.6rem;
+  padding: 0.2rem 0.65rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--rm-sel);
+  color: var(--rm-sel-ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.rm-keys {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.rm-keys > div {
+  padding: 1.2rem 1.6rem;
+  border-radius: 16px;
+  background: var(--md-default-bg-color);
+  font-size: 0.7rem;
+}
+
+.rm-keys p {
+  margin: 0.5rem 0 0;
+  line-height: 2;
+}
+
+.rm-keys kbd {
+  padding: 0.05rem 0.4rem;
+  border-radius: 5px;
+  background: var(--rm-chip-2);
+  font: 600 0.9em var(--md-code-font, monospace);
+}
+
+/* ===========================================================================
+   Articles: "night reading". Callouts, collapsible notes, code blocks, cards
+   and buttons are small dark rooms lit by a warm lamp from above, on the light
+   page as on the dark one. The Markdown stays native; only the look changes.
+   =========================================================================== */
+.md-typeset .rm-art-main {
+  --rm-room: #141414;
+  --rm-room-lamp: #3A1C12;
+  --rm-room-fg: #F2F2F0;
+  --rm-room-mut: rgba(242, 242, 240, 0.62);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .rm-art-main {
+  --rm-room: #1A1A1A;
+  --rm-room-lamp: #43200F;
+}
+
+/* the room: callouts, collapsible notes, cards, buttons */
+.md-typeset .rm-art-main :is(.admonition, details),
+.md-typeset .rm-art-main .grid.cards > ul > li,
+.md-typeset .rm-art-main .grid > .card {
+  --md-default-fg-color: var(--rm-room-fg);
+  --md-default-fg-color--light: var(--rm-room-mut);
+  --md-typeset-color: var(--rm-room-fg);
+  --md-typeset-a-color: #FF9A7A;
+  --md-code-bg-color: rgba(255, 255, 255, 0.07);
+  --md-code-fg-color: #F2D2C6;
+  --rm-lamp: #FF7A5C;
+  border: 0;
+  border-radius: 14px;
+  background: radial-gradient(ellipse 80% 70% at 50% 0%, var(--rm-room-lamp), var(--rm-room) 70%);
+  color: var(--rm-room-fg);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+}
+
+/* the lamp's colour follows the callout's meaning: warm for most, amber for
+   cautions, red for dangers, green for successes */
+.md-typeset .rm-art-main :is(.admonition, details):is(.warning, .caution, .attention) {
+  --rm-room-lamp: #3A2C10;
+  --rm-lamp: #F2C46B;
+}
+
+.md-typeset .rm-art-main :is(.admonition, details):is(.danger, .error, .failure, .fail, .missing, .bug) {
+  --rm-room-lamp: #3D1414;
+  --rm-lamp: #FF8A80;
+}
+
+.md-typeset .rm-art-main :is(.admonition, details):is(.success, .check, .done) {
+  --rm-room-lamp: #12301F;
+  --rm-lamp: #7FD8A4;
+}
+
+.md-typeset .rm-art-main :is(.admonition-title, summary) {
+  border: 0;
+  background: none;
+  color: var(--rm-lamp);
+}
+
+.md-typeset .rm-art-main :is(.admonition-title, summary)::before {
+  background-color: var(--rm-lamp);
+}
+
+.md-typeset .rm-art-main summary::after {
+  color: var(--rm-room-mut);
+}
+
+/* code blocks: the same room, with syntax colours made for the dark */
+.md-typeset .rm-art-main .highlight {
+  --md-code-bg-color: transparent;
+  --md-code-fg-color: #E6E6E3;
+  --md-default-fg-color--light: rgba(242, 242, 240, 0.56);
+  --md-default-fg-color--lighter: rgba(242, 242, 240, 0.32);
+  --md-default-fg-color--lightest: rgba(242, 242, 240, 0.12);
+  --md-code-hl-color: #FF7A5C;
+  --md-code-hl-color--light: rgba(255, 107, 71, 0.2);
+  --md-code-hl-number-color: #FF9A7A;
+  --md-code-hl-special-color: #F06090;
+  --md-code-hl-function-color: #FFB59E;
+  --md-code-hl-constant-color: #C9B6FF;
+  --md-code-hl-keyword-color: #C9B6FF;
+  --md-code-hl-string-color: #7FD8A4;
+  overflow: hidden;
+  border-radius: 14px;
+  background: radial-gradient(ellipse 80% 70% at 50% 0%, var(--rm-room-lamp), var(--rm-room) 70%);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+  color: #E6E6E3;
+}
+
+.md-typeset .rm-art-main .highlight span.filename {
+  border: 0;
+  background: none;
+  color: var(--rm-room-mut);
+}
+
+.md-typeset .rm-art-main .highlight .hll {
+  background: linear-gradient(90deg, rgba(255, 107, 71, 0.28), transparent);
+}
+
+.md-typeset .rm-art-main .highlight :is(.linenodiv, .linenos) {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* highlighted words: a small lit patch */
+.md-typeset .rm-art-main mark {
+  padding: 0 0.25em;
+  border-radius: 4px;
+  background: var(--rm-room);
+  color: #FFB59E;
+  box-shadow: 0 0 12px rgba(255, 107, 71, 0.35);
+}
+
+/* buttons: the main one is the lamp itself */
+.md-typeset .rm-art-main .md-button {
+  border: 0;
+  border-radius: 999px;
+  background: var(--rm-room);
+  color: var(--rm-room-fg);
+}
+
+.md-typeset .rm-art-main .md-button--primary {
+  background: var(--rm-sel);
+  color: var(--rm-sel-ink);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--rm-sel) 45%, transparent);
+}
+
+.md-typeset .rm-art-main .md-button:hover {
+  background: var(--rm-sel);
+  color: var(--rm-sel-ink);
+}
+
+/* the active tab glows from below */
+.md-typeset .rm-art-main .tabbed-set > input:checked + label {
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .rm-art-main .tabbed-labels::before {
+  background: var(--rm-hot);
+  box-shadow: 0 0 10px 1px color-mix(in srgb, var(--rm-hot) 60%, transparent);
+}
+
+/* ===========================================================================
+   Follow (right column, partials/share-side.html) and Share (end of the text,
+   partials/share-end.html): the same fine circles, monochrome, persimmon when
+   pointed at.
+   =========================================================================== */
+.md-typeset .rm-ss {
+  position: relative;
+  margin-top: 1.8rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  font-size: 0.66rem;
+  line-height: 1.45;
+}
+
+.md-typeset .rm-ss__v[hidden] {
+  display: none;
+}
+
+.md-typeset .rm-ss button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.md-typeset .rm-ss a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.md-typeset .rm-ss h5 {
+  margin: 0 0 0.7rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--md-default-fg-color--light);
+  text-transform: none;
+}
+
+.md-typeset .rm-ss__dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 0.45rem;
+  border-radius: 50%;
+  background: var(--rm-hot);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--rm-hot) 22%, transparent), 0 0 10px 1px color-mix(in srgb, var(--rm-hot) 35%, transparent);
+  vertical-align: 0.1em;
+}
+
+.md-typeset .rm-ss__also {
+  margin: 0.7rem 0 0;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset .rm-ss__also :is(a, button) {
+  color: var(--md-default-fg-color--light);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.md-typeset .rm-ss__also :is(a, button):hover,
+.md-typeset .rm-ss__also .is-done {
+  color: var(--rm-hot);
+  border-color: var(--rm-hot);
+}
+
+/* Share and follow: fine circles, monochrome, persimmon when pointed at; a label in
+   small print says what each row does, a short line under it confirms what happened */
+.md-typeset .rm-ssm__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.35rem 0;
+}
+
+.md-typeset .rm-ssm__lbl {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rm-ssm__c {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.md-typeset .rm-ssm__c > :is(a, button) {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color--light) !important;
+  transition: color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+
+.md-typeset .rm-ssm__c svg,
+.md-typeset .rm-ssm3__ic svg {
+  width: 0.62rem;
+  height: 0.62rem;
+  fill: currentColor;
+}
+
+.md-typeset .rm-ssm__c svg[stroke],
+.md-typeset .rm-ssm3__ic svg[stroke] {
+  fill: none;
+}
+
+/* Pointed at, each circle becomes the platform's own badge: its brand colour fills the
+   circle and its mark turns white, as LinkedIn, X, Hacker News or RSS show it themselves.
+   Circles without a brand, like the link, fill with the site's persimmon. */
+.md-typeset .rm-ssm__c > :is(a, button) {
+  --fill: var(--brand, var(--md-default-fg-color));
+  --mark: var(--brand-ink, #FFFFFF);
+  transition: color 0.25s, background 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+
+.md-typeset .rm-ssm__c > :not([style*="--brand"]) {
+  --mark: var(--md-default-bg-color);
+}
+
+.md-typeset .rm-ssm__c > :is(a, button):hover,
+.md-typeset .rm-ssm__c > :is(a, button):focus-visible,
+.md-typeset .rm-ssm__c > .is-done {
+  background: var(--fill);
+  color: var(--mark) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px var(--fill), 0 6px 16px color-mix(in srgb, var(--fill) 35%, transparent);
+}
+
+.md-typeset .rm-ssm__c > [hidden] {
+  display: none;
+}
+
+/* X: always its own black badge with the white mark; on a dark page a fine light ring
+   shows its edge */
+.md-typeset {
+  --rm-x: #000000;
+  --rm-x-ink: #FFFFFF;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .rm-ssm__c > [style*="--rm-x"]:is(:hover, :focus-visible) {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45), 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* the column clips what overflows it: a little room so a raised circle and its glow are
+   never cut on the left or at the top */
+.md-typeset .rm-art-right .rm-art-stick {
+  margin: -6px -6px 0;
+  padding: 6px 6px 12px;
+}
+
+/* Follow: the word, then the circles under it */
+.md-typeset .rm-ssm__row.is-stacked {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.md-typeset .rm-ssm__say {
+  min-height: 1.2em;
+  margin: 0.2rem 0 0;
+  text-align: right;
+  font-size: 0.58rem;
+  color: var(--rm-hot);
+}
+
+/* the ready post: unfolds under the share line */
+.md-typeset .rm-ss__draft {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.md-typeset .rm-ss__draft > div {
+  overflow: hidden;
+}
+
+.md-typeset .rm-ss__draft.is-open {
+  grid-template-rows: 1fr;
+}
+
+.md-typeset .rm-ss__compose {
+  margin-top: 0.8rem;
+  padding: 0.9rem 1rem 1rem;
+  border-radius: 14px;
+  background: var(--md-default-bg-color);
+  box-shadow: 0 0 0 1px var(--md-default-fg-color--lightest), 0 18px 40px rgba(0, 0, 0, 0.06);
+}
+
+.md-typeset .rm-ss__tabs {
+  display: flex;
+  gap: 0.9rem;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+}
+
+.md-typeset .rm-ss__tabs button {
+  padding-bottom: 0.2rem !important;
+  color: var(--md-default-fg-color--lighter);
+  transition: color 0.2s, box-shadow 0.2s;
+}
+
+.md-typeset .rm-ss__tabs button:hover {
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .rm-ss__tabs button.is-on {
+  color: var(--md-default-fg-color);
+  box-shadow: inset 0 -1.5px 0 var(--rm-hot);
+}
+
+.md-typeset .rm-ss__tabs .rm-ss__x {
+  margin-left: auto;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.md-typeset .rm-ss__compose textarea {
+  display: block;
+  width: 100%;
+  min-height: 8rem;
+  border: 0;
+  outline: none;
+  resize: vertical;
+  background: none;
+  font: 500 0.72rem/1.6 var(--md-text-font, sans-serif);
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .rm-ss__go {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.8rem;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset .rm-ss__go button {
+  padding: 0.35rem 0.85rem !important;
+  border-radius: 999px;
+  background: var(--md-default-fg-color) !important;
+  color: var(--md-default-bg-color) !important;
+  font-weight: 700;
+  transition: background 0.2s, color 0.2s;
+}
+
+.md-typeset .rm-ss__go button:hover,
+.md-typeset .rm-ss__go button.is-done {
+  background: var(--rm-sel) !important;
+  color: var(--rm-sel-ink) !important;
+}
+
+/* placement: Follow under the related articles; Share as one line at the end of the text */
+.md-typeset .rm-share-end {
+  margin-top: 2.6rem;
+  padding-top: 0.9rem;
+}
+
+.md-typeset .rm-share-end .rm-ssm__row {
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.md-typeset .rm-share-end .rm-ssm__say {
+  margin: 0;
+  text-align: left;
 }
