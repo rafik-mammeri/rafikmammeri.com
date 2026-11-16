@@ -10,7 +10,7 @@ home:
     - "que lorsqu’elle est utilisée, chaque jour, pour résoudre de vrais problèmes de clients et de collaborateurs."
   rows:
     - label: "Aujourd'hui"
-      text: "Je construis des agents IA pour le e-commerce chez Boulanger. Ses clients les utilisent au téléphone, sur le site et dans l'application ; ses collaborateurs, dans leur travail quotidien."
+      text: "Tech lead d’une équipe d’ingénieurs IA dans le retail et le e-commerce, où nous construisons et faisons tourner des agents IA pour les clients et les collaborateurs : un assistant d’achat, un agent vocal pour le service client, l’accès aux données en langage naturel et des assistants internes."
     - label: "Articles"
       text: "Des articles tirés de la mise en production d'agents IA. Le dernier : pourquoi la latence est un problème d'architecture, pas de prompt."
       href: "articles/"
@@ -22,7 +22,5 @@ hide:
 ---
 
 <div class="rm-home-about" markdown>
-Tech lead d’une équipe d’ingénieurs IA chez l’un des plus grands distributeurs français, j’ai contribué à mettre en production quatre agents IA en dix-huit mois : un assistant d’achat sur le web et le mobile, un agent vocal sur la ligne du service client, l’accès en langage naturel au data warehouse, et des assistants pour les collaborateurs.
-
 [En savoir plus](about.md)
 </div>
