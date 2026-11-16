@@ -1733,6 +1733,18 @@
   border-top: 1px solid var(--md-default-fg-color--lightest);
 }
 
+/* with a single article there is nothing to suggest: no empty block, no stray line */
+.md-typeset .rm-art-next:empty,
+.md-typeset .rm-side:empty {
+  display: none;
+}
+
+.md-typeset .rm-side:empty ~ .rm-follow {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
 .md-typeset h2.rm-art-next__title {
   margin: 0 0 0.6rem;
   font-size: 0.8em;
