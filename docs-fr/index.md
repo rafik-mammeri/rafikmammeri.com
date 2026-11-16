@@ -113,3 +113,9 @@ hide:
   - navigation
   - toc
 ---
+
+<div class="rm-home-about" markdown>
+J'ai commencé par les mathématiques, avec un doctorat à l'Université de Lille. Puis six ans de machine learning chez BNP Paribas, où j'ai appris à prévoir le jour où un modèle se trompe. Quand l'IA générative est arrivée, j'ai voulu construire avec plutôt que regarder. Je vis à Lille.
+
+[En savoir plus](about.md)
+</div>
