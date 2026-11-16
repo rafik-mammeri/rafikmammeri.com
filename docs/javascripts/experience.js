@@ -11,6 +11,8 @@
   var MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december",
                 "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
   function when(s) {
+    var y = s.trim().match(/^(\d{4})$/);  // a bare year, as for the doctorate
+    if (y) return +y[1];
     var m = s.trim().toLowerCase().match(/^(\S+)\s+(\d{4})$/);
     if (!m) { var now = new Date(); return now.getFullYear() + now.getMonth() / 12; }
     return +m[2] + (MONTHS.indexOf(m[1]) % 12) / 12;

@@ -2575,9 +2575,7 @@
 /* Home, under the evidence: a short "about", the human side, with a link to the full story */
 .md-typeset .rm-home-about {
   max-width: 30rem;
-  margin: 4rem 0 0;
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--md-default-fg-color--lightest);
+  margin: 3rem 0 0;
   color: var(--md-default-fg-color);
   font-size: 0.85rem;
   line-height: 1.65;

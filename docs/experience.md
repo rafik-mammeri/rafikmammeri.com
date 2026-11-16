@@ -384,3 +384,17 @@ The team's internal library for building scoring models, with tests, automated d
 - :logos-sonarqube: SonarQube
 
 </div>
+
+## :logos-ulille: University of Lille { #university-of-lille-ater data-years="2015 – 2016" data-key="Teaching and research at the university" }
+
+Lecturer and researcher · 2015 – 2016 · Lille
+{ .rm-meta }
+
+A one-year teaching and research contract at the University of Lille.
+
+## :logos-ulille: University of Lille { #university-of-lille data-years="2012 – 2016" data-key="Doctorate in mathematics" }
+
+PhD in Mathematics · 2012 – 2016 · Lille
+{ .rm-meta }
+
+A doctorate in mathematics at the University of Lille.

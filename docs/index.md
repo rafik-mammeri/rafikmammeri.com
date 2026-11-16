@@ -10,7 +10,7 @@ home:
     - "It starts to count when thousands of customers use it every day and the business relies on it."
   rows:
     - label: "Now"
-      text: "Building AI agents for e-commerce at Boulanger, one of France's leading electronics and home appliance retailers. Its customers use them on the phone, the website and the app; its employees, in their daily work."
+      text: "Tech lead of a team of AI engineers in retail and e-commerce, where we build and run AI agents for customers and employees: a shopping assistant, a customer-service voice agent, plain-language access to data, and internal assistants."
     - label: "Writing"
       text: "Articles from putting AI agents into production. The latest: why latency is an architecture problem, not a prompt problem."
       href: "writing/"
@@ -22,7 +22,5 @@ hide:
 ---
 
 <div class="rm-home-about" markdown>
-Tech lead of a team of AI engineers at one of France’s largest retailers, I have helped take four of them that far in eighteen months: a shopping assistant on web and mobile, a voice agent on the customer-service line, plain-language access to the data warehouse, and assistants for employees.
-
 [More about me](about.md)
 </div>

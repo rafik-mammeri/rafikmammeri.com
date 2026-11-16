@@ -384,3 +384,17 @@ La bibliothèque interne de l'équipe pour construire les modèles de scoring, a
 - :logos-sonarqube: SonarQube
 
 </div>
+
+## :logos-ulille: Université de Lille { #universite-de-lille-ater data-years="2015 – 2016" data-key="Enseignement et recherche à l’université" }
+
+Attaché temporaire d’enseignement et de recherche · 2015 – 2016 · Lille
+{ .rm-meta }
+
+Un contrat d’un an d’enseignement et de recherche à l’Université de Lille.
+
+## :logos-ulille: Université de Lille { #universite-de-lille data-years="2012 – 2016" data-key="Doctorat en mathématiques" }
+
+Doctorat en mathématiques · 2012 – 2016 · Lille
+{ .rm-meta }
+
+Un doctorat en mathématiques à l’Université de Lille.
