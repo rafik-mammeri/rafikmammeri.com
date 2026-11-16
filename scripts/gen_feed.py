@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Generate docs/feed.xml (RSS 2.0) and docs/llms.txt from docs/writing/.
+"""Generate docs/feed.xml (RSS 2.0) from docs/writing/.
 
-Zensical has no native feed or llms.txt support yet, so both are generated
-from front matter and committed as static files. Run after adding an article:
+Zensical has no native feed yet, so it is generated from front matter and
+committed as a static file (llms.txt is made at build time by scripts/gen_ai.py). Run after adding an article:
 
     mise run feed
 """
@@ -18,27 +18,6 @@ import markdown
 ROOT = Path(__file__).resolve().parent.parent
 WRITING = ROOT / "docs" / "writing"
 OUT = ROOT / "docs" / "feed.xml"
-LLMS_OUT = ROOT / "docs" / "llms.txt"
-
-LLMS_HEADER = """\
-# Rafik Mammeri
-
-> Lead AI Engineer and PhD in mathematics, based in Lille, France. Tech lead
-> of a team of AI engineers that designs and ships AI agents to production at
-> scale: a customer-service voice bot answering thousands of calls a day, two
-> generations of shopping assistant on web and mobile, natural-language
-> analytics over the data warehouse via MCP, and internal agents for
-> employees. Six years of production ML in regulated banking before that.
-> A French version of the site is at https://www.rafikmammeri.com/fr/.
-
-## Pages
-
-- [Experience](https://www.rafikmammeri.com/experience/): Each position held and what was built there: the project, its business impact, and the technology stack.
-- [Articles](https://www.rafikmammeri.com/articles/): Articles on building and running AI agents in production.
-- [About](https://www.rafikmammeri.com/about/): From a PhD in mathematics and regulated banking to AI engineering in production.
-
-## Writing
-"""
 
 SITE_URL = "https://www.rafikmammeri.com"
 FEED_TITLE = "Articles by Rafik Mammeri"
@@ -123,11 +102,6 @@ def main() -> None:
     )
     print(f"Wrote {OUT.relative_to(ROOT)} with {len(items)} article(s)")
 
-    article_lines = "\n".join(
-        f"- [{a['title']}]({a['url']}): {a['description']}" for a in items
-    )
-    LLMS_OUT.write_text(LLMS_HEADER + "\n" + article_lines + "\n", encoding="utf-8")
-    print(f"Wrote {LLMS_OUT.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
