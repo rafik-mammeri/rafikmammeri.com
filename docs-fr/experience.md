@@ -11,7 +11,7 @@ hide:
 Les postes que j'ai occupés et ce que j'y ai construit : ce qu'était chaque projet, ce qu'il a changé pour l'entreprise, et les technologies derrière.
 { .rm-lede }
 
-## :logos-boulanger: Boulanger { #boulanger data-years="2025 – aujourd'hui" data-key="Voice bot : plus de 50 000 appels sur ses six premiers jours" }
+## :logos-boulanger: Boulanger { #boulanger data-years="2025 – aujourd'hui" data-lead="Tech lead d'une équipe d'ingénieurs IA" data-key="Voice bot : plus de 50 000 appels sur ses six premiers jours" }
 
 Lead AI Engineer · avril 2025 – aujourd'hui · Lille
 { .rm-meta }

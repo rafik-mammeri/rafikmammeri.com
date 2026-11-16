@@ -11,7 +11,7 @@ hide:
 The positions I have held and what I built in each: what it was, what it changed for the business, and the technology behind it.
 { .rm-lede }
 
-## :logos-boulanger: Boulanger { #boulanger data-years="2025 – today" data-key="Voice bot: 50,000 calls in its first six days" }
+## :logos-boulanger: Boulanger { #boulanger data-years="2025 – present" data-lead="Tech lead of a team of AI engineers" data-key="Voice bot: 50,000 calls in its first six days" }
 
 Lead AI Engineer · April 2025 – present · Lille
 { .rm-meta }
