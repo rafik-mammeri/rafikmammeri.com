@@ -17,6 +17,9 @@ jobs:
     steps:
       - uses: actions/configure-pages@v6
       - uses: actions/checkout@v7
+        with:
+          # full history: the sitemap's dates come from the last commit that touched each page
+          fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x

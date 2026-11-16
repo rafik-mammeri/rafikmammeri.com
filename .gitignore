@@ -45,3 +45,6 @@ docs/assets/og/
 docs/end-lab.md
 docs/lamp-lab.md
 docs/experience-lab.md
+docs/home-lab.md
+# generated from ai-profile.md by scripts/gen_ai.py
+overrides/partials/ai-person.html

@@ -94,6 +94,13 @@
   color: var(--md-default-fg-color--light);
 }
 
+/* On a phone there is room for the name only: the title would cut it */
+@media screen and (max-width: 44.99em) {
+  .md-header__title .md-header__topic:first-child .md-ellipsis::after {
+    content: none;
+  }
+}
+
 /* Generous whitespace — technical-minimal reads as unhurried, not dense */
 .md-typeset {
   line-height: 1.7;
@@ -358,49 +365,27 @@
 }
 
 /* ===========================================================================
-   Home (overrides/home.html): a dark stage in both colour schemes. The name,
-   then one sentence whose words light up the evidence and the technologies.
-   Text and weights: front matter of index.md. Behaviour: javascripts/attention.js.
+   Home (overrides/home.html): one statement in two beats, set large. The setup in ink,
+   the payoff in persimmon. Then three short lines (now, writing, previously) and a short
+   about. No motion. Text: front matter of index.md.
    =========================================================================== */
-.md-content__inner:has(.rm-attn) {
-  max-width: 70rem;
+.md-content__inner:has(.rm-home) {
+  max-width: 62rem;
   margin-top: 0;
   padding-top: 0;
 }
 
-/* Light: ink on paper, lit words get a highlighter. Dark: cream on ink, lit words glow. */
-[data-md-color-scheme="default"] .rm-attn {
-  --a-bg: #FAFAF9;
-  --a-fg: #151515;
-  --a-mut: #636363;
-  --a-faint: #C4C4C2;
-  --a-line: #E6E6E3;
-  --a-hot: #E0431F;
-  --a-card-ink: #151515;
-  --a-card-bg: #FFFFFF;
-  --a-card-shadow: 0 16px 38px rgba(20, 20, 20, 0.09), 0 2px 6px rgba(20, 20, 20, 0.05);
+.md-typeset .rm-home {
+  --h-hot: #C9381A;
+  padding: 3.5rem 0 3em;
 }
 
-[data-md-color-scheme="slate"] .rm-attn {
-  --a-bg: #111111;
-  --a-fg: #F2F2F0;
-  --a-mut: #A3A3A0;
-  --a-faint: #4D4D4B;
-  --a-line: #2B2B2A;
-  --a-hot: #FF7A5C;
-  --a-card-ink: #FF7A5C;
-  --a-card-bg: rgba(255, 122, 92, 0.1);
-  --a-card-shadow: 0 0 38px rgba(255, 122, 92, 0.2);
+[data-md-color-scheme="slate"] .md-typeset .rm-home {
+  --h-hot: #FF7A5C;
 }
 
-.md-typeset .rm-attn {
-  position: relative;
-  padding: 2.2rem 0 3em;
-  color: var(--a-fg);
-}
-
-/* The page title is in the header; this one is for screen readers only */
-.md-typeset .rm-attn__name {
+/* The name and title are in the header: this heading is for screen readers and search engines */
+.md-typeset .rm-home__name {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -410,314 +395,76 @@
   white-space: nowrap;
 }
 
-.md-typeset .rm-attn__sentence {
-  position: relative;
-  z-index: 2;
+.md-typeset .rm-home__statement {
+  max-width: 15em;
   margin: 0;
-  text-align: justify;
-  text-align-last: left;
-  hyphens: none;
-  line-height: 1.95;
+  font-size: clamp(2rem, 1rem + 3.8vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  color: var(--md-default-fg-color);
 }
 
-/* Each phrase is a token: a tinted chip, three tints in rotation */
-.md-typeset .rm-tok {
-  padding: 0.07em 0.3em;
-  margin: 0 0.03em;
-  border-radius: 7px;
-  background: var(--rm-chip-1);
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  cursor: pointer;
-  font-family: var(--md-text-font, sans-serif);
-  font-size: clamp(1.25rem, 0.85rem + 1.5vw, 1.95rem);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--a-fg);
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+.md-typeset .rm-home__statement span {
+  color: var(--h-hot);
 }
 
-.md-typeset .rm-tok:nth-child(3n + 2) {
-  background: var(--rm-chip-2);
-}
-
-.md-typeset .rm-tok:nth-child(3n) {
-  background: var(--rm-chip-3);
-}
-
-/* Opening: tokens are hidden until they stream in (attention.js) */
-.md-typeset .rm-attn.is-streaming .rm-tok:not(.is-in) {
-  opacity: 0;
-  filter: blur(4px);
-}
-
-.md-typeset .rm-attn.is-streaming .rm-tok {
-  transition: opacity 0.55s ease-out, filter 0.55s ease-out, background 0.2s, color 0.2s, box-shadow 0.2s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .md-typeset .rm-attn.is-streaming .rm-tok:not(.is-in) {
-    opacity: 1;
-    filter: none;
-  }
-}
-
-.md-typeset .rm-tok:hover {
-  box-shadow: inset 0 0 0 1.5px var(--a-hot);
-}
-
-.md-typeset .rm-tok.is-on {
-  background: var(--rm-sel);
-  color: var(--rm-sel-ink);
-  box-shadow: none;
-}
-
-.md-typeset .rm-tok.is-rel {
-  box-shadow: inset 0 0 0 1.5px var(--a-hot);
-}
-
-.md-typeset .rm-tok:focus-visible,
-.md-typeset .rm-attn a:focus-visible {
-  outline: 2px solid var(--a-hot);
-  outline-offset: 4px;
-}
-
-/* Evidence: text on the stage, no boxes. Cold items are barely there; hot ones glow
-   and reveal their detail. */
-.md-typeset .rm-attn__targets {
-  position: relative;
-  z-index: 2;
+.md-typeset .rm-home__rows {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 1.7rem;
-  margin-top: 6.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.4rem;
+  margin-top: 4.5rem;
 }
 
-.md-typeset .rm-attn__targets.is-off {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  overflow: hidden;
-  clip-path: inset(50%);
-  visibility: hidden;
-}
-
-.md-typeset a.rm-tg {
-  display: grid;
-  gap: 0.3rem;
-  align-content: start;
-  min-width: 0;
-  margin: -0.6rem;
-  padding: 0.6rem;
-  border-radius: 12px;
-  color: var(--a-mut);
-  text-decoration: none;
-  opacity: calc(0.16 + var(--w, 0.5) * 0.5);
-  transition: color 0.2s, opacity 0.25s, background 0.25s, box-shadow 0.25s, transform 0.25s;
-}
-
-/* At rest every experience is equally readable */
-.md-typeset .rm-attn.is-idle a.rm-tg {
-  opacity: 0.85;
-}
-
-.md-typeset a.rm-tg.is-hot {
-  opacity: 1;
-  background: var(--a-card-bg);
-  box-shadow: var(--a-card-shadow);
-}
-
-.md-typeset .rm-tg__top {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 0.5rem;
-  font-family: var(--md-code-font, monospace);
-  font-size: 0.56rem;
-  color: var(--a-mut);
-}
-
-.md-typeset a.rm-tg.is-hot .rm-tg__top {
-  color: var(--a-hot);
-}
-
-.md-typeset .rm-tg__node {
-  flex: none;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--a-faint);
-  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
-}
-
-/* Company mark before the company name and dates */
-.md-typeset .rm-tg__co {
-  flex: none;
-  width: 1rem;
-  height: 1rem;
-}
-
-.md-typeset .rm-tg__co svg {
+.md-typeset .rm-home__row,
+.md-typeset a.rm-home__row {
   display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 3px;
+  color: var(--md-default-fg-color--light);
+  text-decoration: none;
 }
 
-.md-typeset .rm-tg small {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-family: var(--md-code-font, monospace);
-  font-size: 0.56rem;
-  color: var(--a-mut);
-  white-space: nowrap;
-}
-
-.md-typeset .rm-tg b {
+.md-typeset .rm-home__row b {
+  display: block;
+  margin-bottom: 0.45rem;
   font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: var(--a-fg);
-  transition: color 0.2s, text-shadow 0.2s;
+  letter-spacing: -0.015em;
+  color: var(--md-default-fg-color);
 }
 
-.md-typeset .rm-tg__text {
-  font-size: 0.68rem;
-  line-height: 1.4;
+.md-typeset .rm-home__row span {
+  display: block;
+  max-width: 34ch;
+  font-size: 0.8rem;
+  line-height: 1.55;
 }
 
-.md-typeset a.rm-tg.is-hot .rm-tg__node {
-  background: var(--a-hot);
-  transform: scale(1.35);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--a-hot) 22%, transparent), 0 0 10px 1px color-mix(in srgb, var(--a-hot) 35%, transparent);
+.md-typeset a.rm-home__row:hover b,
+.md-typeset a.rm-home__row:focus-visible b {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
 }
 
-.md-typeset a.rm-tg.is-hot b {
-  color: var(--a-card-ink);
+.md-typeset a.rm-home__row:focus-visible {
+  outline: 2px solid var(--h-hot);
+  outline-offset: 6px;
+  border-radius: 4px;
 }
 
-.md-typeset a.rm-tg.is-hot .rm-tg__pts span {
-  border-left-width: 3px;
-}
-
-.md-typeset a.rm-tg.is-hot small {
-  color: var(--a-fg);
-}
-
-/* Two results per experience, revealed with the description */
-.md-typeset .rm-tg__pts {
-  display: grid;
-  gap: 0.3rem;
-  margin-top: 0.35rem;
-  font-size: 0.66rem;
-  line-height: 1.35;
-  font-weight: 700;
-}
-
-.md-typeset .rm-tg__pts span {
-  padding-left: 0.6rem;
-  border-left: 2px solid var(--a-hot);
-  color: var(--a-fg);
-}
-
-.md-typeset a.rm-tg.is-hot .rm-tg__text {
-  color: var(--a-fg);
-}
-
-.md-typeset a.rm-tg:hover,
-.md-typeset a.rm-tg:focus-visible {
-  opacity: 1;
-}
-
-.md-typeset .rm-attn__lines {
-  overflow: visible;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 3;
-  pointer-events: none;
-  color: var(--a-hot);
-}
-
-.md-typeset .rm-attn__arc {
-  stroke: var(--a-fg);
-}
-
-/* Below 76em there is no room for seven columns and lines: the experiences become a
-   list. The ones the selected word rests on open; the others stay as a single line. */
-@media screen and (max-width: 75.99em) {
-  .md-typeset .rm-attn {
-    padding-top: 1.2rem;
+@media screen and (max-width: 59.99em) {
+  .md-typeset .rm-home {
+    padding-top: 1.8rem;
   }
 
-  .md-typeset .rm-attn__lines {
-    display: none;
-  }
-
-  .md-typeset .rm-attn__targets {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem 2.2rem;
-    margin-top: 2rem;
-    min-height: 0;
-  }
-
-  .md-typeset a.rm-tg {
-    grid-template-columns: auto minmax(0, 1fr);
-    column-gap: 0.7rem;
-    margin: 0;
-    padding: 0.7rem 0.8rem;
-  }
-
-  .md-typeset a.rm-tg.is-hot {
-    transform: none;
-  }
-
-  .md-typeset a.rm-tg > * {
-    grid-column: 2;
-  }
-
-  .md-typeset a.rm-tg > .rm-tg__top {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    flex-direction: column;
-    gap: 0.35rem;
-    margin: 0.3rem 0 0;
-  }
-
-  /* closed until lit, so the list stays short */
-  .md-typeset a.rm-tg .rm-tg__text,
-  .md-typeset a.rm-tg .rm-tg__pts {
-    display: none;
-  }
-
-  .md-typeset a.rm-tg.is-hot .rm-tg__text,
-  .md-typeset a.rm-tg.is-hot .rm-tg__pts {
-    display: grid;
-  }
-}
-
-@media screen and (max-width: 40em) {
-  .md-typeset .rm-attn__targets {
+  .md-typeset .rm-home__rows {
     grid-template-columns: minmax(0, 1fr);
+    gap: 1.4rem;
+    margin-top: 3rem;
   }
 
-  .md-typeset .rm-attn__sentence {
-    text-align: left;
-    line-height: 1.75;
-  }
-
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .md-typeset .rm-tok,
-  .md-typeset a.rm-tg,
-  .md-typeset .rm-tg__node,
-  .md-typeset .rm-tg__top {
-    transition: none;
+  .md-typeset .rm-home__row span {
+    max-width: none;
   }
 }
 
@@ -2827,11 +2574,11 @@
 
 /* Home, under the evidence: a short "about", the human side, with a link to the full story */
 .md-typeset .rm-home-about {
-  max-width: 34rem;
-  margin: 3.2rem 0 0;
-  padding-top: 1.2rem;
+  max-width: 30rem;
+  margin: 4rem 0 0;
+  padding-top: 1.4rem;
   border-top: 1px solid var(--md-default-fg-color--lightest);
-  color: var(--md-default-fg-color--light);
+  color: var(--md-default-fg-color);
   font-size: 0.85rem;
   line-height: 1.65;
 }
