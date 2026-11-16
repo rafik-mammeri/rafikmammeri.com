@@ -17,7 +17,7 @@
     with a ready post, Hacker News, the link;
   - at the end, what to read next and a link to all articles;
   - previews of the site's own pages when pointing at a link to them; J / K to move between
-    sections (? lists the keys); coming back later, an offer to continue where you stopped;
+    sections (? lists the keys);
   - a thin reading-progress line along the top of the window.
 -#}
 {% set slug = page.meta.slug if page.meta and page.meta.slug else (page.url | replace("writing/", "") | replace("/", "")) %}
@@ -168,19 +168,6 @@
         else if (e.key === "Escape") { keys.hidden = true; pv.hidden = true; }
       });
       keys.addEventListener("click", function () { keys.hidden = true; });
-
-      // continue reading: the section reached is remembered in this browser; coming back
-      // to the article later, a short message offers to jump back to it
-      var memKey = "rm-read-" + location.pathname, memT = null;
-      function remember() { clearTimeout(memT); memT = setTimeout(function () { try { if (cur >= 0) localStorage.setItem(memKey, JSON.stringify({ k: cur, y: Math.round(window.scrollY) })); } catch (e) {} }, 500); }
-      try {
-        var was = JSON.parse(localStorage.getItem(memKey) || "null");
-        if (was && was.k > 0 && heads[was.k] && window.scrollY < 80 && !location.hash) {
-          var t = say('Continue where you left off: <b>' + heads[was.k].textContent.replace(/¶/g, "").trim() + '</b><button type="button">Continue</button>', 9000);
-          t.querySelector("button").addEventListener("click", function () { window.scrollTo({ top: was.y, behavior: "smooth" }); toast.classList.remove("is-on"); });
-        }
-      } catch (e) {}
-      window.addEventListener("scroll", remember, { passive: true });
 
       window.addEventListener("scroll", update, { passive: true });
       window.addEventListener("resize", function () { align(); update(); });
