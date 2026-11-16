@@ -37,7 +37,13 @@
     if (!m) { m = document.createElement("meta"); m.name = "theme-color"; document.head.appendChild(m); }
     return m;
   }
-  function tint() { frozen = null; bar().content = getComputedStyle(document.body).backgroundColor; }
+  function tint() {
+    frozen = null;
+    var bg = getComputedStyle(document.body).backgroundColor;
+    bar().content = bg;
+    // Safari colours its top and bottom bars from the root of the page
+    document.documentElement.style.backgroundColor = bg;
+  }
   tint();
   new MutationObserver(function () { if (!busy) tint(); })
     .observe(document.body, { attributes: true, attributeFilter: ["data-md-color-scheme"] });
