@@ -13,7 +13,7 @@ nav = [
 ]
 
 extra_css = ["stylesheets/extra.css"]
-extra_javascript = ["javascripts/language-switch.js", "javascripts/attention.js", "javascripts/theme-lamp.js", "javascripts/articles.js"]
+extra_javascript = ["javascripts/language-switch.js", "javascripts/attention.js", "javascripts/theme-lamp.js", "javascripts/articles.js", "javascripts/experience.js"]
 
 
 [project.extra]
