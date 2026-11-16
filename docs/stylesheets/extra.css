@@ -134,6 +134,34 @@
   background-color: #111111;
 }
 
+/* the lamp sets the root colour itself once the light has settled (theme-lamp.js); the bars
+   then fade to it */
+html {
+  transition: background-color 0.5s ease;
+}
+
+/* Safari also samples fixed elements at the edges of the screen, even invisible ones: those
+   that are not showing are taken out of its way. The skip link stays focusable. */
+.md-skip:not(:focus) {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.md-dialog:not(.md-dialog--active) {
+  visibility: hidden;
+}
+
+.md-overlay {
+  visibility: hidden;
+}
+
+[data-md-toggle="drawer"]:checked ~ .md-overlay {
+  visibility: visible;
+}
+
 [data-md-color-scheme="default"] {
   color-scheme: light;
 }
