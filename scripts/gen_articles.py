@@ -51,7 +51,7 @@ TEXT = {
            "article": "article", "articles": "articles", "reading": "min of reading", "read": "min read", "min": "min",
            "words": "words", "in": "In this article", "next": "Read next", "series": "Series", "part": "part",
            "of": "of", "next_part": "Next in the series", "also": "Also on", "and": "and", "related": "related",
-           "overview": "{n} articles, {m} min of reading. Point at one to see what it covers.", "latest": "Latest",
+           "overview": "{n} {a}, {m} min of reading. Point at one to see what it covers.", "latest": "Latest",
            "start": "Start with part 1", "parts": "parts", "feed": "RSS feed",
            "demo_title": "Design preview",
            "demo": "Except for “{real}”, the articles listed here are placeholders written to design this page. They are not published."},
@@ -60,7 +60,7 @@ TEXT = {
            "article": "article", "articles": "articles", "reading": "min de lecture", "read": "min de lecture", "min": "min",
            "words": "mots", "in": "Dans cet article", "next": "À lire ensuite", "series": "Série", "part": "partie",
            "of": "sur", "next_part": "Suite de la série", "also": "Aussi sur", "and": "et", "related": "proche",
-           "overview": "{n} articles, {m} min de lecture. Survolez-en un pour voir ce qu'il couvre.", "latest": "Le plus récent",
+           "overview": "{n} {a}, {m} min de lecture. Survolez-en un pour voir ce qu'il couvre.", "latest": "Le plus récent",
            "start": "Commencer par la partie 1", "parts": "parties", "feed": "Flux RSS",
            "demo_title": "Aperçu de conception",
            "demo": "À l'exception de « {real} », les articles listés ici sont des exemples rédigés pour concevoir cette page. Ils ne sont pas publiés."},
@@ -233,7 +233,7 @@ def render(entries: list[dict], lang: str) -> str:
 
     # the card at rest: an overview, the series, the latest article
     total = sum(a["min"] for a in entries)
-    idle = f'<p class="rm-arc__sum">{t["overview"].format(n=len(entries), m=total)}</p>'
+    idle = f'<p class="rm-arc__sum">{t["overview"].format(n=len(entries), a=t["article"] if len(entries) == 1 else t["articles"], m=total)}</p>'
     if series:
         idle += f'<h5 class="rm-arc__label">{t["series"]}</h5><div class="rm-arc__list">' + "".join(
             f'<span class="rm-arc__item" data-go="{p[0]}"><b>{e(name)}</b><small>{len(p)} {t["parts"]} · {t["start"]}</small></span>'
