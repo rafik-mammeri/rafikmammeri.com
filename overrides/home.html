@@ -1,37 +1,28 @@
 {% extends "main.html" %}
 
 {#
-  Homepage: the name, then one sentence whose words "attend" to evidence.
-  Selecting a word lights up the experiences it rests on and reveals their results.
-  All text, logos and weights come from the `attention` front matter of docs/index.md
-  (English) and docs-fr/index.md (French). Behaviour: docs/javascripts/attention.js.
-  Each target's `w` holds one weight per word of the sentence, in order.
+  Homepage: one statement in two beats (ink, then persimmon), three short lines
+  (now, writing, previously) and a short about.
+  Text comes from the `home` front matter of docs/index.md (English) and docs-fr/index.md (French).
 #}
 {% block content %}
-{% set a = page.meta.attention %}
-<div class="rm-attn is-idle">
+{% set h = page.meta.home %}
+<div class="rm-home">
 
-  <h1 class="rm-attn__name">{{ a.name }}, {{ a.role }}</h1>
+  {#- the name and title are already in the header; the heading stays for search engines and screen readers -#}
+  <h1 class="rm-home__name">{{ h.name }}, {{ h.role }}</h1>
 
-  <p class="rm-attn__sentence" aria-label="{{ a.hint }}">
-    {% for t in a.tokens %}<span class="rm-tok" role="button" tabindex="0" id="rm-tok-{{ loop.index0 }}" data-self="{{ t.self }}">{{ t.text }}</span> {% endfor %}
-  </p>
+  <p class="rm-home__statement">{{ h.statement[0] }} <span>{{ h.statement[1] }}</span></p>
 
-  {% for h in a.heads %}
-  <div class="rm-attn__targets{% if not loop.first %} is-off{% endif %}" data-head="{{ h.id }}">
-    {% for t in h.targets %}
-    <a class="rm-tg" href="{{ t.href }}" data-w="{{ t.w }}">
-      <span class="rm-tg__top"><span class="rm-tg__node"></span><span class="rm-tg__w"></span></span>
-      <small><span class="rm-tg__co">{% include ".icons/logos/" ~ t.logo ~ ".svg" %}</span><span>{{ t.tag }}</span></small>
-      <b>{{ t.title }}</b>
-      <span class="rm-tg__text">{{ t.text }}</span>
-      <span class="rm-tg__pts">{% for pt in t.points %}<span>{{ pt }}</span>{% endfor %}</span>
-    </a>
+  <div class="rm-home__rows">
+    {% for r in h.rows %}
+    {% set tag = "a" if r.href else "div" %}
+    <{{ tag }} class="rm-home__row"{% if r.href %} href="{{ r.href }}"{% endif %}>
+      <b>{{ r.label }}</b>
+      <span>{{ r.text }}</span>
+    </{{ tag }}>
     {% endfor %}
   </div>
-  {% endfor %}
-
-  <svg class="rm-attn__lines" aria-hidden="true"></svg>
 
   {{ page.content }}
 </div>

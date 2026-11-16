@@ -35,19 +35,6 @@
       <meta name="generator" content="{{ generator }}">
     {% endblock %}
 
-{#- Announcement bar (theme feature), on the homepage only: the site is still being built -#}
-{% block announce %}
-  {%- if page and page.url == "" -%}
-    <p class="rm-banner"><span class="rm-banner__dot" aria-hidden="true"></span>
-    {%- if config.theme.language == "fr" -%}
-      Site en construction : certaines informations peuvent être illustratives ou non exhaustives.
-    {%- else -%}
-      This site is under construction: some information may be illustrative or not exhaustive.
-    {%- endif -%}
-    </p>
-  {%- endif -%}
-{% endblock %}
-
 {#- Fonts, self-hosted (docs/assets/fonts, SIL Open Font License): one variable file per
     family covers every weight the site uses, served from the site itself, so there is no
     connection to a third-party font service and the text font is fetched early.
@@ -79,7 +66,14 @@
   <link rel="icon" type="image/png" sizes="96x96" href="{{ config.site_url }}assets/favicon-96.png">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ config.site_url }}assets/apple-touch-icon.png">
   <link rel="alternate" type="application/rss+xml" title="Articles by Rafik Mammeri" href="{{ config.site_url }}feed.xml">
-  {% if page.canonical_url == config.site_url %}
+  {#- For AI agents and search engines: each page that has a plain Markdown twin (made by
+      scripts/gen_ai.py) points to it, and the pages about Rafik describe him as structured data:
+      the person on the home, About and Experience pages, each article as a BlogPosting. -#}
+  {% set md_twin = page.url in ["", "about/", "experience/"] or (page.meta and page.meta.template == "article.html") %}
+  {% if md_twin %}
+  <link rel="alternate" type="text/markdown" title="This page in Markdown" href="{{ page.canonical_url }}index.md">
+  {% endif %}
+  {% if page.url == "" %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -89,52 +83,38 @@
     "url": "https://www.rafikmammeri.com/"
   }
   </script>
+  {% endif %}
+  {% if page.url in ["about/", "experience/"] %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Rafik Mammeri",
-    "jobTitle": "Lead AI Engineer",
-    "description": "Lead AI Engineer at Boulanger: leads an AI engineering team and runs multi-agent systems, voice AI, and LLM infrastructure in production.",
-    "url": "https://www.rafikmammeri.com/",
-    "image": "https://www.rafikmammeri.com/assets/og-card.png",
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Boulanger"
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Lille",
-      "addressCountry": "FR"
-    },
-    "homeLocation": {
-      "@type": "Place",
-      "name": "Lille, France"
-    },
-    "alumniOf": [
-      { "@type": "CollegeOrUniversity", "name": "Université de Lille" },
-      { "@type": "CollegeOrUniversity", "name": "Université Paris-Saclay" }
-    ],
-    "knowsAbout": [
-      "AI Engineering",
-      "AI governance",
-      "AI product leadership",
-      "Multi-agent systems",
-      "LangGraph",
-      "Model Context Protocol",
-      "LLM infrastructure",
-      "Retrieval-augmented generation",
-      "MLOps",
-      "Kubernetes"
-    ],
-    "sameAs": [
-      "https://www.linkedin.com/in/rafikmammeri",
-      "https://github.com/rafik-mammeri",
-      "https://medium.com/@rafik_23044",
-      "https://dev.to/rafik_mammeri"
-    ]
+    "@type": "ProfilePage",
+    "url": "{{ page.canonical_url }}",
+    "name": "{{ page.title | striptags }} | Rafik Mammeri",
+    "mainEntity": { "@id": "https://www.rafikmammeri.com/#person" }
   }
   </script>
+  {% endif %}
+  {% if page.meta and page.meta.template == "article.html" %}
+  {% set art_slug = page.url | replace("writing/", "") | replace("/", "") %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ page.title | striptags | tojson }},
+    "description": {{ (page.meta.description or "") | tojson }},
+    "datePublished": "{{ art_slug[:10] }}",
+    "url": "{{ page.canonical_url }}",
+    "image": "{{ config.site_url }}assets/og/{{ art_slug }}.png",
+    "inLanguage": "en",
+    "keywords": {{ (page.meta.tags or []) | tojson }},
+    "author": { "@id": "https://www.rafikmammeri.com/#person", "@type": "Person", "name": "Rafik Mammeri", "url": "https://www.rafikmammeri.com/" }
+  }
+  </script>
+  {% endif %}
+  {% if page.url in ["", "about/", "experience/"] %}
+  {#- who Rafik is, as structured data: generated from ai-profile.md by scripts/gen_ai.py -#}
+  {% include "partials/ai-person.html" ignore missing %}
   {% endif %}
   {% if page.url == "" %}
     {% set og_title = config.site_name ~ ", Lead AI Engineer" %}

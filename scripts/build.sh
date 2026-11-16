@@ -13,6 +13,9 @@ python3 scripts/gen_articles.py
 # each article's share image (needs Pillow: CI installs it, locally uv provides it)
 ${OG_PYTHON:-uv run --with pillow python} scripts/gen_og.py
 
+# the structured description of Rafik for search engines and AI agents, from ai-profile.md
+python3 scripts/gen_ai.py --person
+
 rm -rf docs-fr/assets docs-fr/stylesheets docs-fr/javascripts
 cp -R docs/assets docs-fr/assets
 cp -R docs/stylesheets docs-fr/stylesheets
@@ -20,6 +23,9 @@ cp -R docs/javascripts docs-fr/javascripts
 
 $ZENSICAL build --clean -f zensical.toml
 $ZENSICAL build --clean -f zensical.fr.toml
+
+# Markdown versions of the pages, llms.txt, llms-full.txt and sitemap dates, for AI agents
+python3 scripts/gen_ai.py
 
 # version the site's own stylesheet and scripts in every page, so browsers never mix a new page with an old stylesheet
 python3 scripts/cache_bust.py
