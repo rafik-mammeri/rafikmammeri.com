@@ -282,7 +282,7 @@
 .md-typeset .rm-meta {
   margin: 0 0 1em;
   font-size: 0.85em;
-  color: var(--md-default-fg-color--lighter);
+  color: var(--md-default-fg-color--light);
 }
 
 /* Project impact: a short labelled list set off by an accent rule */
@@ -2909,7 +2909,31 @@
 .md-typeset .xp-years {
   font-family: var(--md-code-font);
   font-size: 0.66em;
-  color: var(--md-default-fg-color--lighter);
+  font-variant-numeric: tabular-nums;
+  color: var(--md-default-fg-color--light);
+}
+
+/* an open position keeps its line pinned under the header while you read it */
+.md-typeset .xp-pos[open] > summary {
+  position: sticky;
+  top: var(--xp-top, 0px);
+  z-index: 2;
+  margin-bottom: 0.9rem;
+  background: var(--md-default-bg-color);
+  box-shadow: 0 1px 0 var(--md-default-fg-color--lightest);
+}
+
+/* under the pinned line, the text fades out rather than being cut on a hard edge */
+.md-typeset .xp-pos[open] > summary::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 0.9rem;
+  background: linear-gradient(var(--md-default-bg-color), transparent);
+  pointer-events: none;
 }
 
 /* the tenure, to scale: about 4.6rem for three years */
@@ -2929,11 +2953,15 @@
 }
 
 .md-typeset .xp-chev {
-  display: inline-block;
-  font-family: var(--md-code-font);
-  font-size: 0.8em;
-  color: var(--md-default-fg-color--lighter);
+  display: inline-flex;
+  align-self: start;
+  margin-top: 0.42em;
+  color: var(--md-default-fg-color--light);
   transition: transform 0.2s;
+}
+
+.md-typeset .xp-chev svg {
+  display: block;
 }
 
 .md-typeset details[open] > summary > .xp-chev {
@@ -2976,6 +3004,15 @@
   color: var(--rm-sel);
 }
 
+/* the leadership line, first under the name; then the key result */
+.md-typeset .xp-lead {
+  display: block;
+  margin-top: 0.2em;
+  font-size: 0.82em;
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+}
+
 .md-typeset .xp-key {
   display: block;
   margin-top: 0.15em;
@@ -3003,6 +3040,7 @@
 .md-typeset .xp-in > .rm-meta {
   margin: 0 0 0.2em;
   font-size: 0.75em;
+  color: var(--md-default-fg-color--light);
 }
 
 .md-typeset .xp-in > p:not(.rm-meta) {
@@ -3043,14 +3081,18 @@
   color: var(--md-default-fg-color--light);
 }
 
+/* the key number, set as data: mono, aligned figures, full ink */
 .md-typeset .xp-num {
-  font-size: 0.76em;
-  color: var(--md-default-fg-color--light);
+  font-family: var(--md-code-font);
+  font-size: 0.7em;
+  font-variant-numeric: tabular-nums;
+  color: var(--md-default-fg-color);
   white-space: nowrap;
 }
 
+/* stories at a comfortable reading width */
 .md-typeset .xp-story {
-  max-width: 42rem;
+  max-width: 36rem;
   padding: 0 0 0.8rem;
   font-size: 0.86em;
 }
@@ -3108,8 +3150,14 @@
     left: 0.2rem;
   }
 
+  /* on a phone the key number goes under the project title instead of squeezing it */
+  .md-typeset .xp-pjh {
+    flex-wrap: wrap;
+    gap: 0.1rem 1rem;
+  }
+
   .md-typeset .xp-num {
-    grid-column: 2;
+    flex-basis: 100%;
   }
 }
 
