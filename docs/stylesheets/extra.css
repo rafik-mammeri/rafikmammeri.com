@@ -2824,3 +2824,298 @@
   margin: 0;
   text-align: left;
 }
+
+/* Home, under the evidence: a short "about", the human side, with a link to the full story */
+.md-typeset .rm-home-about {
+  max-width: 34rem;
+  margin: 3.2rem 0 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color--light);
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+.md-typeset .rm-home-about p {
+  margin: 0 0 0.6rem;
+}
+
+.md-typeset .rm-home-about a {
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+}
+
+/* ===========================================================================
+   Experience (docs/javascripts/experience.js): an overview first, the detail on demand.
+   Everything starts closed: one line per position, dates in the left margin with a thin
+   bar as long as the position lasted, logo, name, the role as a token (the homepage's
+   chips), the key result. Inside, one line per project that opens to its story. An open
+   position is joined to its content by a thin line of light. Quiet otherwise: hairlines,
+   a chevron, the accent only on what opens.
+   =========================================================================== */
+.md-typeset .xp-pos,
+.md-typeset .xp-pj {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+  font-size: inherit;
+  overflow: visible;
+  scroll-margin-top: 6.5rem;
+}
+
+.md-typeset .xp-pos > summary,
+.md-typeset .xp-pj > summary {
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  list-style: none;
+  min-height: 0;
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.md-typeset .xp-pos > summary::before,
+.md-typeset .xp-pos > summary::after,
+.md-typeset .xp-pj > summary::before,
+.md-typeset .xp-pj > summary::after {
+  display: none;
+}
+
+.md-typeset .xp-pos > summary::-webkit-details-marker,
+.md-typeset .xp-pj > summary::-webkit-details-marker {
+  display: none;
+}
+
+.md-typeset .xp-pos {
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .xp-pos:last-of-type {
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* a position: dates | chevron | logo, name, role token, key result */
+.md-typeset .xp-pos > summary {
+  display: grid;
+  grid-template-columns: 7rem 1rem minmax(0, 1fr);
+  align-items: baseline;
+  padding: 0.7rem 0 0.65rem;
+}
+
+.md-typeset .xp-years {
+  font-family: var(--md-code-font);
+  font-size: 0.66em;
+  color: var(--md-default-fg-color--lighter);
+}
+
+/* the tenure, to scale: about 4.6rem for three years */
+.md-typeset .xp-years i {
+  display: block;
+  width: var(--xp-len, 1rem);
+  height: 2px;
+  margin-top: 0.35rem;
+  border-radius: 1px;
+  background: var(--md-default-fg-color--lightest);
+  transition: background 0.2s;
+}
+
+.md-typeset .xp-pos[open] .xp-years i,
+.md-typeset .xp-pos > summary:hover .xp-years i {
+  background: var(--rm-sel);
+}
+
+.md-typeset .xp-chev {
+  display: inline-block;
+  font-family: var(--md-code-font);
+  font-size: 0.8em;
+  color: var(--md-default-fg-color--lighter);
+  transition: transform 0.2s;
+}
+
+.md-typeset details[open] > summary > .xp-chev {
+  transform: rotate(90deg);
+  color: var(--rm-sel);
+}
+
+.md-typeset .xp-head h2 {
+  display: inline;
+  margin: 0;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.md-typeset .xp-head h2 .twemoji,
+.md-typeset .xp-head h2 .twemoji svg {
+  width: 1.1em;
+  height: 1.1em;
+  margin-right: 0.3em;
+  vertical-align: -0.18em;
+}
+
+.md-typeset .xp-head .headerlink,
+.md-typeset .xp-t .headerlink {
+  display: none;
+}
+
+/* the role after the company, joined by a persimmon slash, like a path: Boulanger / Lead AI
+   Engineer. The role keeps the ink colour; the slash is the only accent at rest */
+.md-typeset .xp-role {
+  font-size: 1em;
+  font-weight: 500;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .xp-role::before {
+  content: "/";
+  margin: 0 0.35em 0 0.3em;
+  font-weight: 300;
+  color: var(--rm-sel);
+}
+
+.md-typeset .xp-key {
+  display: block;
+  margin-top: 0.15em;
+  font-size: 0.8em;
+  color: var(--md-default-fg-color--light);
+}
+
+/* inside a position, joined to it by a thin line of light under the chevron */
+.md-typeset .xp-in {
+  position: relative;
+  padding: 0 0 0.8rem 8rem;
+}
+
+.md-typeset .xp-in::before {
+  content: "";
+  position: absolute;
+  top: -0.3rem;
+  bottom: 0.8rem;
+  left: 7.2rem;
+  width: 2px;
+  border-radius: 1px;
+  background: linear-gradient(var(--rm-sel), color-mix(in srgb, var(--rm-sel) 0%, transparent));
+}
+
+.md-typeset .xp-in > .rm-meta {
+  margin: 0 0 0.2em;
+  font-size: 0.75em;
+}
+
+.md-typeset .xp-in > p:not(.rm-meta) {
+  max-width: 40rem;
+  margin: 0 0 0.5em;
+  font-size: 0.88em;
+  color: var(--md-default-fg-color--light);
+}
+
+/* a project: chevron | title and one line | key number */
+.md-typeset .xp-pj {
+  border-top: 1px solid color-mix(in srgb, var(--md-default-fg-color--lightest) 60%, transparent);
+}
+
+/* a project inside an open position: its title and key number, then its story, always shown */
+.md-typeset .xp-pjh {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.6rem 0 0.2rem;
+}
+
+.md-typeset .xp-pjh h3 {
+  margin: 0;
+  font-size: 0.9em;
+  font-weight: 700;
+}
+
+.md-typeset .xp-pos > summary:hover h2 {
+  color: var(--rm-sel);
+}
+
+.md-typeset .xp-one {
+  display: block;
+  font-size: 0.78em;
+  line-height: 1.45;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .xp-num {
+  font-size: 0.76em;
+  color: var(--md-default-fg-color--light);
+  white-space: nowrap;
+}
+
+.md-typeset .xp-story {
+  max-width: 42rem;
+  padding: 0 0 0.8rem;
+  font-size: 0.86em;
+}
+
+.md-typeset .xp-story p {
+  margin: 0 0 0.5em;
+}
+
+/* inside a project: the results as a plain list, no box and no label */
+.md-typeset .xp-story .rm-impact {
+  margin: 0.3em 0;
+  padding: 0;
+  border: 0;
+}
+
+.md-typeset .xp-story .rm-impact > p:first-child {
+  display: none;
+}
+
+.md-typeset .xp-story .rm-stack > ul {
+  margin-top: 0.6em;
+}
+
+/* the stack: each technology its own pill, with its logo, all at the same level */
+.md-typeset .xp-story .rm-stack > ul {
+  gap: 0.35rem;
+}
+
+.md-typeset .xp-story .rm-stack > ul > li {
+  margin: 0;
+  padding: 0.2em 0.6em;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 999px;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  font-size: 0.78em;
+}
+
+@media screen and (max-width: 44.99em) {
+  .md-typeset .xp-pos > summary {
+    grid-template-columns: 1rem minmax(0, 1fr);
+  }
+
+  .md-typeset .xp-years {
+    grid-column: 2;
+    order: 2;
+    margin-top: 0.3rem;
+  }
+
+  .md-typeset .xp-in {
+    padding-left: 1rem;
+  }
+
+  .md-typeset .xp-in::before {
+    left: 0.2rem;
+  }
+
+  .md-typeset .xp-num {
+    grid-column: 2;
+  }
+}
+
+@media print {
+  .md-typeset .xp-chev,
+  .md-typeset .xp-in::before {
+    display: none;
+  }
+}

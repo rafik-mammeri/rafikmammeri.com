@@ -113,3 +113,9 @@ hide:
   - navigation
   - toc
 ---
+
+<div class="rm-home-about" markdown>
+I started in mathematics, with a PhD at the University of Lille. Then six years of machine learning at BNP Paribas, where I learned to plan for the day a model gets it wrong. When generative AI arrived, I wanted to build with it rather than watch. I live in Lille.
+
+[More about me](about.md)
+</div>
