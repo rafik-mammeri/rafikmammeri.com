@@ -4,9 +4,6 @@ template: article.html
 description: Why the biggest latency win in a production multi-agent system rarely comes from prompt optimization.
 description_fr: Pourquoi le plus gros gain de latence d'un système multi-agents en production vient rarement de l'optimisation des prompts.
 topic: Agents and architecture
-also:
-  - Medium: https://medium.com/@rafik_23044
-  - dev.to: https://dev.to/rafik_mammeri
 takeaways:
   - Most of the wait comes from model calls made before the one that helps the user.
   - Deterministic routing and native handoffs brought most messages down to one or two LLM calls.

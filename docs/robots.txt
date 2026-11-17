@@ -28,4 +28,3 @@ User-agent: Google-Extended
 Allow: /
 
 Sitemap: https://www.rafikmammeri.com/sitemap.xml
-Sitemap: https://www.rafikmammeri.com/fr/sitemap.xml
