@@ -12,7 +12,7 @@
   {#- the name and title are already in the header; the heading stays for search engines and screen readers -#}
   <h1 class="rm-home__name">{{ h.name }}, {{ h.role }}</h1>
 
-  <p class="rm-home__statement">{{ h.statement[0] }} <span>{{ h.statement[1] }}</span></p>
+  <p class="rm-home__statement"{% if h.statement_lang %} lang="{{ h.statement_lang }}"{% endif %}>{{ h.statement[0] }} <span>{{ h.statement[1] }}</span></p>
 
   <div class="rm-home__rows">
     {% for r in h.rows %}
