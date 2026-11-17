@@ -6,13 +6,15 @@ home:
   name: "Rafik Mammeri"
   role: "Lead AI Engineer"
   statement:
-    - "An AI agent proves nothing in a demo."
-    - "It starts to count when thousands of customers use it every day and the business relies on it."
+    - "I build AI products"
+    - "that people use every day."
   rows:
     - label: "Now"
-      text: "Tech lead of a team of AI engineers in retail and e-commerce, where we build and run AI agents for customers and employees: a shopping assistant, a customer-service voice agent, plain-language access to data, and internal assistants."
-    - label: "Writing"
-      text: "Articles from putting AI agents into production. The latest: why latency is an architecture problem, not a prompt problem."
+      text: "AI Tech Lead in retail and e-commerce: voice and chat agents for customers, plain-language access to data and assistants for employees"
+      more: "… and more"
+      more_href: "experience/"
+    - label: "This site"
+      text: "Where I share what I learn building AI agents: notes and feedback from production, projects and demos."
       href: "writing/"
     - label: "Previously"
       text: "Six years of machine learning at BNP Paribas: credit-risk models first, then a datalab building models for several business lines."
@@ -20,7 +22,3 @@ hide:
   - navigation
   - toc
 ---
-
-<div class="rm-home-about" markdown>
-[More about me](about.md)
-</div>

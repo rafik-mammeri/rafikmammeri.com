@@ -44,7 +44,7 @@ def profile() -> dict:
 
 
 def person_jsonld() -> None:
-    """The schema.org Person for the home, About and Experience pages, from ai-profile.md."""
+    """The schema.org Person for the home and Experience pages, from ai-profile.md."""
     import json
     p = profile()
     person = {
@@ -130,8 +130,12 @@ def home(lang: str) -> str:
     for block in now.split('- label: "')[1:]:
         label = block.split('"', 1)[0]
         text = re.search(r'text: "([^"]+)"', block).group(1)
-        href = re.search(r'href: "([^"]+)"', block)
+        href = re.search(r'^\s+href: "([^"]+)"', block, re.M)
         more = f" [{'More' if lang == 'en' else 'Lire'}]({BASE}{prefix}/{href.group(1)})" if href else ""
+        extra = re.search(r'^\s+more: "([^"]+)"', block, re.M)
+        extra_href = re.search(r'^\s+more_href: "([^"]+)"', block, re.M)
+        if extra and extra_href:
+            text += f", [{extra.group(1).lstrip('… ')}]({BASE}{prefix}/{extra_href.group(1)})"
         lines.append(f"- **{label}**: {text}{more}")
     lines += ["", clean(body, BASE + prefix)]
     return "\n".join(lines).strip() + "\n"
@@ -152,7 +156,7 @@ def pages(lang: str) -> list[tuple[str, str, str, str]]:
     prefix = "" if lang == "en" else "/fr"
     out = [(f"{BASE}{prefix}/", "Home" if lang == "en" else "Accueil",
             "Who Rafik is, his view of AI agents, what he does now and before." if lang == "en" else "", home(lang))]
-    for name in ("experience", "about"):
+    for name in ("experience",):
         if (d / f"{name}.md").exists():
             out.append((f"{BASE}{prefix}/{name}/",) + page(d / f"{name}.md", BASE + prefix))
     if lang == "en":
