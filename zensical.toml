@@ -12,17 +12,13 @@ nav = [
 ]
 
 extra_css = ["stylesheets/extra.css"]
-extra_javascript = ["javascripts/language-switch.js", "javascripts/theme-lamp.js", "javascripts/articles.js", "javascripts/experience.js"]
+extra_javascript = ["javascripts/theme-lamp.js", "javascripts/articles.js", "javascripts/experience.js"]
 
 
 [project.extra]
 generator = false
 # Both languages share stored preferences (light/dark theme), so switching language keeps the theme
 scope = "/"
-alternate = [
-  { name = "English", link = "/", lang = "en" },
-  { name = "Français", link = "/fr/", lang = "fr" },
-]
 
 [project.theme]
 custom_dir = "overrides"

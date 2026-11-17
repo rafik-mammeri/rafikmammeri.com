@@ -2970,3 +2970,48 @@ html {
     display: none;
   }
 }
+
+/* Glossary entries in articles (!!! term "Word"): each word as a quiet block, its name, then
+   the definition and a real case. Lighter than the other callouts, since there are dozens. */
+.md-typeset .rm-art-main .admonition.term {
+  /* back to the page's own colours (the article callouts redefine them for their dark room) */
+  --md-default-fg-color: inherit;
+  --md-default-fg-color--light: inherit;
+  --md-typeset-color: inherit;
+  --md-typeset-a-color: inherit;
+  --md-code-bg-color: inherit;
+  --md-code-fg-color: inherit;
+  margin: 0;
+  padding: 1rem 0 0.2rem;
+  border: 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--md-typeset-color);
+  font-size: inherit;
+}
+
+.md-typeset .rm-art-main .admonition.term > .admonition-title {
+  margin: 0 0 0.35rem;
+  padding: 0;
+  background: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--rm-hot);
+}
+
+.md-typeset .rm-art-main .admonition.term > .admonition-title::before {
+  display: none;
+}
+
+.md-typeset .rm-art-main .admonition.term > p {
+  margin: 0 0 0.6rem;
+  padding: 0;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .rm-art-main .admonition.term + h2 {
+  margin-top: 2.2rem;
+}
