@@ -5,9 +5,11 @@ template: home.html
 home:
   name: "Rafik Mammeri"
   role: "Lead AI Engineer"
+  # the line stays in English on the French site too: a signature, marked lang="en"
+  statement_lang: "en"
   statement:
-    - "Je construis des produits d’IA"
-    - "utilisés au quotidien."
+    - "I build AI products"
+    - "that people use every day."
   rows:
     - label: "Aujourd'hui"
       text: "AI Tech Lead dans le retail et le e-commerce : agents vocaux et conversationnels pour les clients, accès aux données en langage naturel et assistants pour les collaborateurs"
