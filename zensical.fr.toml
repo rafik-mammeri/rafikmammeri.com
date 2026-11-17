@@ -12,7 +12,6 @@ nav = [
   { "Accueil" = "index.md" },
   { "Expérience" = "experience.md" },
   { "Articles" = "articles.md" },
-  { "À propos" = "about.md" },
 ]
 
 extra_css = ["stylesheets/extra.css"]

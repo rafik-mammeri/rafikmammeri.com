@@ -73,7 +73,7 @@
   --md-footer-fg-color--light: #A3A3A0;
 }
 
-/* The job title sits next to the name in the header, on every page */
+/* The header shows the name only, on every page */
 .md-header__title .md-header__topic:first-child {
   opacity: 1;
   pointer-events: auto;
@@ -83,22 +83,6 @@
 
 .md-header__title .md-header__topic + .md-header__topic {
   display: none;
-}
-
-.md-header__title .md-header__topic:first-child .md-ellipsis::after {
-  content: "Lead AI Engineer";
-  margin-left: 0.7em;
-  padding-left: 0.7em;
-  border-left: 1px solid var(--md-default-fg-color--lighter);
-  font-weight: 400;
-  color: var(--md-default-fg-color--light);
-}
-
-/* On a phone there is room for the name only: the title would cut it */
-@media screen and (max-width: 44.99em) {
-  .md-header__title .md-header__topic:first-child .md-ellipsis::after {
-    content: none;
-  }
 }
 
 /* Generous whitespace — technical-minimal reads as unhurried, not dense */
@@ -436,17 +420,19 @@ html {
 }
 
 .md-typeset .rm-home__statement {
-  max-width: 15em;
+  max-width: 21em;
   margin: 0;
-  font-size: clamp(2rem, 1rem + 3.8vw, 4.2rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.55rem, 1rem + 2vw, 2.7rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   text-wrap: balance;
   color: var(--md-default-fg-color);
 }
 
 .md-typeset .rm-home__statement span {
+  display: block;
+  font-style: italic;
   color: var(--h-hot);
 }
 
@@ -477,6 +463,18 @@ html {
   max-width: 34ch;
   font-size: 0.8rem;
   line-height: 1.55;
+}
+
+.md-typeset .rm-home__more {
+  color: var(--md-default-fg-color);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  white-space: nowrap;
+}
+
+.md-typeset .rm-home__more:hover {
+  color: var(--h-hot);
 }
 
 .md-typeset a.rm-home__row:hover b,

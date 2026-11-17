@@ -11,25 +11,23 @@ hide:
 The positions I have held and what I built in each: what it was, what it changed for the business, and the technology behind it.
 { .rm-lede }
 
-## :logos-boulanger: Boulanger { #boulanger data-years="2025 – present" data-lead="Tech lead of a team of AI engineers" data-key="Voice bot: 50,000 calls in its first six days" }
+## :logos-boulanger: Boulanger { #boulanger data-years="2025 – present" data-lead="Tech lead of a team of AI engineers" data-key="AI agents in production for customers and employees" }
 
 Lead AI Engineer · April 2025 – present · Lille
 { .rm-meta }
 
-Tech lead of a team of AI engineers that builds and runs the company's AI agents, for customers and for employees.
+The team builds and runs the company's AI agents, for customers and for employees.
 
-### Customer-service voice bot { #voice-bot data-one="The conversational AI on the customer-service phone line." data-head="50,000 calls in 6 days" }
+### Customer-service voice bot { #voice-bot data-one="The conversational AI on the customer-service phone line." data-head="About 20,000 calls a day" }
 
-The conversational AI behind the customer-service phone line, in production since 28 October 2026. I lead it end to end: architecture, code, integrations, customer authentication, monitoring and production analysis, working with the voice vendor and the customer-service teams. Involved from the vendor tender in late 2025, I co-designed the architecture that keeps business logic and customer data in-house. The agent is connected to 15 internal services, from order tracking and repairs to invoices, loyalty, stores and the product catalogue.
+The conversational AI behind the customer-service phone line. My work on it covers the architecture, the code, the integrations, customer authentication, monitoring and production analysis, with the voice vendor and the customer-service teams. I was in charge of deploying it at scale: load testing, pod autoscaling and resource configuration, monitoring and observability of resources and metrics, and alerts on those metrics. Involved from the vendor tender in late 2025, I co-designed the architecture that keeps business logic and customer data in-house. The agent is connected to 15 internal services, from order tracking and repairs to invoices, loyalty, stores and the product catalogue.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
-- Rolled out from 25% to 100% of inbound calls in three days, a gradual ramp-up I recommended
-- Over 50,000 calls in the first six days, 98% handled by the AI
-- Over 10% of calls resolved without an advisor from the second day, against 2% planned
-- Five fixes in 48 hours after the first day, cutting hang-ups by more than a third
+- About 20,000 calls a day, all answered by the AI voice agent
+- Between 10 and 15% of calls resolved without an advisor
 
 </div>
 
@@ -53,50 +51,16 @@ The conversational AI behind the customer-service phone line, in production sinc
 
 </div>
 
-### Shopping assistant, first generation { #shopping-assistant data-one="A generative assistant for advice, orders and after-sales, on web and apps." data-head="2,000 conversations a day" }
+### Shopping assistant, second generation { #shopping-agent data-one="A chat where customers act directly: buttons, carousels, basket." data-head="About 10,000 conversations a day" }
 
-A generative assistant on the website and mobile apps for product advice, orders and after-sales, replacing a scripted chatbot. Multi-agent design, and one API contract negotiated with the web, iOS and Android teams.
-
-<div class="rm-impact" markdown>
-
-**Impact**
-
-- In production in six months; about 2,000 conversations a day in spring 2026
-- 78% positive ratings from customers
-- Chat became a standard part of every new IT project
-
-</div>
-
-<div class="rm-stack" markdown>
-
-- :logos-langgraph: LangGraph
-- :logos-openai: OpenAI
-- :logos-azureaisearch: Azure AI Search
-- :logos-python: Python
-- :logos-fastapi: FastAPI
-- :logos-kubernetes: Kubernetes
-- :logos-gravitee: Gravitee
-- :logos-mongodb: MongoDB
-- :logos-langfuse: Langfuse
-- :logos-gitlab: GitLab CI
-- :logos-pydantic: Pydantic
-- :logos-ruff: Ruff
-- :logos-pytest: pytest
-- :logos-sonarqube: SonarQube
-
-</div>
-
-### Shopping assistant, second generation { #shopping-agent data-one="Sales and after-sales in one assistant, on web and mobile." data-head="A/B test on 50% of traffic" }
-
-I lead the program as AI product lead: a sales assistant, guided after-sales, product care, and the move to the company's standard platform.
+Integration of interface components into the chat: buttons that open the page the customer asked for (product page, customer account), product carousels, add to basket. The agents choose which components to show with each answer, and several agents can answer at the same time, streaming. I built the agentic architecture, and the API contract between the agent backend and the web and mobile fronts. I was in charge of deploying it at scale: load testing, pod autoscaling and resource configuration, monitoring and observability of resources and metrics, and alerts on those metrics.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
-- One assistant for sales and after-sales instead of separate integrations
-- A/B test on 50% of website traffic since October 2026
-- iOS and Android apps live since 3 November 2026
+- About 10,000 conversations a day
+- Chat is now a standard part of every new customer-facing IT project
 
 </div>
 
@@ -121,9 +85,32 @@ I lead the program as AI product lead: a sales assistant, guided after-sales, pr
 
 </div>
 
-### Self-BI: data in plain language { #self-bi data-one="Business teams question the data warehouse in plain language." data-head="Answers in 60 s, not 150" }
+### Shopping assistant, first generation { #shopping-assistant data-one="A generative assistant for advice, orders and after-sales, on web and apps." data-head="" }
 
-Started the project and took it to production with the data teams: business teams ask the data warehouse questions in plain language in Gemini Enterprise, through an in-house MCP server. Access is secured in four layers, from user sign-in with OAuth 2.0 and OpenID Connect to role-based access to the data.
+A generative assistant on the website and mobile apps for product advice, orders and after-sales, replacing a scripted chatbot. Multi-agent design, and one API contract defined together with the web, iOS and Android teams.
+
+<div class="rm-stack" markdown>
+
+- :logos-langgraph: LangGraph
+- :logos-openai: OpenAI
+- :logos-azureaisearch: Azure AI Search
+- :logos-python: Python
+- :logos-fastapi: FastAPI
+- :logos-kubernetes: Kubernetes
+- :logos-gravitee: Gravitee
+- :logos-mongodb: MongoDB
+- :logos-langfuse: Langfuse
+- :logos-gitlab: GitLab CI
+- :logos-pydantic: Pydantic
+- :logos-ruff: Ruff
+- :logos-pytest: pytest
+- :logos-sonarqube: SonarQube
+
+</div>
+
+### Self-BI: data in plain language { #self-bi data-one="Business teams question the data warehouse in plain language." data-head="Two business scopes live" }
+
+Started the project and took it to production with the data teams: business teams ask the data warehouse questions in plain language in Gemini Enterprise, through an in-house MCP server. Access is secured in four layers, from user sign-in with OAuth 2.0 and OpenID Connect to role-based access to the data. To scale it, the data teams are building data products for these uses: curated, documented data with a semantic layer of business definitions and metrics, so the agent works from the same figures as the dashboards.
 
 <div class="rm-impact" markdown>
 
@@ -131,7 +118,6 @@ Started the project and took it to production with the data teams: business team
 
 - Two business scopes in production; a new scope can be added in about three days
 - Answers without waiting for an analyst, with figures that match the official dashboards
-- Median answer time cut from 150 to 60 seconds with specialized tools
 - Validated by the security team and IT architects, then chosen as the company's target architecture
 
 </div>
@@ -228,7 +214,7 @@ Senior Data Scientist · June 2021 – May 2024 · Paris
 
 The group's data and AI lab: four machine-learning projects taken to production for different business lines.
 
-### Customer-support chatbot { #support-chatbot data-one="Answers support requests before they reach an advisor." data-head="65% of requests automated" }
+### Customer-support chatbot { #support-chatbot data-one="Answers support requests before they reach an advisor." data-head="40% less support workload" }
 
 Answers customer requests from the support knowledge base before they reach an advisor, using a fine-tuned language model.
 
@@ -236,9 +222,7 @@ Answers customer requests from the support knowledge base before they reach an a
 
 **Impact**
 
-- 65% of incoming requests handled automatically
 - 40% less workload for the support teams
-- Support available around the clock
 
 </div>
 
@@ -265,7 +249,6 @@ Daily forecasts of incoming calls for a debt-collection call centre, to plan sta
 **Impact**
 
 - 30% lower forecast error on call peaks
-- 15% lower operating cost
 
 </div>
 

@@ -68,8 +68,8 @@
   <link rel="alternate" type="application/rss+xml" title="Articles by Rafik Mammeri" href="{{ config.site_url }}feed.xml">
   {#- For AI agents and search engines: each page that has a plain Markdown twin (made by
       scripts/gen_ai.py) points to it, and the pages about Rafik describe him as structured data:
-      the person on the home, About and Experience pages, each article as a BlogPosting. -#}
-  {% set md_twin = page.url in ["", "about/", "experience/"] or (page.meta and page.meta.template == "article.html") %}
+      the person on the home and Experience pages, each article as a BlogPosting. -#}
+  {% set md_twin = page.url in ["", "experience/"] or (page.meta and page.meta.template == "article.html") %}
   {% if md_twin %}
   <link rel="alternate" type="text/markdown" title="This page in Markdown" href="{{ page.canonical_url }}index.md">
   {% endif %}
@@ -84,7 +84,7 @@
   }
   </script>
   {% endif %}
-  {% if page.url in ["about/", "experience/"] %}
+  {% if page.url in ["experience/"] %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -112,7 +112,7 @@
   }
   </script>
   {% endif %}
-  {% if page.url in ["", "about/", "experience/"] %}
+  {% if page.url in ["", "experience/"] %}
   {#- who Rafik is, as structured data: generated from ai-profile.md by scripts/gen_ai.py -#}
   {% include "partials/ai-person.html" ignore missing %}
   {% endif %}
