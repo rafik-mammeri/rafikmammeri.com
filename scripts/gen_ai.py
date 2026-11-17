@@ -203,7 +203,7 @@ def llms(items) -> str:
         f"> {p['summary']}",
         "",
         "Every page below also exists as plain Markdown: add `index.md` to its address. The whole site "
-        f"in one file: {BASE}/llms-full.txt. A French version of the site is at {BASE}/fr/.",
+        f"in one file: {BASE}/llms-full.txt.",
         "",
         "## Positions",
         "",
@@ -271,14 +271,12 @@ def main() -> None:
         person_jsonld()
         print("AI profile: structured data written from ai-profile.md")
         return
-    en, fr = pages("en"), pages("fr")
+    en = pages("en")
     write_twins("en", en)
-    write_twins("fr", fr)
     (SITE / "llms-full.txt").write_text(full(en), encoding="utf-8")
     (SITE / "llms.txt").write_text(llms(en), encoding="utf-8")
     lastmod(SITE / "sitemap.xml", ROOT / "docs", en)
-    lastmod(SITE / "fr" / "sitemap.xml", ROOT / "docs-fr", fr)
-    print(f"AI-readable: {len(en)} English and {len(fr)} French pages as Markdown, llms.txt, llms-full.txt, sitemap dates")
+    print(f"AI-readable: {len(en)} pages as Markdown, llms.txt, llms-full.txt, sitemap dates")
 
 
 if __name__ == "__main__":

@@ -375,7 +375,6 @@ def main() -> None:
     entries = pages + read_demo()
     real = pages  # every article with a page gets its header, contents and related list
     (ROOT / "docs" / "articles.md").write_text(page(entries, "en"), encoding="utf-8")
-    (ROOT / "docs-fr" / "articles.md").write_text(page(entries, "fr"), encoding="utf-8")
     article_partials(real, [a for a in entries if a["demo"] and not a.get("demo_page")])
     print(f"Wrote the Articles pages with {len(entries)} article(s), and the header and read-next of {len(real)} article page(s)")
 
