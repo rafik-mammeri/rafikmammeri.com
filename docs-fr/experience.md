@@ -11,25 +11,23 @@ hide:
 Les postes que j'ai occupés et ce que j'y ai construit : ce qu'était chaque projet, ce qu'il a changé pour l'entreprise, et les technologies derrière.
 { .rm-lede }
 
-## :logos-boulanger: Boulanger { #boulanger data-years="2025 – aujourd'hui" data-lead="Tech lead d'une équipe d'ingénieurs IA" data-key="Voice bot : plus de 50 000 appels sur ses six premiers jours" }
+## :logos-boulanger: Boulanger { #boulanger data-years="2025 – aujourd'hui" data-lead="Tech lead d'une équipe d'ingénieurs IA" data-key="Des agents IA en production pour les clients et les collaborateurs" }
 
 Lead AI Engineer · avril 2025 – aujourd'hui · Lille
 { .rm-meta }
 
-Tech lead d'une équipe d'ingénieurs IA qui construit et fait tourner les agents IA de l'entreprise, pour les clients et pour les collaborateurs.
+L'équipe construit et fait tourner les agents IA de l'entreprise, pour les clients et pour les collaborateurs.
 
-### Voice bot du service client { #voice-bot data-one="L'IA conversationnelle de la ligne du service client." data-head="50 000 appels en 6 jours" }
+### Voice bot du service client { #voice-bot data-one="L'agent IA vocal de la ligne du service client." data-head="Environ 20 000 appels par jour" }
 
-L'IA conversationnelle derrière la ligne du service client, en production depuis le 28 octobre 2026. Je la porte de bout en bout : architecture, code, intégrations, authentification des clients, supervision et analyse de production, en lien avec le fournisseur de la voix et les équipes du service client. Impliqué dès l'appel d'offres fin 2025, j'ai co-conçu l'architecture qui garde la logique métier et les données clients dans l'entreprise. L'agent est connecté à 15 services internes, du suivi de commande et des réparations aux factures, à la fidélité, aux magasins et au catalogue.
+L'agent IA vocal derrière la ligne du service client. Mon travail couvre l'architecture, le code, les intégrations, l'authentification des clients, la supervision et l'analyse de production, avec le fournisseur de la voix et les équipes du service client. J'étais responsable de son déploiement à l'échelle : tests de charge, autoscaling des pods et configuration des ressources, supervision et observabilité des ressources et des métriques, et alertes sur ces métriques. Impliqué dès l'appel d'offres fin 2025, j'ai co-conçu l'architecture qui garde la logique métier et les données clients dans l'entreprise. L'agent est connecté à 15 services internes, du suivi de commande et des réparations aux factures, à la fidélité, aux magasins et au catalogue.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
-- Passage de 25 % à 100 % des appels entrants en trois jours, une montée en charge progressive que j'ai recommandée
-- Plus de 50 000 appels sur les six premiers jours, 98 % pris en charge par l'IA
-- Plus de 10 % des appels résolus sans conseiller dès le deuxième jour, contre 2 % prévus
-- Cinq correctifs en 48 heures après la première journée, qui ont fait baisser les abandons de plus d'un tiers
+- Environ 20 000 appels par jour, tous pris en charge par l'agent vocal IA
+- Entre 10 et 15 % des appels résolus sans conseiller
 
 </div>
 
@@ -53,50 +51,16 @@ L'IA conversationnelle derrière la ligne du service client, en production depui
 
 </div>
 
-### Assistant d'achat, première génération { #shopping-assistant data-one="Un assistant génératif pour le conseil, les commandes et l'après-vente, sur le web et les apps." data-head="2 000 conversations par jour" }
+### Assistant d'achat, seconde génération { #shopping-agent data-one="Un chat où le client agit directement : boutons, carrousels, panier." data-head="Environ 10 000 conversations par jour" }
 
-Un assistant génératif sur le site et les applications mobiles, pour le conseil produit, les commandes et l'après-vente, à la place d'un chatbot à scénarios. Conception multi-agents, et un contrat d'API négocié avec les équipes web, iOS et Android.
-
-<div class="rm-impact" markdown>
-
-**Impact**
-
-- En production en six mois ; environ 2 000 conversations par jour au printemps 2026
-- 78 % d'avis positifs des clients
-- Le chat est devenu un volet standard de chaque nouveau projet informatique
-
-</div>
-
-<div class="rm-stack" markdown>
-
-- :logos-langgraph: LangGraph
-- :logos-openai: OpenAI
-- :logos-azureaisearch: Azure AI Search
-- :logos-python: Python
-- :logos-fastapi: FastAPI
-- :logos-kubernetes: Kubernetes
-- :logos-gravitee: Gravitee
-- :logos-mongodb: MongoDB
-- :logos-langfuse: Langfuse
-- :logos-gitlab: GitLab CI
-- :logos-pydantic: Pydantic
-- :logos-ruff: Ruff
-- :logos-pytest: pytest
-- :logos-sonarqube: SonarQube
-
-</div>
-
-### Assistant d'achat, seconde génération { #shopping-agent data-one="La vente et l'après-vente dans un seul assistant, sur le web et le mobile." data-head="Test A/B sur 50 % du trafic" }
-
-Je mène le programme comme lead produit IA : assistant de vente, après-vente guidé, entretien des produits, et passage sur la plateforme standard de l'entreprise.
+Intégration de composants d'interface dans le chat : boutons qui mènent à la page demandée (fiche produit, compte client), carrousels de produits, ajout au panier. Les agents choisissent les composants à afficher selon la réponse, et plusieurs agents peuvent répondre en même temps, en streaming. J'ai construit l'architecture agentique, ainsi que le contrat d'API entre le backend des agents et les fronts web et mobile. J'étais responsable de son déploiement à l'échelle : tests de charge, autoscaling des pods et configuration des ressources, supervision et observabilité des ressources et des métriques, et alertes sur ces métriques.
 
 <div class="rm-impact" markdown>
 
 **Impact**
 
-- Un seul assistant pour la vente et l'après-vente, au lieu d'intégrations séparées
-- A/B test sur 50 % du trafic du site depuis octobre 2026
-- Applications iOS et Android en production depuis le 3 novembre 2026
+- Environ 10 000 conversations par jour
+- Le chat fait désormais partie de chaque nouveau projet IT lié à l'expérience client
 
 </div>
 
@@ -121,9 +85,32 @@ Je mène le programme comme lead produit IA : assistant de vente, après-vente g
 
 </div>
 
-### Self-BI : les données en langage naturel { #self-bi data-one="Les équipes métier interrogent l'entrepôt de données en langage naturel." data-head="Réponses en 60 s au lieu de 150" }
+### Assistant d'achat, première génération { #shopping-assistant data-one="Un assistant génératif pour le conseil, les commandes et l'après-vente, sur le web et les apps." data-head="" }
 
-J'ai lancé le projet et l'ai mené jusqu'à la production avec les équipes data : les équipes métier interrogent l'entrepôt de données en langage naturel dans Gemini Enterprise, via un serveur MCP interne. L'accès est sécurisé en quatre couches, de l'authentification des utilisateurs par OAuth 2.0 et OpenID Connect au contrôle d'accès par rôle (RBAC) sur les données.
+Un assistant génératif sur le site et les applications mobiles, pour le conseil produit, les commandes et l'après-vente, à la place d'un chatbot à scénarios. Conception multi-agents, et un contrat d'API défini avec les équipes web, iOS et Android.
+
+<div class="rm-stack" markdown>
+
+- :logos-langgraph: LangGraph
+- :logos-openai: OpenAI
+- :logos-azureaisearch: Azure AI Search
+- :logos-python: Python
+- :logos-fastapi: FastAPI
+- :logos-kubernetes: Kubernetes
+- :logos-gravitee: Gravitee
+- :logos-mongodb: MongoDB
+- :logos-langfuse: Langfuse
+- :logos-gitlab: GitLab CI
+- :logos-pydantic: Pydantic
+- :logos-ruff: Ruff
+- :logos-pytest: pytest
+- :logos-sonarqube: SonarQube
+
+</div>
+
+### Self-BI : les données en langage naturel { #self-bi data-one="Les équipes métier interrogent l'entrepôt de données en langage naturel." data-head="Deux périmètres métier en production" }
+
+J'ai lancé le projet et l'ai mené jusqu'à la production avec les équipes data : les équipes métier interrogent l'entrepôt de données en langage naturel dans Gemini Enterprise, via un serveur MCP interne. L'accès est sécurisé en quatre couches, de l'authentification des utilisateurs par OAuth 2.0 et OpenID Connect au contrôle d'accès par rôle (RBAC) sur les données. Pour passer à l'échelle, les équipes data construisent des produits de données dédiés à ces usages : des données préparées et documentées, avec une couche sémantique de définitions métier et d'indicateurs, pour que l'agent s'appuie sur les mêmes chiffres que les tableaux de bord.
 
 <div class="rm-impact" markdown>
 
@@ -131,7 +118,6 @@ J'ai lancé le projet et l'ai mené jusqu'à la production avec les équipes dat
 
 - Deux périmètres métier en production ; un nouveau périmètre s'ajoute en trois jours environ
 - Des réponses sans attendre un analyste, avec des chiffres alignés sur les tableaux de bord officiels
-- Temps de réponse médian passé de 150 à 60 secondes grâce à des outils spécialisés
 - Validé par la sécurité et les architectes, puis retenu comme architecture cible de l'entreprise
 
 </div>
@@ -228,7 +214,7 @@ Senior Data Scientist · juin 2021 – mai 2024 · Paris
 
 Le laboratoire data et IA du groupe : quatre projets de machine learning mis en production pour différents métiers.
 
-### Chatbot de support client { #support-chatbot data-one="Répond aux demandes de support avant qu'elles n'arrivent à un conseiller." data-head="65 % des demandes automatisées" }
+### Chatbot de support client { #support-chatbot data-one="Répond aux demandes de support avant qu'elles n'arrivent à un conseiller." data-head="40 % de charge support en moins" }
 
 Répond aux demandes des clients à partir de la base de connaissances du support, avant qu'elles n'arrivent à un conseiller, avec un modèle de langage affiné.
 
@@ -236,9 +222,7 @@ Répond aux demandes des clients à partir de la base de connaissances du suppor
 
 **Impact**
 
-- 65 % des demandes entrantes traitées automatiquement
 - 40 % de charge en moins pour les équipes support
-- Un support disponible 24 h/24
 
 </div>
 
@@ -265,7 +249,6 @@ Prévision quotidienne des appels entrants d'un centre de recouvrement, pour pla
 **Impact**
 
 - 30 % d'erreur de prévision en moins sur les pics d'appels
-- 15 % de coûts d'exploitation en moins
 
 </div>
 

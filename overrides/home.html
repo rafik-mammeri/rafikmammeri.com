@@ -2,7 +2,7 @@
 
 {#
   Homepage: one statement in two beats (ink, then persimmon), three short lines
-  (now, writing, previously) and a short about.
+  (now, this site, previously).
   Text comes from the `home` front matter of docs/index.md (English) and docs-fr/index.md (French).
 #}
 {% block content %}
@@ -19,7 +19,7 @@
     {% set tag = "a" if r.href else "div" %}
     <{{ tag }} class="rm-home__row"{% if r.href %} href="{{ r.href }}"{% endif %}>
       <b>{{ r.label }}</b>
-      <span>{{ r.text }}</span>
+      <span>{{ r.text }}{% if r.more %} <a class="rm-home__more" href="{{ r.more_href }}">{{ r.more }}</a>{% endif %}</span>
     </{{ tag }}>
     {% endfor %}
   </div>
