@@ -5,82 +5,621 @@
     <link>https://www.rafikmammeri.com/articles/</link>
     <description>Notes on building and running LLM systems in production.</description>
     <language>en</language>
-    <lastBuildDate>Sun, 15 Nov 2026 22:09:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Nov 2026 21:28:04 +0000</lastBuildDate>
     <atom:link href="https://www.rafikmammeri.com/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>Latency is an architecture problem, not a prompt problem</title>
-      <link>https://www.rafikmammeri.com/writing/2026-08-14-latency-is-an-architecture-problem/</link>
-      <guid isPermaLink="true">https://www.rafikmammeri.com/writing/2026-08-14-latency-is-an-architecture-problem/</guid>
-      <description>Why the biggest latency win in a production multi-agent system rarely comes from prompt optimization.</description>
-      <content:encoded><![CDATA[<p>Most teams shipping their first multi-agent LLM system reach for the same fix when latency becomes a problem: trim the prompt, switch to a faster model, cache more aggressively. Those help at the margins. They rarely fix the actual problem, because the actual problem is usually structural, not textual.</p>
-<h2>The naive shape almost everyone starts with</h2>
-<p>A common first design for routing a user message to the right specialized agent looks like this:</p>
-<div class="highlight"><pre><span></span><code>flowchart TB
-    A[User message] --&gt; B[&quot;Orchestrator&lt;br&gt;LLM call: &lt;i&gt;which agent should handle this?&lt;/i&gt;&quot;]
-    B --&gt; C[&quot;Specialized agent&lt;br&gt;LLM call: generates the actual response&quot;]
-    C --&gt; D[&quot;Formatter&lt;br&gt;sometimes a third LLM call, to shape the output&quot;]
-</code></pre></div>
-<p>It's a reasonable design on a whiteboard — separation of concerns, one job per node. In production, it means <strong>every single message pays for two or three sequential LLM <abbr title="Calls to a model and back, from the request to the complete answer.">round-trips</abbr> before the user sees a token</strong>, even for something as simple as "what are your opening hours."</p>
-<div class="admonition tip">
-<p class="admonition-title">The tell</p>
-<p>If your <abbr title="The time a system can take before the user feels the wait.">latency budget</abbr> is dominated by "time waiting for an LLM to decide something," before any LLM call that actually helps the user, you're paying an architecture tax — not a prompt tax.</p>
+      <title>Streaming typed UI blocks in a customer chat agent: the protocol and what it costs</title>
+      <link>https://www.rafikmammeri.com/writing/2026-11-22-streaming-typed-ui-blocks/</link>
+      <guid isPermaLink="true">https://www.rafikmammeri.com/writing/2026-11-22-streaming-typed-ui-blocks/</guid>
+      <description>The model answers through one tool that fills typed blocks from a closed catalogue; the server checks them and streams them to a website and two apps.</description>
+      <content:encoded><![CDATA[<p>A chat agent that serves customers has to send more than text: product cards, buttons that open the right page, replies to tap, all rendered by front ends it does not own. Booking assistants, banking apps, and internal copilots face the same problem. One answer is to never let the model write free text. Here, it calls one tool, <code>send_answer</code>, and fills typed blocks from a closed catalogue, which the server checks, completes, and streams as typed events to a website and two mobile apps built by other teams. This article gives you that protocol, the options I ruled out, and what the design costs, measured on production traffic and in a replay experiment.</p>
+<h2>Three clients render the answers, and none of them is mine</h2>
+<p>Here is one answer, in the shape the model writes it. It recommends a TV.</p>
+<div class="admonition note">
+<p class="admonition-title">Illustrative examples</p>
+<p>The answers, field names, code, and events in this article are illustrative. They keep the shape of the real system, with simplified names and made-up products. The measurements are real.</p>
 </div>
-<h2>What changes when routing is native, not delegated</h2>
-<p>The fix that actually moved the needle on a production conversational assistant handling about 2,000 conversations a day<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> wasn't a better <abbr title="The part that picks which specialised agent should answer a message.">router</abbr> prompt. It was removing the <abbr title="The part that picks which specialised agent should answer a message.">router</abbr>'s LLM call entirely for the common case:</p>
-<div class="highlight"><pre><span></span><code>flowchart TB
-    A[User message] --&gt; B[&quot;Router identifies domain&lt;br&gt;(no LLM classification call)&quot;]
-    B --&gt; C[&quot;Correct specialized agent activated&lt;br&gt;(no intermediate LLM call to get there)&quot;]
-    C --&gt; D[&quot;Agent responds&lt;br&gt;(1–2 LLM calls total)&quot;]
-    D -- on topic change --&gt; E[&quot;Native handoff&lt;br&gt;conversation state carried over&lt;br&gt;no restart, no re-explaining context&quot;]
-    E --&gt; C
+<div class="annotate highlight"><span class="filename">send_answer arguments, one answer</span><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;blocks&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;text&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;text&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;The cheapest 55-inch TV with a 120 Hz panel is the Model A, at $549. It handles sports and console games well, but its sound is basic: plan for a soundbar if you watch films. The Model B costs $499, but its panel runs at 60 Hz.&quot;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;products&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;title&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;The cheapest 55-inch TV at 120 Hz&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;items&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">       </span><span class="c1">// (1)!</span>
+<span class="w">       </span><span class="p">{</span><span class="s2">&quot;product_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;tv-0001&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;title&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Model A 55-inch 4K TV&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">// (2)!</span>
+<span class="w">        </span><span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;The lowest price for a 120 Hz panel at this size. A good fit for sports and console games.&quot;</span><span class="p">}</span>
+<span class="w">     </span><span class="p">]},</span>
+<span class="w">    </span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;text&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;text&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;If fluid motion matters most, go for the Model A. Shall I add it to your cart?&quot;</span><span class="p">},</span>
+<span class="w">    </span><span class="c1">// (3)!</span>
+<span class="w">    </span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;suggestions&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="s2">&quot;options&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;I&#39;ll take the Model A&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Show me the Model B&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;I&#39;d rather have better sound&quot;</span><span class="p">]}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
 </code></pre></div>
-<p>The <abbr title="The part that picks which specialised agent should answer a message.">router</abbr> still exists — it still has to figure out which agent should own a message. What changed is <em>how</em> it decides: deterministic signal matching and graph-native routing where possible, instead of asking a general-purpose LLM to classify intent on every single turn. The <abbr title="Passing a conversation from one agent to another, with its state and context.">handoff</abbr> between agents, when a conversation genuinely changes topic mid-flow, is also native to the orchestration graph rather than a fresh LLM call bolted on top — so switching agents doesn't mean losing the conversation's accumulated context.</p>
-<div class="admonition success inline end">
-<p class="admonition-title">The result</p>
-<p>One to two LLM calls per message, instead of three or more.</p>
+<ol>
+<li>A reference, not data. The image, the price, and the stock are not in the call: the client loads them from this ID.</li>
+<li>The only field on a product card written in the model's own words.</li>
+<li>Suggestions: three replies the customer can tap instead of typing.</li>
+</ol>
+<p>On screen, the customer sees two paragraphs, a product card with its image, price, and stock, and three suggestions to tap.</p>
+<p>I use four words in the rest of this article.</p>
+<div class="admonition term">
+<p class="admonition-title">Block</p>
+<p>One typed element of an answer. This answer has two text blocks, a products block, and a suggestions block. A text block is still prose written by the model. What the model never does is answer outside the tool.</p>
 </div>
-<p>The result: most messages resolve in <strong>one to two LLM calls total</strong>, versus the three or more an <abbr title="The component that decides which agent or tool handles each step of a conversation.">orchestrator</abbr>-first design needs. That's not a 10% latency improvement from a leaner prompt — ==it's removing a whole category of round-trip.==</p>
-<h2>Why this is easy to miss</h2>
-<p>Prompt-level optimization is visible and satisfying: you can diff two prompts, run an eval, see a number move. Architectural latency is invisible until you actually trace a request end to end and count how many times you're calling out to a model before anything useful happens. It's also easy to under-count, because "just one more classification step" always looks cheap in isolation — it's the sum across the whole conversation flow that hurts.</p>
-<p>The practical habit that catches this, before optimizing any single prompt:</p>
+<div class="admonition term">
+<p class="admonition-title">Catalogue</p>
+<p>The closed list of block types the model may use.</p>
+</div>
+<div class="admonition term">
+<p class="admonition-title">Client</p>
+<p>An application that renders blocks: the website or one of the two mobile apps.</p>
+</div>
+<div class="admonition term">
+<p class="admonition-title">Turn</p>
+<p>Everything between a trigger, usually a customer message, and the end of the answer.</p>
+</div>
+<p>The agent is a multi-agent system: several specialized agents share the work, each on one part of a retail customer's needs, such as finding a product, following an order, getting help with a product, or reaching a human. It handles thousands of conversations a day. Other teams build the three clients, each on its own release schedule. A design team drew the components the agent can show, as a library: product cards, carousels, buttons, suggestions, surveys.</p>
+<p>That gave me four constraints:</p>
+<div class="grid cards">
 <ul>
-<li>[ ] Draw the actual sequence of LLM calls a real message triggers, node by node.</li>
-<li>[ ] Include the ones that feel like plumbing: classification, formatting, validation.</li>
-<li>[ ] For each full LLM call, ask whether it could be a rule, a smaller and cheaper model, or a native part of the orchestration layer.</li>
+<li>
+<p>:lucide-smartphone: <strong>Native clients</strong></p>
+<hr />
+<p>No client renders HTML written by a model. Every component comes from the design system, and two of the three clients are native apps.</p>
+</li>
+<li>
+<p>:lucide-shield-alert: <strong>Nothing made up</strong></p>
+<hr />
+<p>A made-up link, phone number, or product has a real cost in a retail chat.</p>
+</li>
+<li>
+<p>:lucide-file-lock: <strong>One stable contract</strong></p>
+<hr />
+<p>One API contract serves three clients that ship on different schedules, so it has to stay stable while the model and the prompts change.</p>
+</li>
+<li>
+<p>:lucide-timer: <strong>Several seconds per turn</strong></p>
+<hr />
+<p>The agent calls tools before it answers. The chat has to show something during that time.</p>
+</li>
 </ul>
-<p>If more than one of those nodes could, that's where the <abbr title="The time a system can take before the user feels the wait.">latency budget</abbr> is actually going.</p>
-<h2>Where this doesn't apply</h2>
-<p>This isn't an argument against ever using an LLM to route. Genuinely ambiguous, open-ended intent classification across a large number of possible destinations often <em>does</em> need a model's judgment — a hard-coded ruleset won't scale to that. The distinction that matters is between routing decisions that are <strong>inherently ambiguous</strong> (worth an LLM call) and ones that are <strong>incidentally implemented as an LLM call</strong> because it was the fastest way to prototype the system. The second category is where the free latency wins live, and in most production systems I've seen, it's a larger category than teams expect going in.</p>
+</div>
+<h2>In the early versions, the model wrote text and we rebuilt the UI afterwards</h2>
+<div class="highlight"><pre><span></span><code>flowchart LR
+  subgraph G1[&quot;First generation: text, then UI built afterwards&quot;]
+    direction TB
+    A[&quot;Step 1&lt;br&gt;Text copied as is&quot;] --&gt; B[&quot;Step 2&lt;br&gt;A regex reads a &#39;Links:&#39; section&quot;] --&gt; C[&quot;Step 3&lt;br&gt;A formatter: a second LLM call&lt;br&gt;rewrites the answer as JSON&quot;] --&gt; D[&quot;Step 4&lt;br&gt;Structured output,&lt;br&gt;formatter still behind&quot;]
+  end
+  subgraph G2[&quot;Second generation: one tool&quot;]
+    direction TB
+    E[&quot;Step 5&lt;br&gt;send_answer:&lt;br&gt;ordered typed blocks&quot;] --&gt; F[&quot;Step 6&lt;br&gt;Streamed block by block&quot;] --&gt; G[&quot;Step 7&lt;br&gt;Required on every agent,&lt;br&gt;formatter removed&quot;]
+  end
+  G1 --&gt; G2
+</code></pre></div>
+<p>The first generation of the agent ran on a 2024 multimodal GPT model, with a 128,000-token context window and no built-in reasoning, and without streaming. The model wrote free text, and we turned that text into UI after the fact. At first we copied the text as is and attached links and products taken from the tool results. Then the prompt asked the model to end with a "Links:" section, and a regular expression extracted the URLs, which worked as long as the model kept the format.</p>
+<p>Next we added a second LLM call after every answer, the formatter. It rewrote the agent's text as JSON with three fields (the answer, the links, the product references), and code assembled three kinds of blocks from it. The formatter worked, and it stayed in production for a long time.</p>
+<p>Its costs grew with the product:</p>
+<ul>
+<li><strong>Two LLM calls per answer.</strong> A load audit of that generation measured median request times of 6 to 10 seconds, formatter included.</li>
+<li><strong>Product IDs recovered from prose.</strong> We kept adding validators, after the formatter once took a phone number for a product reference.</li>
+<li><strong>The agent's wording rewritten</strong> by a second model.</li>
+<li><strong>No streaming.</strong> An answer that only exists after a second call cannot be streamed.</li>
+</ul>
+<p>We then moved agent by agent to structured output, with the formatter still running behind.</p>
+<p>The change started in a small part of the system. A smaller assistant in another part of the system needed suggestions, and we gave it a tool to send its answer: a text and a list of suggestions, with the tool call required. That tool is the direct ancestor of <code>send_answer</code>.</p>
+<p>Around the same time, the business decided to give the agent a real place on the site and in the apps, with a new design. I owned the architecture and the API contract with the client teams. I generalized that tool: <code>send_answer</code> replaced the final JSON for every agent, with an ordered list of blocks. Streaming followed within days. A few months later the tool call became required on every agent, and we removed the formatter that same week.</p>
+<p>Answering through a tool did not fix everything. It costs tokens, it depends on a provider feature, and some malformed calls still get through.</p>
+<h2>No existing option fit native clients</h2>
+<p>Answering through a tool is an old pattern: <a href="https://arxiv.org/abs/2210.03629">ReAct had a <code>Finish[answer]</code> action in 2022</a>, <a href="https://github.com/pydantic/pydantic-ai/blob/main/docs/output.md">Pydantic AI returns structured output through a tool by default</a>, and <a href="https://docs.langchain.com/oss/python/langchain/structured-output">LangChain has <code>ToolStrategy</code></a>. What I had to choose was how the answer reaches a screen.</p>
+<p><a href="https://www.copilotkit.ai/blog/the-developer-s-guide-to-generative-ui-in-2026">CopilotKit's guide to generative UI</a> sorts the options into three kinds: static (the front end owns the components, and the agent picks one and fills it), declarative (the agent sends a UI specification), and open-ended (the agent sends HTML). With a design system and native clients, I needed the static kind.</p>
+<p>The options differ on three questions: who chooses the UI, what goes over the wire, and who renders it. The last column is my own judgment for our case: native clients, built by other teams.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Routing decision</th>
-<th style="text-align: left;">Example</th>
-<th style="text-align: left;">Worth an LLM call?</th>
+<th>Approach</th>
+<th>Who chooses the UI</th>
+<th>What goes over the wire</th>
+<th>Who renders it</th>
+<th>Fit for our case</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Incidentally implemented as an LLM call</td>
-<td style="text-align: left;">"What are your opening hours?"</td>
-<td style="text-align: left;">No, a rule does it</td>
+<td>Vercel AI SDK</td>
+<td>The model, by calling a tool</td>
+<td>A message stream with partial tool input</td>
+<td>React, Vue, or Svelte hooks, which parse the partial JSON in the browser</td>
+<td>Weak</td>
 </tr>
 <tr>
-<td style="text-align: left;">Inherently ambiguous</td>
-<td style="text-align: left;">Open-ended intent across many possible destinations</td>
-<td style="text-align: left;">Yes</td>
+<td>CopilotKit with AG-UI</td>
+<td>The model, by calling a tool</td>
+<td>About 30 typed events, including raw tool-call arguments</td>
+<td>React and React Native hooks</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Google A2UI</td>
+<td>The model or agent code, from a negotiated catalogue</td>
+<td>A tree of components plus a data model</td>
+<td>Native renderers (web, Flutter; SwiftUI and Compose in alpha)</td>
+<td>Strong, but very new</td>
+</tr>
+<tr>
+<td>MCP Apps, OpenAI Apps SDK, ChatKit</td>
+<td>The server author (HTML templates or widgets)</td>
+<td>HTML in a sandboxed iframe, or a widget tree</td>
+<td>The host application, or a web SDK</td>
+<td>Weak</td>
+</tr>
+<tr>
+<td>LangGraph generative UI</td>
+<td>Graph code</td>
+<td>A component name and props</td>
+<td>React bundles served by the platform</td>
+<td>Weak</td>
+</tr>
+<tr>
+<td>Free text with inline tags</td>
+<td>The model, in its prose</td>
+<td>Markdown with custom links or tags</td>
+<td>Each client, after parsing the Markdown</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Adaptive Cards, Rasa, Dialogflow</td>
+<td>The bot developer</td>
+<td>A typed card</td>
+<td>Native renderers</td>
+<td>Strong, but built for cards a developer writes</td>
+</tr>
+<tr>
+<td><strong>What I built</strong></td>
+<td>The model, from a closed catalogue</td>
+<td>Text deltas, and one typed event per block</td>
+<td>Each client, with its own components</td>
+<td></td>
 </tr>
 </tbody>
 </table>
+<p>Why I ruled each one out, and what refusing it costs:</p>
+<p>=== "Client-side parsing"</p>
+<pre><code>Client-side parsing is what the [Vercel AI SDK](https://ai-sdk.dev/docs/ai-sdk-ui/stream-protocol) and CopilotKit do: the client receives the tool arguments as they stream and parses them. That assumes a JavaScript client. Ours are two native mobile apps and a web micro-frontend owned by another team, which would mean the same partial-JSON parser written three times by teams that don't own the schema.
+
+**The cost of refusing it:** I maintain that parser on the server.
+</code></pre>
+<p>=== "HTML and iframes"</p>
+<pre><code>HTML written by the model, or served in an iframe as in [MCP Apps](https://modelcontextprotocol.io/seps/1865-mcp-apps-interactive-user-interfaces-for-mcp) and the OpenAI Apps SDK, does not fit native apps with their own design system.
+
+**The cost of refusing it:** rigidity. The model can never show something the catalogue lacks, and a new component means a contract change and three client releases.
+</code></pre>
+<p>=== "LangGraph UI"</p>
+<pre><code>[LangGraph's generative UI](https://docs.langchain.com/langsmith/generative-ui-react) was the closest to our stack, since the agents run on LangGraph. It sends a component name and props, and loads React bundles from the platform. That works on the web only.
+</code></pre>
+<p>=== "Inline tags"</p>
+<pre><code>Free text with inline tags, like [the `card:` links Shopify's Sidekick puts in Markdown](https://shopify.engineering/sidekicks-improved-streaming), is simpler to stream, and the text keeps its natural flow. But nothing validates a tag against a schema before it reaches the screen, and each client has to parse a Markdown extension. Free text followed by a second call that structures it is the option our early versions ran.
+</code></pre>
+<p>=== "A2UI"</p>
+<pre><code>[A2UI](https://a2ui.org/concepts/catalogs/) is the closest standard to what I built. Its authors' own rule is to use it when one agent serves more than one platform, which is our case. It [reached 1.0 in November 2026](https://developers.googleblog.com/a2ui-10-build-delightful-fast-reliable-agentic-experiences/), after we were in production, with SDKs and native renderers still in 0.x.
+
+**What would change my mind:** stable native renderers.
+</code></pre>
+<p>=== "Adaptive Cards"</p>
+<pre><code>[Adaptive Cards](https://learn.microsoft.com/adaptive-cards/resources/principles) and the bot platforms from before LLMs are the model I followed: typed cards that each host renders natively. Here the model picks the cards.
+</code></pre>
+<p>The primitives for the rest exist. Every provider streams tool-call arguments, and Pydantic AI can stream a partially validated output. What I did not find was the layer on top: deciding when each block of a list is complete, and turning it into a typed event for clients that never see JSON. On the LangChain forum, <a href="https://forum.langchain.com/t/is-it-possible-to-stream-structured-output/2179">the answer about streaming partial structured output from the backend</a> is that it is not supported, by design.</p>
+<h2>The model answers by calling one tool</h2>
+<div class="highlight"><pre><span></span><code>flowchart TB
+  M[&quot;Model: one send_answer call&lt;br&gt;tool choice: required&quot;]
+  M -- &quot;1 · arguments, in chunks&quot; --&gt; TP &amp; BS
+  subgraph S[&quot;Server&quot;]
+    TP[&quot;Text parser&lt;br&gt;emits the new text on each chunk&quot;]
+    BS[&quot;Block scanner&lt;br&gt;waits for each block&#39;s closing brace&quot;]
+    CC[&quot;Check and complete&lt;br&gt;validate, check IDs, drop unknown cards&quot;]
+    DB[(&quot;Product database&quot;)]
+    H[(&quot;History&quot;)]
+    BS -- &quot;3 · closed block&quot; --&gt; CC
+    CC &lt;--&gt; DB
+    CC -- &quot;5 · message IDs&quot; --&gt; H
+  end
+  CL[&quot;Clients: website and two apps&lt;br&gt;one handler per event type&quot;]
+  TP -- &quot;2 · text_delta events&quot; --&gt; CL
+  CC -- &quot;4 · one event per block&quot; --&gt; CL
+</code></pre></div>
+<p>Read the figure from top to bottom. The model streams the arguments of one tool call (1). Two parsers on the server read the same chunks. One sends text as it grows (2). The other waits for each remaining block to close (3), then the server checks the block, completes it, and sends it as one event (4). The stored answer keeps the message IDs the clients received (5).</p>
+<p>The model's only way to answer is this tool:</p>
+<div class="highlight"><pre><span></span><code><span class="n">send_answer</span><span class="p">(</span><span class="n">blocks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Block</span><span class="p">],</span> <span class="n">final</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>Every agent's model is bound with <code>#!python tool_choice="required"</code>, so every model call is a tool call. A turn ends with a <code>send_answer</code> call, or with one of two designed ending tools (handing over to a human, closing a support flow), which send their own message.</p>
+<h2>The catalogue is closed, and each agent gets a subset</h2>
+<p>The blocks are Pydantic models. The rules for each block live in the tool's description, versioned with the code. When a block misbehaves, I have one file to open: the rule and the schema sit together.</p>
+<p>=== "Schema"</p>
+<pre><code>Some of the blocks, simplified:
+
+``` { .python title="blocks.py (illustrative)" .annotate }
+class TextBlock(BaseModel):
+    type: Literal["text"] = "text"
+    text: str = Field(description="Text shown to the customer. No link or URL.")
+
+
+class ProductItem(BaseModel):
+    # (1)!
+    product_id: str
+    title: Optional[str] = None
+    # (2)!
+    description: str = Field(description="Why this product fits the request, 1-2 sentences, no URL.")
+
+
+class ProductsBlock(BaseModel):
+    type: Literal["products"] = "products"
+    title: Optional[str] = None
+    items: List[ProductItem] = Field(description="1 item: a card. 2 or more: a ranked carousel.")
+
+
+class Button(BaseModel):
+    label: str = Field(description="Button label, e.g. 'See my orders'")
+    # (3)!
+    destination: Page
+
+
+class ButtonsBlock(BaseModel):
+    type: Literal["buttons"] = "buttons"
+    items: List[Button]
+
+
+class ContactBlock(BaseModel):
+    """Signal only: the client shows its own contact panel. No data."""
+    type: Literal["contact"] = "contact"
+
+
+class SuggestionsBlock(BaseModel):
+    type: Literal["suggestions"] = "suggestions"
+    options: List[str] = Field(description="Short replies the customer can tap.")
+
+
+# (4)!
+OrderBlocks = Union[TextBlock, SuggestionsBlock, LinksBlock, ButtonsBlock, ContactBlock]
+HandoffBlocks = Union[TextBlock, SuggestionsBlock]
+```
+
+1.  The server checks every product ID of the call in one batched request, and drops any card whose ID does not resolve.
+2.  The only field on a product card written in the model's own words.
+3.  An enum of fixed pages (sign in, my orders, warranties, cart), never a URL. Each client maps it to its own screen.
+4.  Each agent gets its own version of the tool, built by a factory from a union of blocks: a small subset for the agent that hands over to a human, most of the catalogue for the agent that recommends products.
+</code></pre>
+<p>=== "Rules"</p>
+<pre><code>The rules live in the tool's description. An illustrative extract:
+
+``` { .text title="Tool description (illustrative)" hl_lines="15 16" }
+send_answer is the only way to answer the customer.
+Never write free text outside this tool.
+
+### type: "suggestions": always last, once
+By default, the answer ends with suggestions. The customer should never
+retype what they could tap. Options go only in this block, never listed
+in the text.
+
+### type: "contact"
+Signal only, no data: asks the client to show its contact panel.
+
+#### Anti-pattern
+Never write a phone number or contact details in a text block, even if
+you know them: the contact block displays them.
+- WRONG: text = "Call us at &lt;number&gt;, open 7 days a week."
+- RIGHT: text = "Here is how to reach us:" and a contact block.
+```
+</code></pre>
+<p>The catalogue holds about a dozen types: text, product cards and carousels, suggestions, buttons, links, a contact signal, and a few other cards. They come from the design team's component library. The library has more components than the catalogue: surveys, the handover to a human chat, and error states are produced by the server or the clients alone, and the model never chooses them.</p>
+<p>Each agent gets its own subset. An agent that only answers order questions has no products block, so it cannot show a product card at all.</p>
+<p>The schemas are non-strict. Pydantic validates the arguments when the tool runs, and an invalid call goes back to the model as a tool error, so the model tries again. On our provider, strict mode excludes parallel tool calls, and partial answers need them.</p>
+<h2>The model writes references, and the server and the clients bring the data</h2>
+<div class="highlight"><pre><span></span><code>flowchart TB
+  J[&quot;What the model writes&lt;br&gt;product_id · title · description&quot;]
+  R[&quot;Server: checks every product ID in one batched call,&lt;br&gt;drops a card that does not resolve&quot;]
+  DB[(&quot;Product database&quot;)]
+  subgraph V[&quot;What the customer sees on the card&quot;]
+    direction LR
+    MW[&quot;The model&#39;s own words&lt;br&gt;description&quot;]:::model
+    CW[&quot;Loaded by the client&lt;br&gt;image · price · stock and delivery&lt;br&gt;rating · add-to-cart&quot;]
+  end
+  J -- product ID --&gt; R
+  R &lt;--&gt; DB
+  R -- checked IDs --&gt; V
+  classDef model stroke-width:2px,stroke-dasharray:5 3
+</code></pre></div>
+<p>Look again at the products block in the first listing. It holds a product ID, the product's name copied from the search result, and a one-line description. The server checks every product ID of the call in one batched request, and drops any card whose ID does not resolve.<sup id="fnref:dropped"><a class="footnote-ref" href="#fn:dropped">1</a></sup> The client loads the image, the price, the stock, the ratings, and the delivery options itself. Of the fifteen or so pieces of information on a product card in the design, one is the model's own words: the description.</p>
+<p>Buttons that open a page carry no URL. The model picks a destination from a fixed list of pages, and each client maps it to its own screen. The contact block carries no data at all. It tells the client to show its own contact panel, so the phone number never passes through the model.</p>
+<div class="admonition warning">
+<p class="admonition-title">Where the design breaks its own rule</p>
+<p>The links block, used for invoices and manuals, still carries a URL that the model copies from a tool result. And a text block is prose: in the replay experiment, about one answer in eight states a price, taken from the tool results, as the first listing does. Nothing structural checks either one. The blocks keep invented data out of the components, and the text still depends on the prompt and the tool results.</p>
+</div>
+<p>IDs and enums were contract decisions as much as safety decisions. The client teams already knew how to display a product from its ID, and an enum of destinations let each of them keep its own table of screens. We published three versions of the API specification in three weeks, then accepted fixes only. During integration, an ID that the specification declared non-null came back null and crashed one app's parser. A native parser is strict, so the server has to keep every promise of the specification.</p>
+<h2>The server turns streaming arguments into typed events</h2>
+<p>As the model generates the call, the arguments arrive in chunks of three or four characters. The server reads them with two parsers.</p>
+<p><strong>Text is sent as it grows.</strong> On each chunk, the server parses the arguments received so far with a lenient partial-JSON parser, compares each text block with what it already sent, and emits the difference as a <code>text_delta</code> event. A client receives fragments of text, never fragments of JSON.</p>
+<p><strong>Every other block is sent whole, once it is complete.</strong> A lenient parser is a bad judge of "complete". Suppose the arguments received so far are:</p>
+<div class="highlight"><span class="filename">Arguments received so far</span><pre><span></span><code>{&quot;blocks&quot;:[{&quot;type&quot;:&quot;products&quot;,&quot;items&quot;:[{&quot;product_id&quot;:&quot;A1&quot;,&quot;description&quot;:&quot;Bright panel, 120 Hz.&quot;},{&quot;product_id&quot;:&quot;B2&quot;
+</code></pre></div>
+<p>A lenient parser closes the open brackets for you and returns a products block with two items. It looks finished. The second card has no description yet, and a third may follow. So for these blocks the server ignores the lenient parse. A scanner walks the raw characters, tracks strings and bracket depth, and reports an element of <code>blocks</code> only when its own closing brace has arrived:</p>
+<div class="annotate highlight"><span class="filename">The block scanner</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find_newly_closed_elements</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scan_from</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">next_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;`scan_from` starts right after the `[` that opens `blocks`,</span>
+<span class="sd">    then right after the last element reported.&quot;&quot;&quot;</span>
+    <span class="n">closed</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">in_string</span><span class="p">,</span> <span class="n">escape</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">scan_from</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scan_from</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)):</span>
+        <span class="n">ch</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="c1"># (1)!</span>
+        <span class="k">if</span> <span class="n">in_string</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">escape</span><span class="p">:</span>
+                <span class="n">escape</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="n">ch</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">:</span>
+                <span class="n">escape</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">ch</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">:</span>
+                <span class="n">in_string</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">ch</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">:</span>
+            <span class="n">in_string</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">ch</span> <span class="ow">in</span> <span class="s2">&quot;{[&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ch</span> <span class="o">==</span> <span class="s2">&quot;{&quot;</span> <span class="ow">and</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">depth</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">ch</span> <span class="ow">in</span> <span class="s2">&quot;}]&quot;</span><span class="p">:</span>
+            <span class="n">depth</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="c1"># (2)!</span>
+<span class="hll">            <span class="k">if</span> <span class="n">ch</span> <span class="o">==</span> <span class="s2">&quot;}&quot;</span> <span class="ow">and</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span class="hll">                <span class="n">closed</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">next_index</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])))</span>
+</span>                <span class="n">next_index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">next_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">ch</span> <span class="o">==</span> <span class="s2">&quot;]&quot;</span> <span class="ow">and</span> <span class="n">depth</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># (3)!</span>
+                <span class="k">break</span>
+    <span class="k">return</span> <span class="n">closed</span><span class="p">,</span> <span class="n">pos</span>
+</code></pre></div>
+<ol>
+<li>A brace inside a string is text, not structure: <code>"Bright {panel}"</code> must not close anything.</li>
+<li>The block's own closing brace has arrived: only now is it parsed, checked, and sent.</li>
+<li>The <code>blocks</code> array itself closed: the answer is complete.</li>
+</ol>
+<p>The scanner resumes after the last closed block, so it never reads a finished block twice. It does rescan the block still open on every chunk, which has a cost I measure further down.</p>
+<p>A closed block becomes one event, whatever it holds. A products block with one item becomes a <code>product_card</code> event, and with two or more a <code>product_carousel</code> event that carries all the cards. The event name is the content type of the API contract, so a client attaches one handler per type. For the answer at the top of this article, a client receives these events:<sup id="fnref:events"><a class="footnote-ref" href="#fn:events">2</a></sup></p>
+<div class="highlight"><span class="filename">Events for the answer at the top (illustrative)</span><pre><span></span><code>event: progress
+data: {&quot;label&quot;: &quot;Searching for 55-inch TVs...&quot;}
+
+event: text_delta
+data: {&quot;message_id&quot;: &quot;5f0c...&quot;, &quot;delta&quot;: &quot;The cheapest&quot;}
+
+event: message_done
+data: {&quot;message_id&quot;: &quot;5f0c...&quot;}
+
+event: product_card
+data: {&quot;message_id&quot;: &quot;a41e...&quot;, &quot;product&quot;: {&quot;product_id&quot;: &quot;tv-0001&quot;, &quot;title&quot;: &quot;...&quot;, &quot;description&quot;: &quot;...&quot;}}
+
+event: text_delta
+data: {&quot;message_id&quot;: &quot;9b27...&quot;, &quot;delta&quot;: &quot;If fluid motion&quot;}
+
+event: message_done
+data: {&quot;message_id&quot;: &quot;9b27...&quot;}
+
+event: suggestions
+data: {&quot;message_id&quot;: &quot;c3d8...&quot;, &quot;options&quot;: [&quot;I&#39;ll take the Model A&quot;, &quot;...&quot;]}
+
+event: done
+data: {}
+</code></pre></div>
+<p>On the wire a block is called a message. Its ID is derived from the tool call ID and the block's position, so the ID a client received during the stream is the ID stored in the history. A thumbs-up on a streamed message still finds its message after a reload. The <code>done</code> event ends the turn.</p>
+<div class="admonition warning">
+<p class="admonition-title">Text leaves before the call is validated</p>
+<p>When Pydantic then rejects the call, the text already sent stays on the screen and the model tries again. The server does not resend a block the client already has, but a retry with a different text can leave both on the screen until the next reload. Calls rejected for a block type outside the catalogue are under 0.05% of calls in production, so I accepted that.</p>
+</div>
+<h2>Parts of an answer can leave before the turn ends</h2>
+<div class="highlight"><pre><span></span><code>sequenceDiagram
+    autonumber
+    actor C as Customer
+    participant S as Server
+    participant M as Model
+    participant T as Order tools
+    C-&gt;&gt;S: &quot;Where are my two orders?&quot;
+    S-&gt;&gt;M: the conversation
+    M-&gt;&gt;T: get_order(first) · find_orders()
+    T--&gt;&gt;M: first order · the second order&#39;s number
+    par one parallel batch
+        M-&gt;&gt;S: send_answer(final=false): status of the first order
+    and
+        M-&gt;&gt;T: get_order(second)
+    end
+    S--&gt;&gt;C: part 1 on screen
+    T--&gt;&gt;M: second order
+    M-&gt;&gt;S: send_answer(final=true): status of the second order
+    S--&gt;&gt;C: part 2, end of the turn
+</code></pre></div>
+<p>With <code>#!python final=False</code>, the agent sends a complete part of its answer and keeps working. The part goes in the same parallel batch as the tool calls it still needs. On a question about two orders, the agent can send the status of the first while it fetches the second. The description forbids using a part to make the customer wait ("let me check"), because the interface already shows what the agent is doing. The server enforces the rest: one <code>send_answer</code> per batch, and at most three parts per turn. Parts are rare in production, about 0.2% of calls.</p>
+<p>Tools can put UI on the stream too. Each planned tool call becomes a progress event with a label, and the product search sends its raw results as a carousel while the agent is still choosing. The server stores that carousel in the answer where it was shown, so a reload replays the same conversation.</p>
+<h2>In a week of production, the model never answered outside the tool</h2>
+<p>The first question about a required tool is whether the model respects it. I counted how turns ended over a week of production traffic, on well over a hundred thousand turns that started with a customer message. The model was a 2026 model from OpenAI's GPT-5 family, with configurable built-in reasoning.</p>
+<table>
+<thead>
+<tr>
+<th>How the turn ended</th>
+<th style="text-align: right;">Share of turns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>With a <code>send_answer</code> call</td>
+<td style="text-align: right;">94.77%</td>
+</tr>
+<tr>
+<td>With a designed ending tool</td>
+<td style="text-align: right;">5.06%</td>
+</tr>
+<tr>
+<td>Stopped by guardrails, or ended for other reasons such as errors</td>
+<td style="text-align: right;">0.17%</td>
+</tr>
+<tr>
+<td>With free text outside the tool</td>
+<td style="text-align: right;">==0==</td>
+</tr>
+</tbody>
+</table>
+<p>The code has a fallback in case a model ignores the required tool call: the server would wrap the plain text in a text block. It did not run once that week.</p>
+<p>Of the <code>send_answer</code> calls of that week, nine in ten carry at least one block besides text. Suggestions are in 86% of them and product cards in 12% (21% for the agent that recommends products). No other block exceeds 5%, so most answers are text plus suggestions, and the other blocks cover a long tail.</p>
+<p>A turn takes 4.6 seconds at the median and 9 seconds at the 90th percentile, measured on the server, with two LLM calls at the median. The first text leaves the server after about 3.4 seconds at the median. The first LLM call and its tools take the first seconds, and progress events cover them.</p>
+<h2>I replayed real turns with and without the tool</h2>
+<p>The usual objection to this design is the format tax: a model made to write JSON would answer worse than a model left free. In 2024, <a href="https://aclanthology.org/2024.emnlp-industry.91/">Tam et al.</a> measured "a significant decline in LLMs reasoning abilities under format restrictions". In 2026, <a href="https://arxiv.org/abs/2604.03616">Lee et al.</a> gave the effect its name. They found that it comes mostly from the format instruction in the prompt, and that most of the recent closed models in their sample pay little or none of it. I found no numbers for a customer-service chatbot, so I measured ours.</p>
+<p>??? abstract "How the replay worked"
+    In a separate experiment, outside production, I took turns from anonymous conversations, 60% about product advice and 40% about product support, and replayed only the last model call, the one that had produced the answer. The messages, the tool results, the tool definitions, and the model deployment were the same. Version A forced the <code>send_answer</code> call. Version B could call no tool and got one more instruction: answer in text, same rules.</p>
+<pre><code>A judge, the same model, compared the two answers on tone, accuracy against the tool results, usefulness, and concision. It did not know which version was which, but it could see the format: A's blocks were shown as bracketed text, with the instruction to neither favor nor penalize them. It judged each pair twice with the order reversed and could call a tie. I counted a disagreement between the two orders as a tie.
+</code></pre>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">A: tool</th>
+<th style="text-align: right;">B: free text</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Preferred by the judge</td>
+<td style="text-align: right;">35%</td>
+<td style="text-align: right;">20% (45% ties)</td>
+</tr>
+<tr>
+<td>Tone / accuracy / usefulness / concision (mean, 1 to 5)</td>
+<td style="text-align: right;">4.89 / 4.51 / 4.52 / 4.54</td>
+<td style="text-align: right;">4.85 / 4.46 / 4.46 / 4.50</td>
+</tr>
+<tr>
+<td>Characters of text (mean)</td>
+<td style="text-align: right;">409, in text blocks only</td>
+<td style="text-align: right;">495</td>
+</tr>
+<tr>
+<td>Output tokens, excluding reasoning (mean)</td>
+<td style="text-align: right;">203</td>
+<td style="text-align: right;">129</td>
+</tr>
+<tr>
+<td>Latency of the call (median)</td>
+<td style="text-align: right;">2.34 s</td>
+<td style="text-align: right;">2.02 s</td>
+</tr>
+<tr>
+<td>Calls rejected by the schema</td>
+<td style="text-align: right;">0%</td>
+<td style="text-align: right;">n/a</td>
+</tr>
+<tr>
+<td>Calls that passed validation and still lost content</td>
+<td style="text-align: right;">2%</td>
+<td style="text-align: right;">n/a</td>
+</tr>
+</tbody>
+</table>
+<p><strong>I measured no loss of quality.</strong> The scores differ by at most 0.06 points. The judge leans toward the tool, but it gave the same verdict in both orders for only 58% of the pairs, and the difference is not statistically significant. The safe reading is "no degradation", and I would not claim more.</p>
+<p><strong>The cost is in tokens and time.</strong> The tool call takes 57% more output tokens, because the JSON structure, the block fields, and the suggestions take room, and 0.3 seconds more. At about 200 tokens per answer, I accept both. The input side costs too: the tool descriptions are long (135 lines for the largest) and go with every model call. Prompt caching absorbs most of it: about 94% of the input tokens of those calls were read from the cache.</p>
+<p>The last row is a defect that free text cannot have: about 2% of the answers lost a product card or their suggestions. The last section says how.</p>
+<div class="admonition warning">
+<p class="admonition-title">Limits of this test</p>
+<p>It covers one model, from the GPT-5 family with built-in reasoning, and the judge is that same model. <a href="https://arxiv.org/abs/2606.09410">Other work on the format tax</a> finds larger penalties on small models and on complex schemas, so I would rerun it before changing either. Version B got a prompt written for the tool plus a last-minute instruction, so it is not the best free-text version one could write. And the sample, from two agents, is small.</p>
+</div>
+<h2>The parsers are quadratic, and I left them that way</h2>
+<p>The text path re-parses the whole argument string on every chunk. For n chunks it reads 1 + 2 + ... + n pieces, so the cost grows with the square of the size. <a href="https://www.aha.io/engineering/articles/streaming-ai-responses-incomplete-json">The Aha! engineering team measured the same trap in a browser</a>: 16.7 seconds on a 12 KB argument, against 43 ms with an incremental parser. Their setup re-rendered the page on each chunk, so their numbers and mine don't compare, but the curve is the same.</p>
+<p>My text parser is <code>parse_partial_json</code> from langchain-core, a Python loop over the characters. I replayed a synthetic answer in chunks of 4 characters on an Apple M4 laptop:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Answer size</th>
+<th style="text-align: right;">Text parser CPU per answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">2 KB</td>
+<td style="text-align: right;">22 ms</td>
+</tr>
+<tr>
+<td style="text-align: right;">5 KB</td>
+<td style="text-align: right;">97 ms</td>
+</tr>
+<tr>
+<td style="text-align: right;">12 KB</td>
+<td style="text-align: right;">515 ms</td>
+</tr>
+</tbody>
+</table>
+<p>The block scanner adds up to half as much again, because it rescans the open block on every chunk: 143 ms for a carousel of 32 products. In async Python that CPU blocks the event loop, so it delays every conversation the process is serving.</p>
+<p>Then I measured real answers. Over a week of production, the median <code>send_answer</code> call is 0.5 KB and the 99th percentile is 2.1 KB, because products travel as IDs: a card weighs about 250 bytes. About one call in 10,000 exceeds 5 KB, and the largest are carousels of 25 to 32 products. A carousel that long does not help the customer either, so the fix that matters is a cap on carousel size. I left both parsers alone.</p>
+<div class="admonition tip">
+<p class="admonition-title">If you parse partial JSON on the server</p>
+<ul>
+<li>Use a native partial parser. <a href="https://simonwillison.net/2024/Sep/22/jiter/">jiter's <code>partial_mode="trailing-strings"</code></a> did the text parser's work about 20 times faster in my benchmark, with a one-line change.</li>
+<li>If you write a scanner, keep its state between chunks.</li>
+<li>Keep the payload small by sending IDs instead of data.</li>
+</ul>
+</div>
+<h2>Streaming, malformed calls, and portability are still fragile</h2>
+<p>Token streaming is mostly invisible. I timed every chunk of 48 calls on the production deployment, half with the tool and half in free text. The chunks are token-sized, but they arrive in two or three bursts.</p>
+<table>
+<thead>
+<tr>
+<th>Median of 24 calls per mode</th>
+<th style="text-align: right;">Free text</th>
+<th style="text-align: right;">Tool call</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First characters received</td>
+<td style="text-align: right;">2.1 s, the answer's text</td>
+<td style="text-align: right;">0.9 s, the JSON opening, no text</td>
+</tr>
+<tr>
+<td>Most of the answer on screen</td>
+<td style="text-align: right;">2.1 s, 74% at once</td>
+<td style="text-align: right;">2.5 s, 88% at once</td>
+</tr>
+</tbody>
+</table>
+<p>In free text, the first character arrives after 2.1 seconds and the whole answer about 0.15 second later. With the tool, the opening of the JSON arrives after 0.9 seconds, then nothing for 1.5 seconds, then nearly all the text at once. Every layer between the model and the screen can hold text, and we found three:</p>
+<ul>
+<li>an internal LLM gateway, fixed;</li>
+<li>the <abbr title="Content delivery network">CDN</abbr>, fixed;</li>
+<li>the provider's content filter, still open.</li>
+</ul>
+<p><a href="https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/content-streaming">The filter's default mode buffers the output before releasing it</a>. Its asynchronous mode streams token by token, but it can report a violation about 1,000 characters late, which is longer than our median answer.</p>
+<div class="admonition question">
+<p class="admonition-title">Still open: show text, then withdraw it?</p>
+<p>Turning the asynchronous mode on means showing text and then withdrawing it, in three clients. That is a product and safety decision, and it is still open. Until then, progress events and blocks sent as they complete are what make the chat feel live.</p>
+</div>
+<div class="admonition bug">
+<p class="admonition-title">Malformed calls that pass validation</p>
+<p>A non-strict schema lets some malformed calls through, because Pydantic ignores unknown keys by default. These are the calls in the last row of the replay table. One merged two product items into one, so the answer announced three products and showed two cards. The other nested the suggestions inside the text block, where they were dropped. I have not measured this in production yet. The fix is to refuse unknown keys, so that both cases trigger the retry.</p>
+</div>
+<p>A forced tool call does not port to every model. <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools">Anthropic's newest models reject a forced <code>tool_choice</code></a> with a 400 error and recommend <code>auto</code>. Their documentation gives the reason: a forced call skips the model's thinking. <a href="https://developers.openai.com/api/docs/api-reference/responses">OpenAI added a <code>phase</code> field</a> to separate commentary from the final answer, and <a href="https://www.letta.com/blog/letta-v1-agent/">Letta dropped its <code>send_message</code> tool</a> for native assistant messages.</p>
+<p>On our provider the required call works, as the production table shows, so the risk is portability. If I had to move, I would keep <code>send_answer</code> behind an adapter and switch to <code>auto</code>. Our own loop would guarantee the call: when the model answers in plain text, ask again or wrap the text in a text block.</p>
+<div class="admonition info">
+<p class="admonition-title">When I would not build this</p>
+<p>If you own a JavaScript client, an SDK that parses tool arguments in the browser gives you most of it. If one agent must serve several platforms and you are starting now, look at A2UI first. I built my own because the clients were native, owned by other teams, and due before a stable standard existed.</p>
+</div>
+<p>The model should choose and fill the blocks. The data, the links, and the rendering belong to your own systems.</p>
 <div class="footnote">
 <hr />
 <ol>
-<li id="fn:1">
-<p>A production conversational assistant on the website and mobile apps; the figure is from spring 2026.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<li id="fn:dropped">
+<p>I have not measured how often a card is dropped.&#160;<a class="footnote-backref" href="#fnref:dropped" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:events">
+<p>Written out from the event format and shortened, not captured from a live stream.&#160;<a class="footnote-backref" href="#fnref:events" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded>
-      <pubDate>Fri, 14 Aug 2026 12:00:00 +0000</pubDate>
+      <pubDate>Sun, 22 Nov 2026 12:00:00 +0000</pubDate>
     </item>
   </channel>
 </rss>

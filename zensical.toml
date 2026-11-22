@@ -47,7 +47,7 @@ admonition.note = "lucide/shield-check"
 
 [project.theme.font]
 text = "Urbanist"
-code = "JetBrains Mono"
+code = "Fira Code"
 
 [[project.theme.palette]]
 media = "(prefers-color-scheme: light)"

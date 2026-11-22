@@ -160,21 +160,6 @@ html {
   color: var(--md-accent-fg-color);
 }
 
-/* Admonitions in the site's register: a persimmon spine and a lightly tinted title,
-   instead of the theme's colour coding by type */
-.md-typeset .admonition {
-  border-color: var(--md-accent-fg-color);
-  box-shadow: none;
-}
-
-.md-typeset .admonition-title {
-  background-color: var(--md-accent-fg-color--transparent);
-}
-
-.md-typeset .admonition-title::before {
-  background-color: var(--md-accent-fg-color);
-}
-
 /* Quieter table headers, consistent with the flat card treatment */
 .md-typeset table:not([class]) th {
   background-color: var(--md-code-bg-color);
@@ -189,7 +174,7 @@ html {
 /* Monospace signal: reserved for concrete technical facts (stats, stack tags) */
 .tag {
   display: inline-block;
-  font-family: var(--md-code-font, "JetBrains Mono", monospace);
+  font-family: var(--md-code-font, "Fira Code", monospace);
   font-size: 0.7rem;
   padding: 0.2rem 0.55rem;
   margin: 0 0.35rem 0.35rem 0;
@@ -207,7 +192,7 @@ html {
 }
 
 .stat {
-  font-family: var(--md-code-font, "JetBrains Mono", monospace);
+  font-family: var(--md-code-font, "Fira Code", monospace);
   font-size: 1.4rem;
   font-weight: 600;
   color: var(--md-default-fg-color);
@@ -569,11 +554,11 @@ html {
   color: var(--md-default-fg-color);
 }
 
-/* Theme switch: a small tube lamp hanging right of the search (overrides/partials/palette.html).
-   Light theme: lit, a warm ring and a halo at its foot. Dark theme: switched off. It takes a
-   fixed slot in the header row; its cord comes down from the header's top edge and the tube
-   hangs out of the slot, so the rest of the header never moves. On wide screens it sits in
-   the margin right of the search; on narrower ones, in the row after the search. */
+/* Theme switch: a small tube lamp hanging left of the search (overrides/partials/palette.html),
+   in the theme's own slot for the palette switch. Light theme: lit, a warm ring and a halo at
+   its foot. Dark theme: switched off. It takes a fixed slot in the header row; its cord comes
+   down from the header's top edge and the tube hangs out of the slot, so the rest of the
+   header never moves. */
 .md-header__inner {
   position: relative;
 }
@@ -582,19 +567,9 @@ html {
   position: relative;
   flex: none;
   align-self: flex-start;
-  order: 1;
   width: 30px;
   height: 2.4rem;
-  margin: 0 0 0 0.4rem;
-}
-
-@media screen and (min-width: 82em) {
-  .rm-theme {
-    position: absolute;
-    top: 0;
-    right: -38px;
-    margin: 0;
-  }
+  margin: 0 0.6rem 0 0;
 }
 
 .rm-lamp.md-header__button {
@@ -869,7 +844,7 @@ html {
 
 .md-typeset .rm-ar-g {
   display: grid;
-  grid-template-columns: 8.25em minmax(0, 1fr);
+  grid-template-columns: 9.5em minmax(0, 1fr);
   gap: 1.6em;
   padding: 0.9em 0 0.4em;
   border-top: 1px solid var(--md-default-fg-color--lightest);
@@ -889,7 +864,8 @@ html {
 
 .md-typeset .rm-ar-st b {
   display: block;
-  font-size: 2.1em;
+  font-size: 1.75em;
+  white-space: nowrap;
   font-weight: 800;
   letter-spacing: -0.04em;
   color: var(--md-default-fg-color);
@@ -1426,24 +1402,6 @@ html {
   margin: 0.5rem 0 2.2rem;
 }
 
-.md-typeset a.rm-art-back {
-  display: inline-block;
-  margin-bottom: 1.1rem;
-  padding: 0.15em 0.55em;
-  border-radius: 7px;
-  background: var(--rm-chip-2);
-  font-size: 0.66rem;
-  font-weight: 600;
-  color: var(--md-default-fg-color);
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
-}
-
-.md-typeset a.rm-art-back:hover {
-  background: var(--rm-sel);
-  color: var(--rm-sel-ink);
-}
-
 .md-typeset .rm-art-head h1 {
   margin: 0 0 0.6rem;
   font-size: 2.1em;
@@ -1629,11 +1587,14 @@ html {
 .md-typeset .rm-art-main {
   grid-area: main;
   min-width: 0;
+  /* article text at Zensical's native size (the site's pages use 0.9rem) */
+  font-size: 0.8rem;
 }
 
 .md-typeset .rm-art-side {
   grid-area: side;
-  margin-right: -1rem;
+  /* reaches into the gap so the contents' scrollbar sits midway between the names and the text */
+  margin-right: -1.4rem;
 }
 
 /* the side columns sit as close to the text as each other: the contents on the left, related
@@ -1649,6 +1610,7 @@ html {
   position: sticky;
   top: 6.5rem;
   max-height: calc(100vh - 8rem);
+  transition: top 0.25s cubic-bezier(0.8, 0, 0.6, 1), max-height 0.25s cubic-bezier(0.8, 0, 0.6, 1);
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -1658,7 +1620,6 @@ html {
 }
 
 .md-typeset .rm-art-toc h5 {
-  margin-right: 1.05rem;
   text-align: right;
 }
 
@@ -1672,11 +1633,11 @@ html {
   text-transform: none;
 }
 
-/* The contents: section names aligned against a spine of capsules, each as tall as its
-   section's reading time; the capsule of the section being read lights up. */
+/* The contents: each section name, then a thin line as long as its share of the longest
+   section's reading time. The line of the section being read fills as it is
+   read; the lines of the sections already read stay lit; only the name of the section being read lights up. Even spacing whatever the length. */
 .md-typeset .rm-art-toc ol,
 [dir] .md-typeset .rm-art-toc ol {
-  position: relative;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1684,44 +1645,16 @@ html {
 
 .md-typeset .rm-art-toc ol li,
 [dir] .md-typeset .rm-art-toc ol li {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 0.3rem;
-  gap: 0 0.75rem;
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.75rem;
   padding: 0;
   text-align: right;
-}
-
-.md-typeset .rm-art-toc ol li a {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.md-typeset .rm-art-toc ol li .rm-cap {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.md-typeset .rm-cap {
-  height: calc(var(--m) * 1.1rem + 1.2rem);
-  border-radius: 0.15rem;
-  background: var(--md-default-fg-color--lightest);
-  transition: background 0.35s, box-shadow 0.35s;
-}
-
-/* the section being read: its capsule lights up */
-.md-typeset .rm-art-toc li.is-here .rm-cap {
-  background: var(--rm-hot);
-  box-shadow: 0 0 10px 1px color-mix(in srgb, var(--rm-hot) 45%, transparent);
 }
 
 .md-typeset .rm-art-toc a {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.15rem;
-  padding-top: 0.05rem;
+  gap: 0.3rem;
   color: var(--md-default-fg-color--light);
   text-decoration: none;
   transition: color 0.2s;
@@ -1733,9 +1666,42 @@ html {
   line-height: 1.35;
 }
 
-.md-typeset .rm-art-toc li.is-here a,
+.md-typeset .rm-len {
+  position: relative;
+  display: block;
+  width: calc(var(--w, 1) * 5rem);
+  min-width: 0.4rem;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .rm-len b {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: var(--rm-hot);
+  transition: width 0.15s linear;
+}
+
+/* only the section being read shows its progress (a section read earlier then scrolled back
+   above keeps no trace of it) */
+.md-typeset .rm-art-toc li.is-here .rm-len b {
+  width: calc(var(--p, 0) * 100%);
+}
+
+.md-typeset .rm-art-toc li.is-read .rm-len b {
+  width: 100%;
+}
+
 .md-typeset .rm-art-toc a:hover {
   color: var(--md-default-fg-color);
+}
+
+/* the section being read: its name lights up in the accent */
+.md-typeset .rm-art-toc li.is-here a {
+  color: var(--rm-hot);
 }
 
 /* right column and the intro block (narrower screens) */
@@ -1805,21 +1771,6 @@ html {
   font-size: 0.92em;
 }
 
-/* takeaways and project, under the header */
-.md-typeset .rm-art-intro {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 0 1.6rem;
-  margin: -0.6rem 0 2rem;
-  padding: 1rem 1.1rem 0.2rem;
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--rm-chip-2) 45%, transparent);
-}
-
-.md-typeset .rm-art-intro .rm-side__block {
-  font-size: 0.72rem;
-}
-
 @media screen and (max-width: 89.99em) {
   .md-typeset .rm-art-layout {
     grid-template-columns: 12rem minmax(0, 37rem);
@@ -1840,13 +1791,6 @@ html {
 
   .md-typeset .rm-art-side {
     display: none;
-  }
-}
-
-/* intro in one column on narrow screens */
-@media screen and (max-width: 44.99em) {
-  .md-typeset .rm-art-intro {
-    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -2083,15 +2027,39 @@ html {
   color: var(--rm-sel-ink);
 }
 
-/* the contents column is short: no scroll box, so the pin and its glow are never clipped */
-.md-typeset .rm-art-side .rm-art-stick {
-  max-height: none;
-  overflow: visible;
+/* the contents can be taller than the window: it scrolls on its own, with a thin scrollbar
+   so the hidden sections are clearly there, and stops well above the end of the page */
+.md-typeset .rm-art-side {
+  padding-bottom: 4rem;
 }
 
-.md-typeset .rm-art-toc a.rm-art-back {
-  display: table;
-  margin: 0 1.05rem 1.4rem auto;
+/* its height is the room left between its top and the bottom of the window (set by the page,
+   overrides/article.html), so the whole list is reachable by scrolling it, and scrolling it
+   never moves the page */
+.md-typeset .rm-art-side .rm-art-stick {
+  max-height: calc(100vh - 10rem);
+  overscroll-behavior: contain;
+  transition: top 0.25s cubic-bezier(0.8, 0, 0.6, 1);
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--md-default-fg-color--lightest) transparent;
+}
+
+/* when the header slides away on scrolling down (header.autohide), the side columns rise into
+   its place with the same timing */
+body:has(.md-header[hidden]) .md-typeset .rm-art-stick {
+  top: 1.5rem;
+}
+
+.md-typeset .rm-art-side .rm-art-stick::-webkit-scrollbar {
+  display: block;
+  width: 4px;
+}
+
+.md-typeset .rm-art-side .rm-art-stick::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: var(--md-default-fg-color--lightest);
 }
 
 /* a passage reached through a shared quote link (text fragment) is highlighted in the
@@ -2209,147 +2177,6 @@ html {
   border-radius: 5px;
   background: var(--rm-chip-2);
   font: 600 0.9em var(--md-code-font, monospace);
-}
-
-/* ===========================================================================
-   Articles: "night reading". Callouts, collapsible notes, code blocks, cards
-   and buttons are small dark rooms lit by a warm lamp from above, on the light
-   page as on the dark one. The Markdown stays native; only the look changes.
-   =========================================================================== */
-.md-typeset .rm-art-main {
-  --rm-room: #141414;
-  --rm-room-lamp: #3A1C12;
-  --rm-room-fg: #F2F2F0;
-  --rm-room-mut: rgba(242, 242, 240, 0.62);
-}
-
-[data-md-color-scheme="slate"] .md-typeset .rm-art-main {
-  --rm-room: #1A1A1A;
-  --rm-room-lamp: #43200F;
-}
-
-/* the room: callouts, collapsible notes, cards, buttons */
-.md-typeset .rm-art-main :is(.admonition, details),
-.md-typeset .rm-art-main .grid.cards > ul > li,
-.md-typeset .rm-art-main .grid > .card {
-  --md-default-fg-color: var(--rm-room-fg);
-  --md-default-fg-color--light: var(--rm-room-mut);
-  --md-typeset-color: var(--rm-room-fg);
-  --md-typeset-a-color: #FF9A7A;
-  --md-code-bg-color: rgba(255, 255, 255, 0.07);
-  --md-code-fg-color: #F2D2C6;
-  --rm-lamp: #FF7A5C;
-  border: 0;
-  border-radius: 14px;
-  background: radial-gradient(ellipse 80% 70% at 50% 0%, var(--rm-room-lamp), var(--rm-room) 70%);
-  color: var(--rm-room-fg);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
-}
-
-/* the lamp's colour follows the callout's meaning: warm for most, amber for
-   cautions, red for dangers, green for successes */
-.md-typeset .rm-art-main :is(.admonition, details):is(.warning, .caution, .attention) {
-  --rm-room-lamp: #3A2C10;
-  --rm-lamp: #F2C46B;
-}
-
-.md-typeset .rm-art-main :is(.admonition, details):is(.danger, .error, .failure, .fail, .missing, .bug) {
-  --rm-room-lamp: #3D1414;
-  --rm-lamp: #FF8A80;
-}
-
-.md-typeset .rm-art-main :is(.admonition, details):is(.success, .check, .done) {
-  --rm-room-lamp: #12301F;
-  --rm-lamp: #7FD8A4;
-}
-
-.md-typeset .rm-art-main :is(.admonition-title, summary) {
-  border: 0;
-  background: none;
-  color: var(--rm-lamp);
-}
-
-.md-typeset .rm-art-main :is(.admonition-title, summary)::before {
-  background-color: var(--rm-lamp);
-}
-
-.md-typeset .rm-art-main summary::after {
-  color: var(--rm-room-mut);
-}
-
-/* code blocks: the same room, with syntax colours made for the dark */
-.md-typeset .rm-art-main .highlight {
-  --md-code-bg-color: transparent;
-  --md-code-fg-color: #E6E6E3;
-  --md-default-fg-color--light: rgba(242, 242, 240, 0.56);
-  --md-default-fg-color--lighter: rgba(242, 242, 240, 0.32);
-  --md-default-fg-color--lightest: rgba(242, 242, 240, 0.12);
-  --md-code-hl-color: #FF7A5C;
-  --md-code-hl-color--light: rgba(255, 107, 71, 0.2);
-  --md-code-hl-number-color: #FF9A7A;
-  --md-code-hl-special-color: #F06090;
-  --md-code-hl-function-color: #FFB59E;
-  --md-code-hl-constant-color: #C9B6FF;
-  --md-code-hl-keyword-color: #C9B6FF;
-  --md-code-hl-string-color: #7FD8A4;
-  overflow: hidden;
-  border-radius: 14px;
-  background: radial-gradient(ellipse 80% 70% at 50% 0%, var(--rm-room-lamp), var(--rm-room) 70%);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
-  color: #E6E6E3;
-}
-
-.md-typeset .rm-art-main .highlight span.filename {
-  border: 0;
-  background: none;
-  color: var(--rm-room-mut);
-}
-
-.md-typeset .rm-art-main .highlight .hll {
-  background: linear-gradient(90deg, rgba(255, 107, 71, 0.28), transparent);
-}
-
-.md-typeset .rm-art-main .highlight :is(.linenodiv, .linenos) {
-  background: transparent;
-  box-shadow: none;
-}
-
-/* highlighted words: a small lit patch */
-.md-typeset .rm-art-main mark {
-  padding: 0 0.25em;
-  border-radius: 4px;
-  background: var(--rm-room);
-  color: #FFB59E;
-  box-shadow: 0 0 12px rgba(255, 107, 71, 0.35);
-}
-
-/* buttons: the main one is the lamp itself */
-.md-typeset .rm-art-main .md-button {
-  border: 0;
-  border-radius: 999px;
-  background: var(--rm-room);
-  color: var(--rm-room-fg);
-}
-
-.md-typeset .rm-art-main .md-button--primary {
-  background: var(--rm-sel);
-  color: var(--rm-sel-ink);
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--rm-sel) 45%, transparent);
-}
-
-.md-typeset .rm-art-main .md-button:hover {
-  background: var(--rm-sel);
-  color: var(--rm-sel-ink);
-}
-
-/* the active tab glows from below */
-.md-typeset .rm-art-main .tabbed-set > input:checked + label {
-  color: var(--md-default-fg-color);
-}
-
-.md-typeset .rm-art-main .tabbed-labels::before {
-  background: var(--rm-hot);
-  box-shadow: 0 0 10px 1px color-mix(in srgb, var(--rm-hot) 60%, transparent);
 }
 
 /* ===========================================================================
