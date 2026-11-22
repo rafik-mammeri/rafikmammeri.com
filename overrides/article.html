@@ -6,10 +6,9 @@
   (terms explained on hover). This template adds around it, from partials written by
   scripts/gen_articles.py:
   - a header: the title, date, reading time and topic,
-    the summary as a lead, the series progress, keywords and where else it is published,
-    then the key takeaways and the project the article comes from;
-  - left, on wide screens: a link to all articles, then the section names beside a spine of
-    capsules, each as tall as its section's reading time; the section being read lights up;
+    the summary as a lead, the series progress, keywords and where else it is published;
+  - left, on wide screens: each section name with a thin line as
+    long as its share of reading time; the line fills as the section is read and stays lit;
   - right, on very wide screens: related articles with their summary and relation score;
   - selecting a sentence offers to copy it as a quote, with a link to that passage;
   - under the related articles, where to follow new articles (partials/share-side.html);
@@ -31,7 +30,6 @@
         <h1>{{ page.title }}</h1>
         {% include "partials/articles/" ~ slug ~ ".html" ignore missing %}
       </header>
-      {% include "partials/articles/" ~ slug ~ "-intro.html" ignore missing %}
       {{ page.content }}
       {% include "partials/share-end.html" %}
       {% include "partials/articles/" ~ slug ~ "-next.html" ignore missing %}
@@ -59,22 +57,47 @@
       var items = Array.prototype.slice.call(document.querySelectorAll(".rm-art-toc li"));
       var share = document.querySelector("div.rm-share");
       var secBtn = document.querySelector(".rm-share__section");
-      var cur = -1;
+      var cur = -1, shown = -1, list = document.querySelector(".rm-art-side .rm-art-stick");
       // the contents list follows the article's own headings, in order
       items.forEach(function (li, k) { var a = li.querySelector("a"), h = heads[k]; if (h) a.href = "#" + h.id; else li.hidden = true; });
 
       function update() {
         var d = document.documentElement, max = d.scrollHeight - window.innerHeight;
         if (bar) bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ")";
-        // the section being read: the last heading above the upper third of the window
-        // the reading line sits a third of the way down the window, and slides to the bottom
-        // over the last screen, so the last sections are read through to the end
+        // the section being read: the last heading above the reading line. People read near the
+        // top of the window, so the line sits just under the header (a fifth of the way down),
+        // and slides to the bottom over the last screen, so the last sections are read through
         var tail = max > 0 ? Math.max(0, Math.min(1, (window.scrollY - (max - window.innerHeight)) / window.innerHeight)) : 1;
-        var line = window.innerHeight * (1 / 3 + 2 / 3 * tail); cur = -1;
+        var line = window.innerHeight * (0.2 + 0.8 * tail); cur = -1;
         heads.forEach(function (h, k) { if (h.getBoundingClientRect().top < line) cur = k; });
         items.forEach(function (li, k) { li.classList.toggle("is-here", k === cur); li.classList.toggle("is-read", k < cur); });
+        // the line of the section being read fills with how far the reading line is through it
+        if (cur >= 0 && items[cur]) {
+          var top = heads[cur].getBoundingClientRect().top;
+          var end = heads[cur + 1] ? heads[cur + 1].getBoundingClientRect().top : main.getBoundingClientRect().bottom;
+          items[cur].style.setProperty("--p", Math.max(0, Math.min(1, (line - top) / Math.max(1, end - top))).toFixed(3));
+        }
         if (secBtn) secBtn.hidden = cur < 0;
+        fit();
+        // the contents scrolls on its own: when a new section starts, its name is brought near
+        // the top of the list, under the previous one, so a glance finds it (no animation; the
+        // list cannot scroll past its end, so the last sections simply stay in view)
+        if (list && cur !== shown) {
+          shown = cur;
+          var ref = items[cur - 1] || items[cur];
+          list.scrollTop = ref && cur > 0 ? ref.getBoundingClientRect().top - list.getBoundingClientRect().top + list.scrollTop - 8 : 0;
+        }
       }
+
+
+      // the contents fits the room between its top and the bottom of the window (its top is
+      // lower at the start of the article, under the title), so all of it can be scrolled to
+      function fit() {
+        if (!list) return;
+        var top = Math.max(list.getBoundingClientRect().top, parseFloat(getComputedStyle(list).top) || 0);
+        list.style.maxHeight = Math.max(160, window.innerHeight - top - 24) + "px";
+      }
+      if (list) list.addEventListener("transitionend", fit);
 
       // the side columns start level with the text, under the header, whatever its height
       var head = main.querySelector(".rm-art-head");
